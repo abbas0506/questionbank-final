@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('question_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name_en', 50);
+            $table->string('name_ur', 50);
+            $table->string('associated_model', 50);
             $table->timestamps();
         });
     }

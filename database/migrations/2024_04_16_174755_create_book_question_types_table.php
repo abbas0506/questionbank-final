@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('book_question_types', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('book_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('question_type_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
