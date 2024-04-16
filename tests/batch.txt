@@ -1,0 +1,186 @@
+insert into db.chapters (book_id, chapter_no, name)
+SELECT subject_id, chapter_no, name from temp.chapters;
+
+update db.chapters set book_id=100 where book_id=11;
+update db.chapters set book_id=200 where book_id=34;
+update db.chapters set book_id=300 where book_id=2;
+update db.chapters set book_id=400 where book_id=12;
+update db.chapters set book_id=500 where book_id=44;
+update db.chapters set book_id=600 where book_id=33;
+update db.chapters set book_id=700 where book_id=43;
+update db.chapters set book_id=800 where book_id=17;
+update db.chapters set book_id=900 where book_id=27;
+update db.chapters set book_id=1000 where book_id=29;
+update db.chapters set book_id=1100 where book_id=3;
+update db.chapters set book_id=1200 where book_id=5;
+update db.chapters set book_id=1300 where book_id=4;
+update db.chapters set book_id=1400 where book_id=30;
+update db.chapters set book_id=1500 where book_id=51;
+update db.chapters set book_id=1600 where book_id=9;
+update db.chapters set book_id=1700 where book_id=10;
+update db.chapters set book_id=1800 where book_id=35;
+update db.chapters set book_id=1900 where book_id=52;
+update db.chapters set book_id=2000 where book_id=13;
+update db.chapters set book_id=2100 where book_id=46;
+update db.chapters set book_id=2200 where book_id=36;
+update db.chapters set book_id=2300 where book_id=1;
+update db.chapters set book_id=2400 where book_id=6;
+update db.chapters set book_id=2500 where book_id=47;
+update db.chapters set book_id=2600 where book_id=37;
+update db.chapters set book_id=2700 where book_id=7;
+update db.chapters set book_id=2800 where book_id=28;
+update db.chapters set book_id=3700 where book_id=50;
+update db.chapters set book_id=3800 where book_id=31;
+update db.chapters set book_id=book_id/100;
+
+//open question_bank_final database
+
+insert into chapters(book_id, chapter_no, name) 
+select book_id, chapter_no, name from db.chapters where book_id>0;
+
+//questions loading
+insert into db.questions (book_id, chapter_no, statement_en,marks, bise_frequency, questionable_type, questionable_id)
+SELECT subject_id, chapter_no, question,marks, bise_frequency, question_type, mcq_id from temp.questions INNER join temp.chapters on temp.questions.chapter_id=temp.chapters.id;
+
+update db.questions set book_id=100 where book_id=11;
+update db.questions set book_id=200 where book_id=34;
+update db.questions set book_id=300 where book_id=2;
+update db.questions set book_id=400 where book_id=12;
+update db.questions set book_id=500 where book_id=44;
+update db.questions set book_id=600 where book_id=33;
+update db.questions set book_id=700 where book_id=43;
+update db.questions set book_id=800 where book_id=17;
+update db.questions set book_id=900 where book_id=27;
+update db.questions set book_id=1000 where book_id=29;
+update db.questions set book_id=1100 where book_id=3;
+update db.questions set book_id=1200 where book_id=5;
+update db.questions set book_id=1300 where book_id=4;
+update db.questions set book_id=1400 where book_id=30;
+update db.questions set book_id=1500 where book_id=51;
+update db.questions set book_id=1600 where book_id=9;
+update db.questions set book_id=1700 where book_id=10;
+update db.questions set book_id=1800 where book_id=35;
+update db.questions set book_id=1900 where book_id=52;
+update db.questions set book_id=2000 where book_id=13;
+update db.questions set book_id=2100 where book_id=46;
+update db.questions set book_id=2200 where book_id=36;
+update db.questions set book_id=2300 where book_id=1;
+update db.questions set book_id=2400 where book_id=6;
+update db.questions set book_id=2500 where book_id=47;
+update db.questions set book_id=2600 where book_id=37;
+update db.questions set book_id=2700 where book_id=7;
+update db.questions set book_id=2800 where book_id=28;
+update db.questions set book_id=3700 where book_id=50;
+update db.questions set book_id=3800 where book_id=31;
+update db.questions set book_id=book_id/100;
+
+update db.questions set questionable_type='App\\Models\\Short' where questionable_type='short';
+update db.questions set questionable_type='App\\Models\\Long' where questionable_type='long';
+update db.questions set questionable_type='App\\Models\\Mcq' where questionable_type='mcq';
+
+//open question_bank_final database
+
+insert into questions(book_id, chapter_no, statement_en,marks, bise_frequency, questionable_type, questionable_id) 
+select book_id, chapter_no, statement_en,marks, bise_frequency, questionable_type, questionable_id from db.questions where book_id>0;
+
+
+//load mcqs
+insert into db.mcqs(db.mcqs.id, choice_a, choice_b, choice_c, choice_d, correct)
+SELECT temp.mcqs.id, option_a, option_b, option_c, option_d, answer from temp.mcqs INNER join temp.questions on temp.mcqs.id=temp.questions.mcq_id;
+
+//open question_bank_final
+insert into mcqs(id,choice_a, choice_b,choice_c, choice_d, correct)
+select id,choice_a,choice_b,choice_c,choice_d, correct from db.mcqs;
+
+// .................
+delete from db.chapters;
+delete from db.questions;
+delete from db.mcqs;
+
+insert into db.chapters (book_id, chapter_no, name)
+SELECT subject_id, chapter_no, name from temp.chapters;
+
+update db.chapters set book_id=100 where book_id=11;
+update db.chapters set book_id=200 where book_id=34;
+update db.chapters set book_id=300 where book_id=2;
+update db.chapters set book_id=400 where book_id=12;
+update db.chapters set book_id=500 where book_id=44;
+update db.chapters set book_id=600 where book_id=33;
+update db.chapters set book_id=700 where book_id=43;
+update db.chapters set book_id=800 where book_id=17;
+update db.chapters set book_id=900 where book_id=27;
+update db.chapters set book_id=1000 where book_id=29;
+update db.chapters set book_id=1100 where book_id=3;
+update db.chapters set book_id=1200 where book_id=5;
+update db.chapters set book_id=1300 where book_id=4;
+update db.chapters set book_id=1400 where book_id=30;
+update db.chapters set book_id=1500 where book_id=51;
+update db.chapters set book_id=1600 where book_id=9;
+update db.chapters set book_id=1700 where book_id=10;
+update db.chapters set book_id=1800 where book_id=35;
+update db.chapters set book_id=1900 where book_id=52;
+update db.chapters set book_id=2000 where book_id=13;
+update db.chapters set book_id=2100 where book_id=46;
+update db.chapters set book_id=2200 where book_id=36;
+update db.chapters set book_id=2300 where book_id=1;
+update db.chapters set book_id=2400 where book_id=6;
+update db.chapters set book_id=2500 where book_id=47;
+update db.chapters set book_id=2600 where book_id=37;
+update db.chapters set book_id=2700 where book_id=7;
+update db.chapters set book_id=2800 where book_id=28;
+update db.chapters set book_id=3700 where book_id=50;
+update db.chapters set book_id=3800 where book_id=31;
+update db.chapters set book_id=book_id/100;
+
+insert into chapters(book_id, chapter_no, name, created_at, updated_at) 
+select book_id, chapter_no, name, created_at, updated_at from db.chapters where book_id>0;
+
+insert into db.questions (book_id, chapter_no, statement_en,marks, bise_frequency, questionable_type, questionable_id,created_at, updated_at)
+SELECT subject_id, chapter_no, question,marks, bise_frequency, question_type, mcq_id, temp.questions.created_at, temp.questions.updated_at from temp.questions INNER join temp.chapters on temp.questions.chapter_id=temp.chapters.id;
+
+update db.questions set book_id=100 where book_id=11;
+update db.questions set book_id=200 where book_id=34;
+update db.questions set book_id=300 where book_id=2;
+update db.questions set book_id=400 where book_id=12;
+update db.questions set book_id=500 where book_id=44;
+update db.questions set book_id=600 where book_id=33;
+update db.questions set book_id=700 where book_id=43;
+update db.questions set book_id=800 where book_id=17;
+update db.questions set book_id=900 where book_id=27;
+update db.questions set book_id=1000 where book_id=29;
+update db.questions set book_id=1100 where book_id=3;
+update db.questions set book_id=1200 where book_id=5;
+update db.questions set book_id=1300 where book_id=4;
+update db.questions set book_id=1400 where book_id=30;
+update db.questions set book_id=1500 where book_id=51;
+update db.questions set book_id=1600 where book_id=9;
+update db.questions set book_id=1700 where book_id=10;
+update db.questions set book_id=1800 where book_id=35;
+update db.questions set book_id=1900 where book_id=52;
+update db.questions set book_id=2000 where book_id=13;
+update db.questions set book_id=2100 where book_id=46;
+update db.questions set book_id=2200 where book_id=36;
+update db.questions set book_id=2300 where book_id=1;
+update db.questions set book_id=2400 where book_id=6;
+update db.questions set book_id=2500 where book_id=47;
+update db.questions set book_id=2600 where book_id=37;
+update db.questions set book_id=2700 where book_id=7;
+update db.questions set book_id=2800 where book_id=28;
+update db.questions set book_id=3700 where book_id=50;
+update db.questions set book_id=3800 where book_id=31;
+update db.questions set book_id=book_id/100;
+
+update db.questions set questionable_type='App\\Models\\Short' where questionable_type='short';
+update db.questions set questionable_type='App\\Models\\Long' where questionable_type='long';
+update db.questions set questionable_type='App\\Models\\Mcq' where questionable_type='mcq';
+
+insert into questions(book_id, chapter_no, statement_en,marks, bise_frequency, questionable_type, questionable_id,created_at, updated_at) 
+select book_id, chapter_no, statement_en,marks, bise_frequency, questionable_type, questionable_id,created_at, updated_at from db.questions where book_id>0;
+
+
+insert into db.mcqs(db.mcqs.id, choice_a, choice_b, choice_c, choice_d, correct,created_at, updated_at)
+SELECT temp.mcqs.id, option_a, option_b, option_c, option_d, answer,temp.mcqs.created_at, temp.mcqs.updated_at from temp.mcqs INNER join temp.questions on temp.mcqs.id=temp.questions.mcq_id;
+
+insert into mcqs(id,choice_a, choice_b,choice_c, choice_d, correct,created_at, updated_at)
+select id,choice_a,choice_b,choice_c,choice_d, correct,created_at, updated_at from db.mcqs;
+
