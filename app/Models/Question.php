@@ -25,8 +25,6 @@ class Question extends Model
         'bise_frequency',
         'is_conceptual',
         'is_approved',
-        'questionable_type',
-        'questionable_id',
     ];
 
 
@@ -52,6 +50,18 @@ class Question extends Model
         return $this->morphTo();
     }
 
+    public function mcq()
+    {
+        return $this->hasOne(Mcq::class);
+    }
+    public function comprehensions()
+    {
+        return $this->hasMany(Comprehension::class);
+    }
+    public function paraphrasings()
+    {
+        return $this->hasMany(Paraphrasing::class);
+    }
     public function scopeMcqs($query)
     {
         return $query->where('question_type', 'mcq');

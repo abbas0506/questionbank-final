@@ -45,46 +45,40 @@
                     <div class="custom-input-borderless">{{ $question->statement_en }}</div>
                 </div>
                 <!-- MCQs -->
-                @if($question->questionable_type=='App\Models\Mcq')
+                @if($question->subtype->tagname=='mcq')
                 <div class="text-sm">
                     <label for="">Choices</label>
                     <div class="grid gap-4 mt-2">
-                        <div class="text-sm md:w-1/2">a. &nbsp {{ $question->questionable->choice_a }}</div>
-                        <div class="text-sm md:w-1/2">b. &nbsp{{ $question->questionable->choice_b }}</div>
-                        <div class="text-sm md:w-1/2">c. &nbsp{{ $question->questionable->choice_c }}</div>
-                        <div class="text-sm md:w-1/2">d. &nbsp{{ $question->questionable->choice_d }}</div>
+                        <div class="text-sm md:w-1/2">a. &nbsp{{ $question->mcq->choice_a }}</div>
+                        <div class="text-sm md:w-1/2">b. &nbsp{{ $question->mcq->choice_b }}</div>
+                        <div class="text-sm md:w-1/2">c. &nbsp{{ $question->mcq->choice_c }}</div>
+                        <div class="text-sm md:w-1/2">d. &nbsp{{ $question->mcq->choice_d }}</div>
                     </div>
                 </div>
                 @endif
+                <!-- Paraphrasing -->
+                @if($question->subtype->tagname=='paraphrasing')
+                <div class="text-sm">
+                    <label for="">Parahrasing: Poetry lines</label>
+                    <div class="grid gap-4 md:grid-cols-2 mt-2">
+                        @foreach($question->paraphrasings as $paraphrasing)
+                        <div class="text-sm">{{ $paraphrasing->poetry_line }}</div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
                 <!-- Comprehension -->
-                @if($question->questionable_type=='App\Models\Comprehension')
+                @if($question->subtype->tagname=='comprehension')
                 <div class="text-sm">
                     <label for="">Comprehension Questions</label>
                     <div class="grid gap-4 mt-2">
-                        @if($question->questionable->question_a!='')
-                        <div class="text-sm">a. &nbsp {{ $question->questionable->question_a }}</div>
-                        @endif
-                        @if($question->questionable->question_b!='')
-                        <div class="text-sm">b. &nbsp {{ $question->questionable->question_b }}</div>
-                        @endif
-                        @if($question->questionable->question_c!='')
-                        <div class="text-sm">c. &nbsp {{ $question->questionable->question_c }}</div>
-                        @endif
-                        @if($question->questionable->question_d!='')
-                        <div class="text-sm">d. &nbsp {{ $question->questionable->question_d }}</div>
-                        @endif
-                        @if($question->questionable->question_e!='')
-                        <div class="text-sm">e. &nbsp {{ $question->questionable->question_e }}</div>
-                        @endif
-                        @if($question->questionable->question_f!='')
-                        <div class="text-sm">f. &nbsp {{ $question->questionable->question_f }}</div>
-                        @endif
-                        @if($question->questionable->question_g!='')
-                        <div class="text-sm">g. &nbsp {{ $question->questionable->question_g }}</div>
-                        @endif
-                        @if($question->questionable->question_h!='')
-                        <div class="text-sm">h. &nbsp {{ $question->questionable->question_h }}</div>
-                        @endif
+                        @php
+                        $i=1;
+                        @endphp
+                        @foreach($question->comprehensions as $comprehension)
+                        <div class="text-sm">{{ Roman::lowercase($i++) }} &nbsp {{ $comprehension->sub_question }}</div>
+                        @endforeach
                     </div>
                 </div>
                 @endif

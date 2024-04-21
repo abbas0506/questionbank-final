@@ -32,14 +32,6 @@
                     <input type="text" name='name_ur' class="custom-input-borderless" placeholder="Enter subject name" value="" required>
                 </div>
                 <div class="">
-                    <label>Is Language?</label>
-                    <select name="is_language" id="" class="custom-input-borderless py-1">
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                    </select>
-                </div>
-
-                <div class="">
                     <label>Display Order</label>
                     <input type="number" name='display_order' class="custom-input-borderless" placeholder="Enter display order" value="1" min=0 required>
                 </div>

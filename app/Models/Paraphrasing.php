@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comprehension extends Model
+class Paraphrasing extends Model
 {
     use HasFactory;
     protected $fillable = [
         'question_id',
-        'sub_question',
+        'poetry_line',
     ];
 
     public function question()

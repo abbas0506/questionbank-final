@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('mcqs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('question_id')->constrained()->cascadeOnDelete();
             $table->string('choice_a', 100);
             $table->string('choice_b', 100);
             $table->string('choice_c', 100);

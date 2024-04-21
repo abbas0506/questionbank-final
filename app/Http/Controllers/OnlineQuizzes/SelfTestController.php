@@ -73,7 +73,7 @@ class SelfTestController extends Controller
 
         $questions = Question::where('book_id', $book->id)
             ->whereIn('chapter_no', $chapterNoArray)
-            ->where('questionable_type', 'App\Models\Mcq')
+            ->where('type_id', 1)
             ->get()
             ->random($mcqs_count);
         // echo $questions;

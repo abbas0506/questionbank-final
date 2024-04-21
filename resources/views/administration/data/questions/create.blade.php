@@ -90,22 +90,39 @@
                     </div>
                 </div>
 
+                <!-- Paraphrasing question -->
+                <div id='divParaphrasing' class="questionable col-span-full hidden">
+                    <label for="">Paraphrasing: Poetry Lines</label>
+                    <div class="grid gap-4 md:grid-cols-2 mt-2">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 1">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 2">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 3">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 4">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 5">
+                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                    </div>
+                </div>
+
                 <!-- Comprehension question -->
                 <div id='divComprehension' class="questionable col-span-full hidden">
                     <label for="">Comprehension Questions</label>
                     <div class="grid gap-4 mt-2">
-
-                        <input type="text" name='question_a' class="custom-input-borderless" placeholder="a.">
-                        <input type="text" name='question_b' class="custom-input-borderless" placeholder="b.">
-                        <input type="text" name='question_c' class="custom-input-borderless" placeholder="c.">
-                        <input type="text" name='question_d' class="custom-input-borderless" placeholder="d.">
-                        <input type="text" name='question_e' class="custom-input-borderless" placeholder="e.">
-                        <input type="text" name='question_f' class="custom-input-borderless" placeholder="f.">
-
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
                     </div>
                 </div>
 
-
+                <!-- preview -->
                 <div class="col-span-full border p-6">
                     <!-- <span id="math" class="text-left no-line-break text-slate-400">Preview</span> -->
                     <span id="math" class="text-left text-slate-400">Preview</span>
@@ -113,9 +130,9 @@
                 <div class="grid gap-1">
                     <label>Exercise No.</label>
                     <select name="exercise_no" id="" class="custom-input-borderless">
-                        <option value="">Out of exercise</option>
+                        <option value="">NA</option>
                         @if($book->subject->name_en!='Mathematics')
-                        <option value="0">Basic exercise</option>
+                        <option value="0">Basic</option>
                         @else
                         @for($i=1;$i<=20;$i++) <option value="{{$i}}" @selected(session('exercise_no')==$i)>{{ $chapter->chapter_no }}.{{$i}}</option>
                             @endfor
@@ -148,6 +165,19 @@
 @section('script')
 <script type="module">
     $(document).ready(function() {
+        // show or hide on page load
+        if ($('#type_id').val() == 1) {
+            $('.questionable').hide()
+            $('#divMcq').show()
+        } else if ($('#subtype_id').val() == 18) {
+            $('.questionable').hide()
+            $('#divParaphrasing').show()
+        } else if ($('#subtype_id').val() == 19) {
+            $('.questionable').hide()
+            $('#divComprehension').show()
+        }
+
+
         $('#statement_en').bind('input propertychange', function() {
             $('#math').html($('#statement_en').val());
             MathJax.typeset();
@@ -192,6 +222,14 @@
         });
 
         $('#subtype_id').change(function() {
+            // paraphrasing
+            if ($(this).val() == 18) {
+                $('.questionable').hide()
+                $('#divParaphrasing').show()
+            } else {
+                $('#divParaphrasing').hide()
+            }
+
             // if comprehension option 
             if ($(this).val() == 19) {
                 $('.questionable').hide()
@@ -199,6 +237,7 @@
             } else {
                 $('#divComprehension').hide()
             }
+
         })
 
         $('.choice').bind('input propertychange', function() {

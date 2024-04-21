@@ -38,7 +38,6 @@
                     <tr class="border-b border-slate-200">
                         <th class="w-16">Sr</th>
                         <th class="w-48">Subject</th>
-                        <th class="w-20">Is Language?</th>
                         <th class="w-20">Display Order</th>
                         <th class="w-20">Action</th>
                     </tr>
@@ -49,7 +48,6 @@
                     <tr class="tr">
                         <td>{{$sr++}}</td>
                         <td class="text-left">{{$subject->name_en}}</td>
-                        <td>{{ $subject->language_tag }}</td>
                         <td>{{ $subject->display_order }}</td>
                         <td>
                             <div class="flex justify-center items-center space-x-3">

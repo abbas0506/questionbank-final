@@ -79,39 +79,8 @@ class QuestionController extends Controller
 
         try {
             $subtype = Subtype::find($request->subtype_id);
-            $questionable_id = null;
-            // mcqs
-            if ($subtype->name == 'MCQs') {
-                $correct = '';
-                if ($request->check_a) $correct = 'a';
-                if ($request->check_b) $correct = 'b';
-                if ($request->check_c) $correct = 'c';
-                if ($request->check_d) $correct = 'd';
 
-                $mcq = Mcq::create([
-                    'choice_a' => $request->choice_a,
-                    'choice_b' => $request->choice_b,
-                    'choice_c' => $request->choice_c,
-                    'choice_d' => $request->choice_d,
-                    'correct' => $correct,
-                ]);
-                $questionable_id = $mcq->id;
-            }
-            //comprehension
-            if ($subtype->name == 'Comprehension') {
-                $comprehension = Comprehension::create([
-                    'question_a' => $request->question_a,
-                    'question_b' => $request->question_b,
-                    'question_c' => $request->question_c,
-                    'question_d' => $request->question_d,
-                    'question_e' => $request->question_e,
-                    'question_f' => $request->question_f,
-                    'question_g' => $request->question_g,
-                    'question_h' => $request->question_h,
-                ]);
-                $questionable_id = $comprehension->id;
-            }
-            Question::create([
+            $question = Question::create([
                 'user_id' => Auth::user()->id,
                 'book_id' => $bookId,
                 'type_id' => $request->type_id,
@@ -124,10 +93,46 @@ class QuestionController extends Controller
                 'is_conceptual' => $request->is_conceptual,
                 'bise_frequency' => $request->bise_frequency,
                 'is_approved' => false,
-                'questionable_type' => $subtype->questionable_type,
-                'questionable_id' => $questionable_id,
-
             ]);
+
+            // mcqs
+            if ($subtype->tagname == 'mcq') {
+                $correct = '';
+                if ($request->check_a) $correct = 'a';
+                if ($request->check_b) $correct = 'b';
+                if ($request->check_c) $correct = 'c';
+                if ($request->check_d) $correct = 'd';
+
+                $question->mcq()->create([
+                    'choice_a' => $request->choice_a,
+                    'choice_b' => $request->choice_b,
+                    'choice_c' => $request->choice_c,
+                    'choice_d' => $request->choice_d,
+                    'correct' => $correct,
+                ]);
+            }
+
+            // paraphrasing
+            if ($subtype->tagname == 'paraphrasing') {
+                foreach ($request->poetry_lines as $poetry_line) {
+                    if ($poetry_line != '')
+                        $question->paraphrasings()->create([
+                            'poetry_line' => $poetry_line,
+                        ]);
+                }
+            }
+
+            //comprehension
+            if ($subtype->tagname == 'comprehension') {
+                foreach ($request->sub_questions as $subQuestion) {
+                    if ($subQuestion != '')
+                        $question->comprehensions()->create([
+                            'sub_question' => $subQuestion,
+                        ]);
+                }
+            }
+
+            // commit if all ok
             DB::commit();
             return redirect()->back()->with(
                 [
@@ -138,9 +143,9 @@ class QuestionController extends Controller
                     'bise_frequency' => $request->bise_frequency,
                     'is_conceptual' => $request->is_conceptual,
                     'subtypes' => $book->subtypes($request->type_id),
-                    'success', 'Successfully added'
+                    'success' => 'Successfully added',
                 ]
-            );;
+            );
             // return redirect()->route('admin.book.chapter.questions.index', [$bookId, $chapterId])->with('success', 'Successfully added');;
         } catch (Exception $ex) {
             DB::rollBack();
@@ -175,9 +180,80 @@ class QuestionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $bookId, $chapterId, $questionId)
     {
         //
+        $request->validate([
+            'chapter_no' => 'required|numeric',
+            'exercise_no' => 'nullable|numeric',
+            'statement_en' => 'required',
+            'marks' => 'required|numeric',
+            'bise_frequency' => 'required|numeric',
+            'is_conceptual' => 'required|boolean',
+        ]);
+
+        $question = Question::find($questionId);
+
+        DB::beginTransaction();
+
+        try {
+            $question->update([
+                'marks' => $request->marks,
+                'statement_en' => $request->statement_en,
+                'exercise_no' => $request->exercise_no,
+                'is_conceptual' => $request->is_conceptual,
+                'bise_frequency' => $request->bise_frequency,
+            ]);
+
+            // mcqs
+            if ($question->type->name == 'Objective') {
+                $correct = '';
+                if ($request->check_a) $correct = 'a';
+                if ($request->check_b) $correct = 'b';
+                if ($request->check_c) $correct = 'c';
+                if ($request->check_d) $correct = 'd';
+
+                $question->mcq()->update([
+                    'choice_a' => $request->choice_a,
+                    'choice_b' => $request->choice_b,
+                    'choice_c' => $request->choice_c,
+                    'choice_d' => $request->choice_d,
+                    'correct' => $correct,
+                ]);
+            }
+
+            // paraphrasing
+            // if ($question->subtype->tagname == 'paraphrasing') {
+            //     foreach ($request->poetry_lines as $poetry_line) {
+            //         if ($poetry_line != '')
+            //             $question->paraphrasings()->update([
+            //                 'poetry_line' => $poetry_line,
+            //             ]);
+            //     }
+            // }
+
+            // //comprehension
+            // if ($question->subtype->tagname == 'comprehension') {
+            //     foreach ($request->sub_questions as $subQuestion) {
+            //         if ($subQuestion != '')
+            //             $question->comprehensions()->update([
+            //                 'sub_question' => $subQuestion,
+            //             ]);
+            //     }
+            // }
+
+            // commit if all ok
+            DB::commit();
+            return redirect()->back()->with(
+                [
+                    'success' => 'Successfully updated',
+                ]
+            );
+            // return redirect()->route('admin.book.chapter.questions.index', [$bookId, $chapterId])->with('success', 'Successfully added');;
+        } catch (Exception $ex) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($ex->getMessage());
+        }
     }
 
     /**

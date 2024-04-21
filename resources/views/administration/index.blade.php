@@ -88,10 +88,10 @@
                             @foreach($grade->questions()->today()->get()->take(30) as $question) <tr class="tr text-sm">
                                 <td>{{$sr++}}</td>
                                 <td class="text-left">
-                                    {{ $question->book->subject->name }} - {{ $grade->grade_no }}
+                                    {{ $question->book->subject->name_en }} - {{ $grade->grade_no }}
                                 </td>
                                 <td class="text-left">
-                                    <span class="font-semibold text-teal-700">{{$question->questionable_type}}</span>
+                                    <span class="font-semibold text-teal-700">{{ $question->type->name }}</span>
                                     <br>
                                     {{$question->statement_en}}
                                 </td>
@@ -126,7 +126,7 @@
                     <div class="divider border-blue-200 mt-4"></div>
                     <div class="flex text-sm mt-4">
                         <div class="w-8"><i class="bi-key"></i></div>
-                        <a href="{{url('admin/change/password')}}" class="link">Change Password</a>
+                        <a href="{{route('passwords.edit', Auth::user()->id)}}" class="link">Change Password</a>
                     </div>
                 </div>
             </div>

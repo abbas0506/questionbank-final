@@ -71,29 +71,29 @@ $sr=1;
                 <p class="font-semibold text-base text-left text-gray-800">{{$question->statement_en}}</p>
                 <div class="divider my-4"></div>
                 <div id='ans' class="answer flex flex-col mt-4 text-gray-600 gap-y-2">
-                    <div class="option flex space-x-3 items-center @if($question->questionable->correct=='a') correct @endif">
+                    <div class="option flex space-x-3 items-center @if($question->mcq->correct=='a') correct @endif">
                         <input type="radio" id='radioa-{{$question->id}}' class="radio">
-                        <label for="radioa-{{$question->id}}" class="">{{$question->questionable->choice_a}}</label>
+                        <label for="radioa-{{$question->id}}" class="">{{$question->mcq->choice_a}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>
 
-                    <div class="option flex space-x-3 items-center @if($question->questionable->correct=='b') correct @endif">
+                    <div class="option flex space-x-3 items-center @if($question->mcq->correct=='b') correct @endif">
                         <input type="radio" id='radiob-{{$question->id}}' class="radio">
-                        <label for="radiob-{{$question->id}}" class="">{{$question->questionable->choice_b}}</label>
+                        <label for="radiob-{{$question->id}}" class="">{{$question->mcq->choice_b}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>
 
-                    <div class="option flex space-x-3 items-center @if($question->questionable->correct=='c') correct @endif">
+                    <div class="option flex space-x-3 items-center @if($question->mcq->correct=='c') correct @endif">
                         <input type="radio" id='radioc-{{$question->id}}' class="radio">
-                        <label for="radioc-{{$question->id}}" class="">{{$question->questionable->choice_c}}</label>
+                        <label for="radioc-{{$question->id}}" class="">{{$question->mcq->choice_c}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>
-                    <div class="option flex space-x-3 items-center @if($question->questionable->correct=='d') correct @endif">
+                    <div class="option flex space-x-3 items-center @if($question->mcq->correct=='d') correct @endif">
                         <input type="radio" id="radiod-{{$question->id}}" class="radio">
-                        <label for="radiod-{{$question->id}}" class="">{{$question->questionable->choice_d}}</label>
+                        <label for="radiod-{{$question->id}}" class="">{{$question->mcq->choice_d}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>

@@ -37,7 +37,6 @@ class SubjectController extends Controller
         $request->validate([
             'name_en' => 'required',
             'name_ur' => 'required',
-            'is_language' => 'boolean|required',
             'display_order' => 'required',
         ]);
 
@@ -78,7 +77,6 @@ class SubjectController extends Controller
         $request->validate([
             'name_en' => 'required',
             'name_ur' => 'required',
-            'is_language' => 'boolean|required',
             'display_order' => 'required',
         ]);
 

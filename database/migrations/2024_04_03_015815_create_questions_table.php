@@ -28,7 +28,6 @@ return new class extends Migration
             $table->unsignedTinyInteger('bise_frequency');
             $table->boolean('is_conceptual');
             $table->boolean('is_approved');
-            $table->nullableMorphs('questionable');
             $table->timestamps();
         });
     }

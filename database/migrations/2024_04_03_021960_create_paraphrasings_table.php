@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subtypes', function (Blueprint $table) {
+        Schema::create('paraphrasings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id')->constrained()->cascadeOnDelete();
-            $table->string('name', 50);
-            $table->string('language', 2)->nullable();
-            $table->string('tagname', 50)->nullable();
+            $table->foreignId('question_id')->constrained()->cascadeOnDelete();
+            $table->string('poetry_line', 100);
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subtypes');
+        Schema::dropIfExists('paraphrasings');
     }
 };

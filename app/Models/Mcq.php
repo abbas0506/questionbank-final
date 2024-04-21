@@ -16,4 +16,9 @@ class Mcq extends Model
         'choice_d',
         'correct',
     ];
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class);
+    }
 }

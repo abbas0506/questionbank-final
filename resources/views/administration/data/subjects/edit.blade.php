@@ -25,22 +25,19 @@
                 @csrf
                 @method('PATCH')
                 <div class="md:col-span-full">
-                    <label>Subject Name</label>
-                    <input type="text" name='name' class="custom-input-borderless" placeholder="Enter subject name" value="{{ $subject->name }}" required>
+                    <label>Subject Name (english)</label>
+                    <input type="text" name='name_en' class="custom-input-borderless" placeholder="Subject name" value="{{ $subject->name_en }}" required>
                 </div>
-                <div>
-                    <label>Is Language?</label>
-                    <select name="is_language" id="" class="custom-input-borderless py-1">
-                        <option value="0" @selected(!$subject->language_tag)>No</option>
-                        <option value="1" @selected($subject->language_tag)>Yes</option>
-                    </select>
+                <div class="md:col-span-full">
+                    <label>Subject Name (urdu)</label>
+                    <input type="text" name='name_ur' class="custom-input-borderless" placeholder="Subject name" value="{{ $subject->name_ur }}" required>
                 </div>
                 <div>
                     <label>Display Order</label>
                     <input type="number" name='display_order' class="custom-input-borderless" placeholder="Enter display order" value="{{ $subject->display_order}}" min=0 required>
                 </div>
                 <div class="md:col-span-full">
-                    <button type="submit" class="btn-teal rounded mt-6">Create</button>
+                    <button type="submit" class="btn-teal rounded mt-6">Update</button>
                 </div>
             </form>
 

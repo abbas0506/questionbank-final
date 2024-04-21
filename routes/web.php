@@ -11,6 +11,7 @@ use App\Http\Controllers\Administration\Data\SubjectController;
 use App\Http\Controllers\Administration\Users\UserManagementController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\OnlineQuizzes\SelfTestController;
 use App\Http\Middleware\CheckSessionExpiry;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('login/as', [AuthController::class, 'loginAs'])->name('login.as');
 Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
+Route::resource('passwords', PasswordController::class);
 
 Route::resource('self-tests', SelfTestController::class);
 Route::get('fetchSubTypesByTypeId', [AjaxController::class, 'fetchSubTypesByTypeId']);

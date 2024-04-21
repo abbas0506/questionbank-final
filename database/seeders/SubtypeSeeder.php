@@ -17,7 +17,7 @@ class SubtypeSeeder extends Seeder
         Subtype::create([
             'name' => 'MCQs',
             'type_id' => 1,
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'Short',
@@ -33,43 +33,43 @@ class SubtypeSeeder extends Seeder
             'name' => 'Correct form of verb',
             'type_id' => 1,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'Correct spelling',
             'type_id' => 1,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'Meaning of words',
             'type_id' => 1,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'Correct grammar',
             'type_id' => 1,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'MCQs (Lesson)',
             'type_id' => 1,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'MCQs (Play)',
             'type_id' => 1,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'MCQs (Novel)',
             'type_id' => 1,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'Correct grammar',
@@ -111,17 +111,13 @@ class SubtypeSeeder extends Seeder
             'name' => 'Paraphrasing of poetry',
             'type_id' => 2,
             'language' => 'en',
+            'tagname' => 'paraphrasing',
         ]);
         Subtype::create([
             'name' => 'Comprehension',
             'type_id' => 2,
             'language' => 'en',
-            'questionable_type' => 'App\Models\Comprehension',
-        ]);
-        Subtype::create([
-            'name' => 'Idioms/Phrases',
-            'type_id' => 2,
-            'language' => 'en'
+            'tagname' => 'comprehension',
         ]);
         Subtype::create([
             'name' => 'Letter',
@@ -174,67 +170,67 @@ class SubtypeSeeder extends Seeder
             'name' => ' نصابی کثیرالانتخاب ',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'تشبیہ',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'استعارہ',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'تلمیح',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'مطلع',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'قافیہ',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'ردیف',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'تذکیرو تانیث',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'امدادی فعل',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'رموزاوقاف',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'جملہ کی درستی',
             'type_id' => 1,
             'language' => 'ur',
-            'questionable_type' => 'App\Models\Mcq',
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'اشعار کی تشریح:نظم',

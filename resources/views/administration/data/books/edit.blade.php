@@ -42,7 +42,7 @@
                         <select name="subject_id" class="custom-input-borderless" required>
                             <option value="">...</option>
                             @foreach($subjects as $subject)
-                            <option value="{{ $subject->id }}" @selected($book->subject_id==$subject->id)>{{ $subject->name }}</option>
+                            <option value="{{ $subject->id }}" @selected($book->subject_id==$subject->id)>{{ $subject->name_en }}</option>
                             @endforeach
                         </select>
                     </div>
