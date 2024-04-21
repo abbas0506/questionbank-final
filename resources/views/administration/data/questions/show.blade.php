@@ -56,6 +56,38 @@
                     </div>
                 </div>
                 @endif
+                <!-- Comprehension -->
+                @if($question->questionable_type=='App\Models\Comprehension')
+                <div class="text-sm">
+                    <label for="">Comprehension Questions</label>
+                    <div class="grid gap-4 mt-2">
+                        @if($question->questionable->question_a!='')
+                        <div class="text-sm">a. &nbsp {{ $question->questionable->question_a }}</div>
+                        @endif
+                        @if($question->questionable->question_b!='')
+                        <div class="text-sm">b. &nbsp {{ $question->questionable->question_b }}</div>
+                        @endif
+                        @if($question->questionable->question_c!='')
+                        <div class="text-sm">c. &nbsp {{ $question->questionable->question_c }}</div>
+                        @endif
+                        @if($question->questionable->question_d!='')
+                        <div class="text-sm">d. &nbsp {{ $question->questionable->question_d }}</div>
+                        @endif
+                        @if($question->questionable->question_e!='')
+                        <div class="text-sm">e. &nbsp {{ $question->questionable->question_e }}</div>
+                        @endif
+                        @if($question->questionable->question_f!='')
+                        <div class="text-sm">f. &nbsp {{ $question->questionable->question_f }}</div>
+                        @endif
+                        @if($question->questionable->question_g!='')
+                        <div class="text-sm">g. &nbsp {{ $question->questionable->question_g }}</div>
+                        @endif
+                        @if($question->questionable->question_h!='')
+                        <div class="text-sm">h. &nbsp {{ $question->questionable->question_h }}</div>
+                        @endif
+                    </div>
+                </div>
+                @endif
 
                 <div class="grid gap-1">
                     <label>Exercise No.</label>
