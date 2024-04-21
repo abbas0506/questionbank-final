@@ -33,7 +33,7 @@
 
                 <div class="grid gap-y-1">
                     <label>Question Type</label>
-                    <div>{{ $question->type() }}</div>
+                    <div>{{ $question->type->name }}</div>
                 </div>
                 <div class="grid gap-y-1">
                     <label for="">Marks</label>

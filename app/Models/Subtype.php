@@ -9,7 +9,9 @@ class Subtype extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name_en',
-        'name_ur',
+        'name',
+        'type_id',
+        'language',
+        'questionable_type',
     ];
 }

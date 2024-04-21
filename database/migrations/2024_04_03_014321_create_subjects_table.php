@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name_en', 100);
             $table->string('name_ur', 100);
+            // $table->string('language', 2);
             $table->unsignedTinyInteger('display_order')->default(1);
             $table->timestamps();
         });

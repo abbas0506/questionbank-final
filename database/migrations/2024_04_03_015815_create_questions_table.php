@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('book_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('topic_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('type_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('subtype_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('topic_id')->nullable()->constrained()->cascadeOnDelete();
 
             $table->unsignedTinyInteger('chapter_no')->nullable();
             $table->unsignedTinyInteger('exercise_no')->nullable();

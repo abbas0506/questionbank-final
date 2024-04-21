@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('subtypes', function (Blueprint $table) {
             $table->id();
-            $table->string('name_en', 50);
-            $table->string('name_ur', 50);
+            $table->foreignId('type_id')->constrained()->cascadeOnDelete();
+            $table->string('name', 50);
+            $table->string('language', 2)->nullable();
+            $table->string('questionable_type', 50)->nullable();
             $table->timestamps();
         });
     }

@@ -9,6 +9,7 @@ class Mcq extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'question_id',
         'choice_a',
         'choice_b',
         'choice_c',

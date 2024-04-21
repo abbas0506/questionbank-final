@@ -49,7 +49,7 @@
                     <tr class="tr">
                         <td>{{$sr++}}</td>
                         <td class="text-left">{{ $question->statement_en }} @if($question->statement_ur) <br> @endif {{ $question->statement_ur }}</td>
-                        <td>{{ $question->type() }}</td>
+                        <td>{{ $question->type->name }}</td>
                         <td>
                             <a href="{{ route('admin.book.chapter.questions.show',[$book,$chapter,$question]) }}">
                                 <i class="bx bx-show-alt"></i>

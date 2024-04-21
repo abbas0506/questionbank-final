@@ -9,6 +9,7 @@ use App\Http\Controllers\Administration\Data\QuestionController;
 use App\Http\Controllers\Administration\Data\QuestionSearchController;
 use App\Http\Controllers\Administration\Data\SubjectController;
 use App\Http\Controllers\Administration\Users\UserManagementController;
+use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\OnlineQuizzes\SelfTestController;
 use App\Http\Middleware\CheckSessionExpiry;
@@ -41,7 +42,7 @@ Route::get('signout', [AuthController::class, 'signout'])->name('signout');
 
 
 Route::resource('self-tests', SelfTestController::class);
-
+Route::get('fetchSubTypesByTypeId', [AjaxController::class, 'fetchSubTypesByTypeId']);
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::resource('users', UserManagementController::class);
@@ -53,7 +54,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
     Route::resource('question-search', QuestionSearchController::class);
     Route::resource('book.chapter.questions', QuestionController::class);
     Route::resource('questions', QuestionController::class);
-
 
     Route::view('change/password', 'admin.change_password');
     Route::post('change/password', [AuthController::class, 'changePassword'])->name('change.password');

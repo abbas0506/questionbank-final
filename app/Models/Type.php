@@ -10,6 +10,10 @@ class Type extends Model
     use HasFactory;
     protected $fillable = [
         'name',
-        'associated_model'
     ];
+
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
 }

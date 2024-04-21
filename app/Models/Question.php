@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Question extends Model
 {
@@ -11,6 +12,8 @@ class Question extends Model
     protected $fillable = [
         'user_id', //owner id
         'book_id',
+        'type_id',
+        'subtype_id',
         'topic_id',
 
         'chapter_no',
@@ -36,7 +39,15 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function questionable()
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+    public function subtype()
+    {
+        return $this->belongsTo(Subtype::class);
+    }
+    public function questionable(): MorphTo
     {
         return $this->morphTo();
     }
@@ -56,14 +67,5 @@ class Question extends Model
     public function scopeToday($query)
     {
         return $query->whereDate('questions.created_at', today());
-    }
-    public function type()
-    {
-        $str = '';
-        if ($this->questionable_type == 'App\Models\Short') $str = 'Short';
-        if ($this->questionable_type == 'App\Models\Long') $str = 'Long';
-        if ($this->questionable_type == 'App\Models\Mcq') $str = 'MCQ';
-
-        return $str;
     }
 }

@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Administration\Data;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Chapter;
+use App\Models\Comprehension;
 use App\Models\Grade;
 use App\Models\Mcq;
 use App\Models\Question;
+use App\Models\Subject;
 use App\Models\Subtype;
 use App\Models\Type;
 use Exception;
@@ -44,16 +46,8 @@ class QuestionController extends Controller
             ->where('chapter_no', $chapter->chapter_no)
             ->get();
 
-        $types = '';
-        $language_subjects = collect(['English', 'Urdu']);
-
-        if ($language_subjects->contains($book->subject->name_en))
-            $types = Type::all();
-        else
-            //if other than language, return only MCQ, Short, Long 
-            $types = Type::where('id', '<=', 3)->get();
-
-        $subtypes = Subtype::all();
+        $types = Type::all();
+        $subtypes = $book->subtypes(1); //objectives
         return view('administration.data.questions.create', compact('book', 'chapter', 'questions', 'types', 'subtypes'));
     }
 
@@ -64,17 +58,16 @@ class QuestionController extends Controller
     {
         //
         $request->validate([
-            // 'topic_id',
             'chapter_no' => 'required|numeric',
             'exercise_no' => 'nullable|numeric',
             'statement_en' => 'required',
-            // 'statement_ur',
             'marks' => 'required|numeric',
             'bise_frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
-            'questionable_type' => 'required',
+            'type_id' => 'required',
         ]);
 
+        $book = Book::find($bookId);
         $chapter = Chapter::find($chapterId);
         $request->merge([
             'book_id' => $bookId,
@@ -85,9 +78,10 @@ class QuestionController extends Controller
         DB::beginTransaction();
 
         try {
+            $subtype = Subtype::find($request->subtype_id);
             $questionable_id = null;
-
-            if ($request->questionable_type == 'App\Models\Mcq') {
+            // mcqs
+            if ($subtype->name == 'MCQs') {
                 $correct = '';
                 if ($request->check_a) $correct = 'a';
                 if ($request->check_b) $correct = 'b';
@@ -103,9 +97,25 @@ class QuestionController extends Controller
                 ]);
                 $questionable_id = $mcq->id;
             }
+            //comprehension
+            if ($subtype->name == 'Comprehension') {
+                $comprehension = Comprehension::create([
+                    'question_a' => $request->question_a,
+                    'question_b' => $request->question_b,
+                    'question_c' => $request->question_c,
+                    'question_d' => $request->question_d,
+                    'question_e' => $request->question_e,
+                    'question_f' => $request->question_f,
+                    'question_g' => $request->question_g,
+                    'question_h' => $request->question_h,
+                ]);
+                $questionable_id = $comprehension->id;
+            }
             Question::create([
                 'user_id' => Auth::user()->id,
                 'book_id' => $bookId,
+                'type_id' => $request->type_id,
+                'subtype_id' => $request->subtype_id,
                 'chapter_no' => $chapter->chapter_no,
                 'marks' => $request->marks,
 
@@ -114,18 +124,20 @@ class QuestionController extends Controller
                 'is_conceptual' => $request->is_conceptual,
                 'bise_frequency' => $request->bise_frequency,
                 'is_approved' => false,
-                'questionable_type' => $request->questionable_type,
+                'questionable_type' => $subtype->questionable_type,
                 'questionable_id' => $questionable_id,
 
             ]);
             DB::commit();
             return redirect()->back()->with(
                 [
-                    'questionable_type' => $request->questionable_type,
+                    'type_id' => $request->type_id,
+                    'subtype_id' => $request->subtype_id,
                     'marks' => $request->marks,
                     'exercise_no' => $request->exercise_no,
                     'bise_frequency' => $request->bise_frequency,
                     'is_conceptual' => $request->is_conceptual,
+                    'subtypes' => $book->subtypes($request->type_id),
                     'success', 'Successfully added'
                 ]
             );;
