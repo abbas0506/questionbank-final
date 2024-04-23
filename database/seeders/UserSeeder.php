@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
 
         $user = User::create([
             'name' => 'Operator',
-            'email' => 'data@exam.txdevs.com',
+            'email' => 'data@mail.com',
             'password' => Hash::make('password'),
             'userable_type' => 'App\Models\Operator',
 
