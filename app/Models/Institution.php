@@ -9,7 +9,6 @@ class Institution extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
         'logo',
         'phone',
         'address',

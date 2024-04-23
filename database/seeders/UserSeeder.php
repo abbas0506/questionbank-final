@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
         $user->assignRole('admin');
 
         $user = User::create([
-            'name' => 'Operator',
+            'name' => 'Data Expert',
             'email' => 'data@mail.com',
             'password' => Hash::make('password'),
             'userable_type' => 'App\Models\Operator',

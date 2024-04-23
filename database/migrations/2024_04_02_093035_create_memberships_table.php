@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('package_id')->constrained()->cascadeOnDelete();
-            $table->date('active_from');
-            $table->date('active_to');
+            $table->unsignedInteger('discount');
+            $table->date('paid_at');
+            $table->string('paid_through');
+            $table->string('transaction_no');
             $table->timestamps();
         });
     }

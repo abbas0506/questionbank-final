@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('package_id')->constrained()->cascadeOnDelete();
             $table->foreignId('feature_id')->constrained()->cascadeOnDelete();
-            $table->boolean('is_enabled')->dafault(false);
+            $table->unsignedInteger('daily_instances');   //maximum instances allowed: for example, 20 papers
+            $table->unsignedInteger('overall_instances');   //overall maximum instances allowed: for example, 2000 papers
             $table->timestamps();
         });
     }
