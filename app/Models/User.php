@@ -22,8 +22,6 @@ class User extends Authenticatable
         'email',
         'password',
         'is_active',
-        'userable_type',
-        'userable_id',
     ];
 
     /**
@@ -47,5 +45,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function institution()
+    {
+        return $this->hasOne(Institution::class);
+    }
+    public function teacher()
+    {
+        return $this->hasOne(Teacher::class);
     }
 }

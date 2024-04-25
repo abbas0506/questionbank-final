@@ -1,33 +1,42 @@
 <aside aria-label="Sidebar" id='sidebar'>
-    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wider">GHSS</div>
-    <div class="text-xs text-center">Chak Bedi, Pakpattan</div>
+    <div class="flex items-center justify-center w-full mt-16">
+        <a href="{{url('/')}}" class="">
+            <img alt="logo" src="{{asset('images/logo/app_logo.png')}}" class="w-8 h-8">
+        </a>
+    </div>
+    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wide">Exampixel</div>
+    <div class="text-xs text-center text-green-600">data entry panel</div>
     <div class="mt-12">
         <ul class="space-y-2">
             <li>
-                <a href="{{url('operator')}}" class="flex items-center p-2">
+                <a href="{{url('/')}}" class="flex items-center p-2">
+                    @if($page=='home')
+                    <i class="bi-house current-page"></i>
+                    @else
                     <i class="bi-house"></i>
+                    @endif
                     <span class="ml-3">Home</span>
                 </a>
             </li>
-            <!-- <li>
-                <a href="" class="flex items-center p-2">
-                    <i class="bi-book"></i>
-                    <span class="ml-3">Subjects</span>
-                </a>
-            </li> -->
             <li>
-                <a href="{{route('teacher.qbank.index')}}" class="flex items-center p-2">
-                    <i class="bi-question-circle"></i>
-                    <span class="ml-3">Q. Bank</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{route('teacher.tests.create')}}" class="flex items-center p-2">
-                    <i class="bi-file-text"></i>
-                    <span class="ml-3">Create Test</span>
+                <a href="{{url('/')}}" class="flex items-center p-2">
+                    <i class="bi bi-database-gear @if($page=='questions') current-page @endif"></i>
+                    <span class="ml-3">Questions</span>
                 </a>
             </li>
 
+            <!-- <li>
+                <a href="{{route('admin.users.index')}}" class="flex items-center p-2">
+                    <i class="bi bi-person-gear @if($page=='users') current-page @endif"></i>
+                    <span class="ml-3">Books</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.data.index') }}" class="flex items-center p-2">
+                    <i class="bi bi-database-gear @if($page=='data') current-page @endif"></i>
+                    <span class="ml-3">Chapters</span>
+                </a>
+            </li> -->
         </ul>
     </div>
 </aside>

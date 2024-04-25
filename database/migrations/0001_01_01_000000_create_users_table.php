@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('is_active')->default(true);
 
-            $table->nullableMorphs('userable'); //creates userable_id, userable_type cols by default
+            // $table->nullableMorphs('userable'); //creates userable_id, userable_type cols by default
             $table->rememberToken();
             $table->timestamps();
         });

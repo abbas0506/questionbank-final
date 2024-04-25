@@ -22,8 +22,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('chapter_no')->nullable();
             $table->unsignedTinyInteger('exercise_no')->nullable();
 
-            $table->string('statement_en', 300)->nullable();
-            $table->string('statement_ur', 300)->nullable();
+            $table->string('statement', 300)->nullable();
             $table->unsignedTinyInteger('marks');
             $table->unsignedTinyInteger('bise_frequency');
             $table->boolean('is_conceptual');

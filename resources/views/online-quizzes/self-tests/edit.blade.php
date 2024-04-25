@@ -58,7 +58,7 @@
         <input type="hidden" name='book_id' value="{{$book->id}}">
         <div class="border-b border-slate-100 my-12"></div>
 
-        <button type="submit" class="fixed bottom-6 right-6 w-12 h-12 rounded-full btn-teal flex justify-center items-center" @disabled($book->chapters->count()==0)> <i class="bi-caret-right"></i></button>
+        <button type="submit" class="fixed bottom-6 right-6 w-12 h-12 rounded-full btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> <i class="bi-caret-right"></i></button>
     </form>
 </div>
 @endsection

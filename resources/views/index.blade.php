@@ -37,7 +37,7 @@
         <p class="text-teal-800 text-3xl md:text-5xl">Question Bank </p>
         <p class="text-slate-600 mt-3 text-md">50,000+ questions including short, long, MCQs have been taken from the exercises of textbooks and past papers, fully covering 9th to 12th classes.</p>
         <a href="{{url('services')}}" class="mt-5">
-            <button class="btn-teal">Get Started <i class="bi-arrow-right"></i></button>
+            <button class="btn-green">Get Started <i class="bi-arrow-right"></i></button>
         </a>
     </div>
 

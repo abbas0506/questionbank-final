@@ -1,163 +1,171 @@
-@extends('layouts.admin')
-@section('page-content')
+@extends('layouts.basic')
+@section('header')
+<x-headers.user page="Data" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
+@endsection
 
-<div class="custom-container">
-    <h1>New Question</h1>
-    <div class="bread-crumb">
-        <a href="{{url('admin')}}">Home</a>
-        <div>/</div>
-        <a href="{{route('admin.data.index')}}">Data</a>
-        <div>/</div>
-        <a href="{{route('admin.book.chapter.questions.index',[$book,$chapter])}}">Questions</a>
-        <div>/</div>
-        <div>New</div>
-    </div>
+@section('sidebar')
+<x-sidebars.admin page='data'></x-sidebars.admin>
+@endsection
 
-    <div class="content-section md:p-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 items-end">
-            <div>
-                <h2>{{ $book->name }}</h2>
-                <p>{{ $chapter->chapter_no }}. {{$chapter->name}}</p>
-            </div>
-
+@section('body')
+<div class="responsive-container">
+    <div class="container">
+        <div class="bread-crumb">
+            <a href="{{url('admin')}}">Home</a>
+            <i class="bx bx-chevron-right"></i>
+            <a href="{{route('admin.data.index')}}">Data</a>
+            <i class="bx bx-chevron-right"></i>
+            <a href="{{route('admin.book.chapter.questions.index',[$book,$chapter])}}">Questions</a>
+            <i class="bx bx-chevron-right"></i>
+            <div>New</div>
         </div>
-        <div class="divider my-5"></div>
-        <div class="md:w-3/4 mx-auto mt-8">
-            <!-- page message -->
-            @if($errors->any())
-            <x-message :errors='$errors'></x-message>
-            @else
-            <x-message></x-message>
-            @endif
-            <form action="{{route('admin.book.chapter.questions.store', [$book->id, $chapter->id])}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
-                @csrf
-                <input type="hidden" id='book_id' value="{{ $book->id }}">
-                <div class="grid gap-y-1">
-                    <label>Question Type</label>
-                    <select name="type_id" id="type_id" class="custom-input-borderless text-sm">
-                        @foreach($types as $type)
-                        <option value="{{ $type->id }}" @selected(session('type_id')==$type->id)> {{ $type->name }} </option>
-                        @endforeach
-                    </select>
-                </div>
 
-                <div class="grid gap-y-1">
-                    <label>Sub Type</label>
-                    <select name="subtype_id" id="subtype_id" class="custom-input-borderless text-sm">
-                        <!-- <option value="">Select ...</option> -->
-                        @if(Session::has('subtypes'))
-                        @foreach(session('subtypes') as $subtype)
-                        <option value="{{ $subtype->id }}" @selected(session('subtype_id')==$subtype->id)>{{$subtype->name}}</option>
-                        @endforeach
-                        @elseif($subtypes->count()>0)
-                        @foreach($subtypes as $subtype)
-                        <option value="{{ $subtype->id }}" @selected(session('subtype_id')==$subtype->id)>{{$subtype->name}}</option>
-                        @endforeach
-                        @endif
-                    </select>
+        <div class="container-light">
+            <div class="flex flex-wrap items-center justify-between">
+                <h3 class="text-green-600 bg-green-100 px-3 py-1 rounded-full">New Question <i class="bx bx-plus"></i></h3>
+                <div>
+                    <h3>{{ $book->name }}</h3>
+                    <p class="text-sm">Chapter {{ $chapter->chapter_no }}</p>
                 </div>
-
-                <div class="grid gap-y-1">
-                    <label for="">Marks</label>
-                    <input type="number" name="marks" value="{{ session('marks') ? session('marks') : 1}}" min=1 class="custom-input-borderless">
-                </div>
-
-                <div class="grid gap-y-1 col-span-full">
-                    <label for="">Question Statement</label>
-                    <textarea type="text" id='statement_en' name="statement_en" class="custom-input py-2 mt-2" rows='3' placeholder="Type here"></textarea>
-                </div>
-
-                <!-- MCQs -->
-                <div id='divMcq' class="questionable col-span-full">
-                    <label for="">Choices</label>
-                    <div class="grid gap-4 mt-2">
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" name='check_a' class="correct w-4 h-4" value='1' checked>
-                            <input type="text" name='choice_a' class="custom-input-borderless choice md:w-1/2" placeholder="a.">
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" name='check_b' class="correct w-4 h-4" value='1'>
-                            <input type="text" name='choice_b' class="custom-input-borderless choice md:w-1/2" placeholder="b.">
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" name='check_c' class="correct w-4 h-4" value='1'>
-                            <input type="text" name='choice_c' class="custom-input-borderless choice md:w-1/2" placeholder="c.">
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <input type="checkbox" name='check_d' class="correct w-4 h-4" value='1'>
-                            <input type="text" name='choice_d' class="custom-input-borderless choice md:w-1/2" placeholder="d.">
-                        </div>
+            </div>
+            <div class="divider my-5"></div>
+            <div class="md:w-3/4 mx-auto">
+                <!-- page message -->
+                @if($errors->any())
+                <x-message :errors='$errors'></x-message>
+                @else
+                <x-message></x-message>
+                @endif
+                <form action="{{route('admin.book.chapter.questions.store', [$book->id, $chapter->id])}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
+                    @csrf
+                    <input type="hidden" id='book_id' value="{{ $book->id }}">
+                    <div class="grid gap-y-1">
+                        <label>Question Type</label>
+                        <select name="type_id" id="type_id" class="custom-input-borderless text-sm">
+                            @foreach($types as $type)
+                            <option value="{{ $type->id }}" @selected(session('type_id')==$type->id)> {{ $type->name }} </option>
+                            @endforeach
+                        </select>
                     </div>
-                </div>
 
-                <!-- Paraphrasing question -->
-                <div id='divParaphrasing' class="questionable col-span-full hidden">
-                    <label for="">Paraphrasing: Poetry Lines</label>
-                    <div class="grid gap-4 md:grid-cols-2 mt-2">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 1">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 2">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 3">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 4">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 5">
-                        <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
-                    </div>
-                </div>
-
-                <!-- Comprehension question -->
-                <div id='divComprehension' class="questionable col-span-full hidden">
-                    <label for="">Comprehension Questions</label>
-                    <div class="grid gap-4 mt-2">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                        <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
-                    </div>
-                </div>
-
-                <!-- preview -->
-                <div class="col-span-full border p-6">
-                    <!-- <span id="math" class="text-left no-line-break text-slate-400">Preview</span> -->
-                    <span id="math" class="text-left text-slate-400">Preview</span>
-                </div>
-                <div class="grid gap-1">
-                    <label>Exercise No.</label>
-                    <select name="exercise_no" id="" class="custom-input-borderless">
-                        <option value="">NA</option>
-                        @if($book->subject->name_en!='Mathematics')
-                        <option value="0">Basic</option>
-                        @else
-                        @for($i=1;$i<=20;$i++) <option value="{{$i}}" @selected(session('exercise_no')==$i)>{{ $chapter->chapter_no }}.{{$i}}</option>
-                            @endfor
+                    <div class="grid gap-y-1">
+                        <label>Sub Type</label>
+                        <select name="subtype_id" id="subtype_id" class="custom-input-borderless text-sm">
+                            <!-- <option value="">Select ...</option> -->
+                            @if(Session::has('subtypes'))
+                            @foreach(session('subtypes') as $subtype)
+                            <option value="{{ $subtype->id }}" @selected(session('subtype_id')==$subtype->id)>{{$subtype->name}}</option>
+                            @endforeach
+                            @elseif($subtypes->count()>0)
+                            @foreach($subtypes as $subtype)
+                            <option value="{{ $subtype->id }}" @selected(session('subtype_id')==$subtype->id)>{{$subtype->name}}</option>
+                            @endforeach
                             @endif
-                    </select>
-                </div>
+                        </select>
+                    </div>
 
-                <div class="grid gap-1">
-                    <label>Conceptual?</label>
-                    <select name="is_conceptual" id="" class="custom-input-borderless">
-                        <option value="1" @selected(session('is_conceptual'))>Yes</option>
-                        <option value="0" @selected(!session('is_conceptual'))>No</option>
-                    </select>
-                </div>
+                    <div class="grid gap-y-1">
+                        <label for="">Marks</label>
+                        <input type="number" name="marks" value="{{ session('marks') ? session('marks') : 1}}" min=1 class="custom-input-borderless">
+                    </div>
 
-                <div class="grid gap-y-1">
-                    <label for="">Bise Frequency</label>
-                    <input type="number" name="bise_frequency" value="1" min=0 class="custom-input-borderless">
-                </div>
-                <input type="hidden" name='chapter_no' value="{{ $chapter->chapter_no }}">
-                <div class="text-right col-span-full">
-                    <button type="submit" class="btn-teal">Create Now</button>
-                </div>
-            </form>
+                    <div class="grid gap-y-1 col-span-full">
+                        <label for="">Question Statement</label>
+                        <textarea type="text" id='statement' name="statement" class="custom-input py-2 mt-2" rows='3' placeholder="Type here"></textarea>
+                    </div>
 
+                    <!-- MCQs -->
+                    <div id='divMcq' class="questionable col-span-full">
+                        <label for="">Choices</label>
+                        <div class="grid gap-4 mt-2">
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" name='check_a' class="correct w-4 h-4" value='1' checked>
+                                <input type="text" name='choice_a' class="custom-input-borderless choice md:w-1/2" placeholder="a.">
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" name='check_b' class="correct w-4 h-4" value='1'>
+                                <input type="text" name='choice_b' class="custom-input-borderless choice md:w-1/2" placeholder="b.">
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" name='check_c' class="correct w-4 h-4" value='1'>
+                                <input type="text" name='choice_c' class="custom-input-borderless choice md:w-1/2" placeholder="c.">
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" name='check_d' class="correct w-4 h-4" value='1'>
+                                <input type="text" name='choice_d' class="custom-input-borderless choice md:w-1/2" placeholder="d.">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Paraphrasing question -->
+                    <div id='divParaphrasing' class="questionable col-span-full hidden">
+                        <label for="">Paraphrasing: Poetry Lines</label>
+                        <div class="grid gap-4 md:grid-cols-2 mt-2">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 1">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 2">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 3">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 4">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 5">
+                            <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="">
+                        </div>
+                    </div>
+
+                    <!-- Comprehension question -->
+                    <div id='divComprehension' class="questionable col-span-full hidden">
+                        <label for="">Comprehension Questions</label>
+                        <div class="grid gap-4 mt-2">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                            <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
+                        </div>
+                    </div>
+
+                    <!-- preview -->
+                    <div class="col-span-full border p-6">
+                        <!-- <span id="math" class="text-left no-line-break text-slate-400">Preview</span> -->
+                        <span id="math" class="text-left text-slate-400">Preview</span>
+                    </div>
+                    <div class="grid gap-1">
+                        <label>Exercise No.</label>
+                        <select name="exercise_no" id="" class="custom-input-borderless">
+                            <option value="">NA</option>
+                            @if($book->subject->name_en!='Mathematics')
+                            <option value="0">Basic</option>
+                            @else
+                            @for($i=1;$i<=20;$i++) <option value="{{$i}}" @selected(session('exercise_no')==$i)>{{ $chapter->chapter_no }}.{{$i}}</option>
+                                @endfor
+                                @endif
+                        </select>
+                    </div>
+
+                    <div class="grid gap-1">
+                        <label>Conceptual?</label>
+                        <select name="is_conceptual" id="" class="custom-input-borderless">
+                            <option value="1" @selected(session('is_conceptual'))>Yes</option>
+                            <option value="0" @selected(!session('is_conceptual'))>No</option>
+                        </select>
+                    </div>
+
+                    <div class="grid gap-y-1">
+                        <label for="">Bise Frequency</label>
+                        <input type="number" name="bise_frequency" value="1" min=0 class="custom-input-borderless">
+                    </div>
+                    <input type="hidden" name='chapter_no' value="{{ $chapter->chapter_no }}">
+                    <div class="text-right col-span-full">
+                        <button type="submit" class="btn-green">Create Now</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 </div>
@@ -178,8 +186,8 @@
         }
 
 
-        $('#statement_en').bind('input propertychange', function() {
-            $('#math').html($('#statement_en').val());
+        $('#statement').bind('input propertychange', function() {
+            $('#math').html($('#statement').val());
             MathJax.typeset();
         });
 

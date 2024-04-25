@@ -24,7 +24,6 @@ class UserSeeder extends Seeder
             'name' => 'Muhammad Abbas',
             'email' => 'abbas.sscs@gmail.com',
             'password' => Hash::make('password'),
-            'userable_type' => 'App\Models\Admin',
 
         ]);
 
@@ -34,42 +33,43 @@ class UserSeeder extends Seeder
             'name' => 'Azeem Rehan',
             'email' => 'mianazeemdaula@gmail.com',
             'password' => Hash::make('password'),
-            'userable_type' => 'App\Models\Admin',
-
         ]);
 
         $user->assignRole('admin');
 
         $user = User::create([
             'name' => 'Data Expert',
-            'email' => 'data@mail.com',
+            'email' => 'data@exampixel.com',
             'password' => Hash::make('password'),
-            'userable_type' => 'App\Models\Operator',
 
         ]);
 
         $user->assignRole('operator');
 
+        $user = User::create([
+            'name' => 'GHSS Chak Bedi, Pakpattan',
+            'email' => 'principal.ghsschakbedi@gmail.com',
+            'password' => Hash::make('password'),
 
-        $institution = Institution::create([
+        ]);
+
+        $user->institution()->create([
             'logo' => '',
             'phone' => '03000373004',
-            'address' => ' Chak bedi, Pakpattan',
+            'address' => 'Village Chak bedi, Pakpattan',
         ]);
-        $teacher = Teacher::create([
-            'institution_id' => $institution->id,
-            'subject_id' => 4,
-            'phone' => '030034683246',
-            'is_active' => true,
-        ]);
+        $user->assignRole(['institution']);
+
 
         $user = User::create([
             'name' => 'Muzammil Hussain',
             'email' => 'muzammilhussain@gmail.com',
             'password' => Hash::make('password'),
-            'userable_id' => $teacher->id,
-            'userable_type' => 'App\Models\Teacher',
 
+        ]);
+        $user->teacher()->create([
+            'subject_id' => 4,
+            'phone' => '03167717963',
         ]);
 
         $user->assignRole(['collaborator', 'teacher']);

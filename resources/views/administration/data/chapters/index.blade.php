@@ -1,75 +1,83 @@
-@extends('layouts.admin')
-@section('page-content')
+@extends('layouts.basic')
 
-<div class="custom-container">
-    <h1>Chapters Managment</h1>
-    <div class="bread-crumb">
-        <a href="{{url('admin')}}">Home</a>
-        <div>/</div>
-        <a href="{{route('admin.data.index')}}">Data</a>
-        <div>/</div>
-        <a href="{{route('admin.books.index')}}">Books</a>
-        <div>/</div>
-        <div>Chapters</div>
-    </div>
+@section('header')
+<x-headers.user page="Data" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
+@endsection
 
-    <!-- page message -->
-    @if($errors->any())
-    <x-message :errors='$errors'></x-message>
-    @else
-    <x-message></x-message>
-    @endif
+@section('sidebar')
+<x-sidebars.admin page='data'></x-sidebars.admin>
+@endsection
 
-    <div class="content-section md:p-16">
-
-        <h2>{{ $book->name }}</h2>
-        <div class="flex items-center flex-wrap justify-between gap-3 mt-3">
-            <!-- search -->
-            <div class="flex relative w-full md:w-1/3">
-                <input type="text" id='searchby' placeholder="Search ..." class="custom-search w-full" oninput="search(event)">
-                <i class="bx bx-search absolute top-2 right-2"></i>
-            </div>
-            <a href="{{route('admin.book.chapters.create', $book)}}" class="btn-teal rounded">New</a>
+@section('body')
+<div class="responsive-container">
+    <div class="container">
+        <div class="bread-crumb">
+            <a href="{{url('admin')}}">Home</a>
+            <i class="bx bx-chevron-right"></i>
+            <a href="{{route('admin.data.index')}}">Data</a>
+            <i class="bx bx-chevron-right"></i>
+            <a href="{{route('admin.books.index')}}">Books</a>
+            <i class="bx bx-chevron-right"></i>
+            <div>Chapters</div>
         </div>
 
+        <!-- page message -->
+        @if($errors->any())
+        <x-message :errors='$errors'></x-message>
+        @else
+        <x-message></x-message>
+        @endif
 
-        @php $sr=1; @endphp
-        <div class="overflow-x-auto">
-            <table class="table-fixed w-full mt-3">
-                <thead>
-                    <tr class="border-b border-slate-200">
-                        <th class="w-16">Sr</th>
-                        <th class="w-48">Chapter Title</th>
-                        <th class="w-24">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="container-light">
+            <h2>{{ $book->name }} : Chapters List</h2>
+            <div class="flex items-center flex-wrap justify-between gap-3 mt-3">
+                <!-- search -->
+                <div class="flex relative w-full md:w-1/3">
+                    <input type="text" id='searchby' placeholder="Search ..." class="custom-search w-full" oninput="search(event)">
+                    <i class="bx bx-search absolute top-2 right-2"></i>
+                </div>
+                <a href="{{route('admin.book.chapters.create', $book)}}" class="btn-green rounded">New</a>
+            </div>
 
-                    @foreach($book->chapters->sortBy('chapter_no') as $chapter)
-                    <tr class="tr">
-                        <td>{{$chapter->chapter_no}}</td>
-                        <td class="text-left">{{$chapter->name}}</td>
-                        <td>
-                            <div class="flex justify-center items-center space-x-3">
-                                <a href="{{route('admin.book.chapters.edit', [$book,$chapter])}}">
-                                    <i class="bx bx-pencil text-green-600"></i>
-                                </a>
-                                <span class="text-slate-400">|</span>
-                                <form action="{{route('admin.book.chapters.destroy',[$book,$chapter])}}" method="POST" onsubmit="return confirmDel(event)">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="bg-transparent p-0 border-0">
-                                        <i class="bx bx-trash text-red-600"></i>
-                                    </button>
-                                </form>
-                            </div>
 
-                        </td>
-                    </tr>
-                    @endforeach
+            @php $sr=1; @endphp
+            <div class="overflow-x-auto">
+                <table class="table-fixed w-full mt-3">
+                    <thead>
+                        <tr class="border-b border-slate-200">
+                            <th class="w-16">Sr</th>
+                            <th class="w-48">Chapter Title</th>
+                            <th class="w-24">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
+                        @foreach($book->chapters->sortBy('chapter_no') as $chapter)
+                        <tr class="tr">
+                            <td>{{$chapter->chapter_no}}</td>
+                            <td class="text-left">{{$chapter->name}}</td>
+                            <td>
+                                <div class="flex justify-center items-center space-x-3">
+                                    <a href="{{route('admin.book.chapters.edit', [$book,$chapter])}}">
+                                        <i class="bx bx-pencil text-green-600"></i>
+                                    </a>
+                                    <span class="text-slate-400">|</span>
+                                    <form action="{{route('admin.book.chapters.destroy',[$book,$chapter])}}" method="POST" onsubmit="return confirmDel(event)">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="bg-transparent p-0 border-0">
+                                            <i class="bx bx-trash text-red-600"></i>
+                                        </button>
+                                    </form>
+                                </div>
+
+                            </td>
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

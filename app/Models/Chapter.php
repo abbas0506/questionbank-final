@@ -18,4 +18,8 @@ class Chapter extends Model
     {
         return $this->belongsTo(Book::class);
     }
+    public function questions()
+    {
+        // return $this->book->questions->where()
+    }
 }

@@ -19,8 +19,7 @@ class Question extends Model
         'chapter_no',
         'exercise_no',
 
-        'statement_en',
-        'statement_ur',
+        'statement',
         'marks',
         'bise_frequency',
         'is_conceptual',

@@ -42,7 +42,7 @@ update db.chapters set book_id=book_id/100;
 insert into chapters(book_id, chapter_no, name, created_at, updated_at) 
 select book_id, chapter_no, name, created_at, updated_at from db.chapters where book_id>0;
 
-insert into db.questions (id,book_id, chapter_no, statement_en,marks, bise_frequency, questionable_type, questionable_id,created_at, updated_at)
+insert into db.questions (id,book_id, chapter_no, statement,marks, bise_frequency, questionable_type, questionable_id,created_at, updated_at)
 SELECT temp.questions.id, subject_id, chapter_no, question,marks, bise_frequency, question_type, mcq_id, temp.questions.created_at, temp.questions.updated_at from temp.questions INNER join temp.chapters on temp.questions.chapter_id=temp.chapters.id;
 
 update db.questions set chapter_no=1 where book_id=32;
@@ -86,14 +86,14 @@ update db.questions set questionable_type='App\\Models\\Short' where questionabl
 update db.questions set questionable_type='App\\Models\\Long' where questionable_type='long';
 update db.questions set questionable_type='App\\Models\\Mcq' where questionable_type='mcq';
 
-insert into questions(id, book_id, type_id,subtype_id, chapter_no, statement_en,marks, bise_frequency, created_at, updated_at) 
-select id, book_id, 1, 1, chapter_no, statement_en,marks, bise_frequency,created_at, updated_at from db.questions where book_id>0 and db.questions.questionable_type='App\\Models\\Mcq';
+insert into questions(id, book_id, type_id,subtype_id, chapter_no, statement,marks, bise_frequency, created_at, updated_at) 
+select id, book_id, 1, 1, chapter_no, statement,marks, bise_frequency,created_at, updated_at from db.questions where book_id>0 and db.questions.questionable_type='App\\Models\\Mcq';
 
-insert into questions(id, book_id, type_id, subtype_id, chapter_no, statement_en,marks, bise_frequency, created_at, updated_at) 
-select db.questions.id, book_id, 2, 2, chapter_no, statement_en,marks, bise_frequency, created_at, updated_at from db.questions where book_id>0 and db.questions.questionable_type='App\\Models\\Short';
+insert into questions(id, book_id, type_id, subtype_id, chapter_no, statement,marks, bise_frequency, created_at, updated_at) 
+select db.questions.id, book_id, 2, 2, chapter_no, statement,marks, bise_frequency, created_at, updated_at from db.questions where book_id>0 and db.questions.questionable_type='App\\Models\\Short';
 
-insert into questions(id, book_id, type_id, subtype_id, chapter_no, statement_en,marks, bise_frequency, created_at, updated_at) 
-select db.questions.id, book_id, 2, 3, chapter_no, statement_en,marks, bise_frequency,created_at, updated_at from db.questions where book_id>0 and db.questions.questionable_type='App\\Models\\Long';
+insert into questions(id, book_id, type_id, subtype_id, chapter_no, statement,marks, bise_frequency, created_at, updated_at) 
+select db.questions.id, book_id, 2, 3, chapter_no, statement,marks, bise_frequency,created_at, updated_at from db.questions where book_id>0 and db.questions.questionable_type='App\\Models\\Long';
 
 insert into db.mcqs(db.mcqs.id, question_id, choice_a, choice_b, choice_c, choice_d, correct, created_at, updated_at)
 SELECT temp.mcqs.id, temp.questions.id, option_a, option_b, option_c, option_d, answer,temp.mcqs.created_at, temp.mcqs.updated_at from temp.mcqs INNER join temp.questions on temp.mcqs.id=temp.questions.mcq_id;

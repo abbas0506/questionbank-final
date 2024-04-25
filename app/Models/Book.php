@@ -26,6 +26,10 @@ class Book extends Model
     {
         return $this->hasMany(Chapter::class);
     }
+    public function questions()
+    {
+        return $this->hasMany(Question::class);
+    }
     public function  subtypes($type_id)
     {
         if ($this->subject->name_en == 'English')

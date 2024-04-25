@@ -60,7 +60,7 @@ class QuestionController extends Controller
         $request->validate([
             'chapter_no' => 'required|numeric',
             'exercise_no' => 'nullable|numeric',
-            'statement_en' => 'required',
+            'statement' => 'required',
             'marks' => 'required|numeric',
             'bise_frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
@@ -88,7 +88,7 @@ class QuestionController extends Controller
                 'chapter_no' => $chapter->chapter_no,
                 'marks' => $request->marks,
 
-                'statement_en' => $request->statement_en,
+                'statement' => $request->statement,
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
                 'bise_frequency' => $request->bise_frequency,
@@ -186,7 +186,7 @@ class QuestionController extends Controller
         $request->validate([
             'chapter_no' => 'required|numeric',
             'exercise_no' => 'nullable|numeric',
-            'statement_en' => 'required',
+            'statement' => 'required',
             'marks' => 'required|numeric',
             'bise_frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
@@ -199,7 +199,7 @@ class QuestionController extends Controller
         try {
             $question->update([
                 'marks' => $request->marks,
-                'statement_en' => $request->statement_en,
+                'statement' => $request->statement,
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
                 'bise_frequency' => $request->bise_frequency,

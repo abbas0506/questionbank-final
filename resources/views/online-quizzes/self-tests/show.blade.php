@@ -68,7 +68,7 @@ $sr=1;
         <div class="flex flex-col items-start justify-start border border-dashed rounded  bg-slate-50 relative">
             <p class="w-8 font-semibold text-xs text-center text-slate-100 bg-teal-600">{{$sr++}}</p>
             <div class="pt-4 pb-8 px-8 md:px-16 w-full">
-                <p class="font-semibold text-base text-left text-gray-800">{{$question->statement_en}}</p>
+                <p class="font-semibold text-base text-left text-gray-800">{{$question->statement}}</p>
                 <div class="divider my-4"></div>
                 <div id='ans' class="answer flex flex-col mt-4 text-gray-600 gap-y-2">
                     <div class="option flex space-x-3 items-center @if($question->mcq->correct=='a') correct @endif">
@@ -103,7 +103,7 @@ $sr=1;
 
         </div>
         @endforeach
-        <button id='finishQuizButton' type="submit" class="fixed bottom-6 right-6 w-12 h-12 rounded-full btn-teal flex justify-center items-center"> <i class="bi-caret-right"></i></button>
+        <button id='finishQuizButton' type="submit" class="fixed bottom-6 right-6 w-12 h-12 rounded-full btn-green flex justify-center items-center"> <i class="bi-caret-right"></i></button>
     </div>
     <div class="my-8"></div>
 </div>

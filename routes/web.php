@@ -12,6 +12,12 @@ use App\Http\Controllers\Administration\Users\UserManagementController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Collaboration\CollaborationController;
+use App\Http\Controllers\Collaboration\CollaboratorController;
+use App\Http\Controllers\DataEntry\BookChapterController;
+use App\Http\Controllers\DataEntry\DataEntryController;
+use App\Http\Controllers\DataEntry\GradeBookController;
+use App\Http\Controllers\DataEntry\QuestionController as DataEntryQuestionController;
 use App\Http\Controllers\OnlineQuizzes\SelfTestController;
 use App\Http\Middleware\CheckSessionExpiry;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +51,7 @@ Route::resource('passwords', PasswordController::class);
 
 Route::resource('self-tests', SelfTestController::class);
 Route::get('fetchSubTypesByTypeId', [AjaxController::class, 'fetchSubTypesByTypeId']);
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
     Route::get('/', [AdminController::class, 'index']);
     Route::resource('users', UserManagementController::class);
@@ -59,4 +66,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
 
     Route::view('change/password', 'admin.change_password');
     Route::post('change/password', [AuthController::class, 'changePassword'])->name('change.password');
+});
+
+Route::group(['prefix' => 'collaborator', 'as' => 'collaborator.', 'middleware' => ['role:collaborator']], function () {
+    Route::get('/', [CollaboratorController::class, 'index']);
+});
+Route::group(['prefix' => 'operator', 'as' => 'operator.', 'middleware' => ['role:operator']], function () {
+    Route::get('/', [DataEntryController::class, 'index']);
+    Route::resource('grade.books', GradeBookController::class);
+    Route::resource('book.chapters', BookChapterController::class);
+    Route::resource('book.chapter.questions', DataEntryQuestionController::class);
 });

@@ -1,16 +1,6 @@
 @extends('layouts.basic')
 
-@section('header')
-<x-headers.user></x-headers.user>
-@endsection
-
-@section('sidebar')
-<x-sidebars.admin></x-sidebars.admin>
-@endsection
-
-
 @section('body')
-
 <div class="responsive-body">
     @yield('page-content')
 </div>

@@ -33,16 +33,17 @@
 </head>
 
 <body>
-    @yield('header')
+
     @yield('sidebar')
+    @yield('header')
     @yield('body')
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
-  CommonHTML: {
-    linebreaks: {automatic: false}
-  }
-});
-</script>
+            CommonHTML: {
+            linebreaks: {automatic: false}
+            }
+        });
+    </script>
     <script src="{{asset('js/sweetalert2@10.js')}}"></script>
     <script type="module" src="{{asset('js/collapsible.js')}}"></script>
     <script type="module" src="{{asset('js/swiper.js')}}"></script>

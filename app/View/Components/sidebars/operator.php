@@ -11,11 +11,12 @@ class operator extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $page;
+    public function __construct($page)
     {
         //
+        $this->page = $page;
     }
-
     /**
      * Get the view / contents that represent the component.
      */

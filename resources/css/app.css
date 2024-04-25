@@ -6,7 +6,7 @@
 
 @layer base {
     body {
-        @apply bg-white w-screen lg:overflow-x-hidden;
+        @apply w-screen lg:overflow-x-hidden;
     }
     tr th {
         @apply px-2 text-sm text-gray-600 border bg-blue-50 text-center;
@@ -51,9 +51,18 @@
         @apply text-xs text-slate-600;
     }
     
+    /* .header {
+        @apply fixed top-12 md:top-10 left-0 w-full h-16 z-10 bg-transparent transition-all duration-500 ease-in-out;
+    }
+    .header.scrolled {
+        @apply top-0 bg-white border-b-[1px] text-slate-800;
+    } */
     /* header */
     header {
-        @apply w-full fixed top-0 z-20 bg-white text-slate-700;
+        @apply fixed top-0 left-0 right-0 z-10 bg-white text-slate-700 border-b;
+    }
+    header.user-header {
+        @apply fixed top-0 left-0 md:left-48 right-0 z-10 bg-white text-slate-700 border-b;
     }
     header .current-user-dropdown {
         @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
@@ -62,15 +71,70 @@
         @apply text-orange-700;
     }
 
-    aside {
-        @apply fixed top-16 z-10 md:flex flex-col w-60 -translate-x-60 md:translate-x-0 h-full px-4 text-slate-300 transition-all duration-500 ease-in-out;
-    }
-    aside {
-        @apply bg-gradient-to-b from-cyan-800 to-cyan-500;
+/*  */
+    /* sticky header */
+    .sticky-header {
+        @apply fixed flex items-center justify-between top-0 z-50 px-5 md:px-16 w-full h-20 bg-transparent text-slate-800 transition-all duration-500 ease-in-out;
     }
 
-    aside li:hover {
-        @apply text-orange-400;
+    .sticky-header.scrolled-down {
+        @apply bg-white text-slate-800 h-16 border-b;
+    }
+
+    .sticky-header.light {
+        @apply fixed flex items-center justify-between top-0 z-50 px-5 md:px-16 w-full h-20 bg-white text-slate-800 transition-all duration-500 ease-in-out;
+    }
+
+    .sticky-header.light.scrolled-down {
+        @apply bg-white text-slate-800 h-16;
+    }
+
+    .sticky-header .nav-item {
+        @apply font-normal;
+    }
+
+    .sticky-header .nav-item:hover {
+        @apply text-blue-600;
+    }
+
+    /* responsive navbar on mobile screen */
+
+    .sticky-header .navbar {
+        @apply hidden md:block;
+    }
+    .sticky-header .navbar ul {
+        @apply flex flex-row space-x-6 relative bg-transparent w-auto h-auto gap-y-0 transform-none;
+    }
+    .sticky-header .navbar.mobile {
+        @apply block;
+    }
+
+    .sticky-header .navbar.mobile ul {
+        @apply block absolute top-0 left-0 w-full h-screen bg-slate-800 text-slate-200 opacity-90 gap-y-4 p-4 text-center;
+    }
+
+    .sticky-header .navbar.mobile ul li:not(:first-child) {
+        @apply mt-6 mx-0;
+    }
+    .sticky-header .navbar.mobile ul li:nth-child(2) {
+        @apply mt-24;
+    }
+    .sticky-header .navbar.mobile .nav-item {
+        @apply text-slate-300 text-xl;
+    }
+
+    aside {
+        @apply fixed top-0 left-0 z-30 md:flex flex-col w-48 text-slate-400 text-sm -translate-x-60 md:translate-x-0 h-full px-4 transition-all duration-500 ease-in-out;
+    }
+    aside {
+        @apply bg-gray-800;
+    }
+    aside .current-page{
+        @apply text-green-600;
+    }
+
+    aside li:hover i{
+        @apply text-green-600;
     }
     aside.shown {
         @apply translate-x-0;
@@ -81,25 +145,27 @@
 }
 
 @layer components {
-    .responsive-body {
-        @apply md:pl-60 mt-16 bg-slate-100;
+    .responsive-container {
+        @apply md:pl-48 mt-16 w-full bg-slate-100 min-h-screen;
     }
     .container {
-        @apply p-4 md:p-12 min-w-full bg-white;
+        @apply px-5 md:px-8;
     }
-    .custom-container {
-        @apply p-5 md:p-8 md:pt-5 w-full bg-slate-100;
+    .container-light{
+        @apply p-5 md:p-8 bg-white rounded-lg;
     }
-    .content-section {
-        /* @apply mt-4 p-4 md:p-8 bg-white; */
-        @apply mt-5 p-5 md:p-8 md:pt-5  bg-white rounded;
+    .page-title {
+        @apply flex items-center ;
+    }
+    .page-title h3{
+        @apply bg-green-600 rounded-full px-3 py-1 text-slate-200;
     }
     .text-xxs {
         font-size: 0.5rem;
         line-height: 0.75rem;
     }
     .bread-crumb {
-        @apply flex flex-wrap items-center space-x-1 text-sm;
+        @apply flex flex-wrap items-center space-x-1 text-sm py-3;
     }
     .bread-crumb a {
         @apply text-blue-600;
@@ -110,12 +176,7 @@
     .link {
         @apply text-blue-600 hover:text-blue-800 hover:underline hover:underline-offset-4;
     }
-    .header {
-        @apply fixed top-12 md:top-10 left-0 w-full h-16 z-40 bg-transparent transition-all duration-500 ease-in-out;
-    }
-    .header.scrolled {
-        @apply top-0 bg-white border-b-[1px] text-slate-800;
-    }
+    
     .custom-input {
         @apply w-full px-2 py-1 mt-1 text-gray-600 bg-gray-100 border bg-opacity-50 border-slate-300 focus:ring-2 focus:ring-indigo-200 focus:bg-transparent focus:border-indigo-500 text-base outline-none leading-8 transition-colors duration-200 ease-in-out;
     }
@@ -301,57 +362,7 @@
         @apply border-t border-slate-200 border-dashed;
     }
 
-    /*  */
-    /* sticky header */
-    .sticky-header {
-        @apply fixed flex items-center justify-between top-0 z-50 px-5 md:px-16 w-full h-20 bg-transparent text-slate-800 transition-all duration-500 ease-in-out;
-    }
-
-    .sticky-header.scrolled-down {
-        @apply bg-white text-slate-800 h-16 border-b;
-    }
-
-    .sticky-header.light {
-        @apply fixed flex items-center justify-between top-0 z-50 px-5 md:px-16 w-full h-20 bg-white text-slate-800 transition-all duration-500 ease-in-out;
-    }
-
-    .sticky-header.light.scrolled-down {
-        @apply bg-white text-slate-800 h-16;
-    }
-
-    .sticky-header .nav-item {
-        @apply font-normal;
-    }
-
-    .sticky-header .nav-item:hover {
-        @apply text-blue-600;
-    }
-
-    /* responsive navbar on mobile screen */
-
-    .sticky-header .navbar {
-        @apply hidden md:block;
-    }
-    .sticky-header .navbar ul {
-        @apply flex flex-row space-x-6 relative bg-transparent w-auto h-auto gap-y-0 transform-none;
-    }
-    .sticky-header .navbar.mobile {
-        @apply block;
-    }
-
-    .sticky-header .navbar.mobile ul {
-        @apply block absolute top-0 left-0 w-full h-screen bg-slate-800 text-slate-200 opacity-90 gap-y-4 p-4 text-center;
-    }
-
-    .sticky-header .navbar.mobile ul li:not(:first-child) {
-        @apply mt-6 mx-0;
-    }
-    .sticky-header .navbar.mobile ul li:nth-child(2) {
-        @apply mt-24;
-    }
-    .sticky-header .navbar.mobile .nav-item {
-        @apply text-slate-300 text-xl;
-    }
+    
 
     .modal {
         @apply fixed -top-96 -left-96 z-10 transition-all duration-500 ease-in-out;
