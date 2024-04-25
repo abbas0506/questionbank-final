@@ -77,4 +77,12 @@ class Question extends Model
     {
         return $query->whereDate('questions.created_at', today());
     }
+    public function scopeObjective($query)
+    {
+        return $query->where('type_id', 1);
+    }
+    public function scopeSubjective($query)
+    {
+        return $query->where('type_id', 2);
+    }
 }

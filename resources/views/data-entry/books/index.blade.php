@@ -24,7 +24,6 @@
         @endif
 
         <div class="container-light">
-
             <div class="flex flex-wrap gap-4 justify-between items-center">
                 <h2>Grade {{ $grade->grade_no }} <i class="bx bx-chevron-right"></i> Books <i class="bx bx-book"></i></h2>
                 <a href="{{ route('operator.grade.books.create', $grade) }}" class="btn-green rounded">Add Book</a>
