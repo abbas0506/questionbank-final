@@ -23,13 +23,13 @@ class QuestionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($bookId, $chapterId)
+    public function index($bookId, $chapter_no)
     {
         //
         $book = Book::find($bookId);
-        $chapter = Chapter::find($chapterId);
+        $chapter = $book->chapters->where('chapter_no', $chapter_no)->first();
         $questions = Question::where('book_id', $bookId)
-            ->where('chapter_no', $chapter->chapter_no)
+            ->where('chapter_no', $chapter_no)
             ->get();
         return view('data-entry.questions.index', compact('book', 'chapter', 'questions'));
     }

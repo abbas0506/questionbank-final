@@ -15,7 +15,7 @@
             <i class="bx bx-chevron-right"></i>
             <a href="{{route('operator.book.chapters.index', $book)}}">{{ $book->name }}</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('operator.book.chapter.questions.index', [$book, $chapter])}}">Ch. {{ $chapter->chapter_no }}</a>
+            <a href="{{route('operator.book.chapter.questions.index', [$book, $chapter->chapter_no])}}">Ch. {{ $chapter->chapter_no }}</a>
             <i class="bx bx-chevron-right"></i>
             <div>Questions</div>
         </div>
@@ -27,13 +27,12 @@
         <x-message></x-message>
         @endif
 
-        <div class="flex flex-row gap-3">
-            <div class="flex-1">
-                <div class="flex items-center justify-between p-3 rounded-lg bg-green-50">
-                    <div>
-                        <h2>{{ $book->name }}</h2>
-                        <p class="text-sm">Chapter {{$chapter->chapter_no}}</p>
-                    </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- mid panel  -->
+            <div class="md:col-span-2 lg:col-span-3">
+                <div class="flex items-center justify-between p-4 border rounded-lg bg-green-100 border-green-200">
+                    <h2>{{ $book->name }} <i class="bx bx-chevron-right"></i> Chapter {{$chapter->chapter_no}}</h2>
+
                     <div class="flex items-center flex-wrap justify-between gap-x-6">
                         <!-- search -->
                         <div class="flex-1 relative">
@@ -42,7 +41,6 @@
                         </div>
                         <a href="{{route('operator.book.chapter.questions.create',[$book->id, $chapter->id])}}" class="btn-green rounded">New Q.</a>
                     </div>
-
                 </div>
 
                 @php $sr=1; @endphp
@@ -51,11 +49,11 @@
                     <table class="table-fixed w-full mt-3">
                         <thead>
                             <tr class="border-b border-slate-200">
-                                <th class="w-16">Sr</th>
+                                <th class="w-8">Sr</th>
                                 <th class="w-48">Question</th>
-                                <th class="w-24">Type</th>
-                                <th class="w-16">View</th>
-                                <th class="w-24">Action</th>
+                                <th class="w-12">Type</th>
+                                <th class="w-12">View</th>
+                                <th class="w-12">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -93,33 +91,38 @@
                     </table>
                 </div>
             </div>
-            <div class="md:w-1/4">
-                <div class="grid divide-y border rounded-lg p-3">
-                    <h3 class="pb-3">Chapters list</h3>
-                    @php
-                    $colors=config('globals.colors');
-                    $size=count($colors);
-                    $i=0;
-                    @endphp
-                    @foreach($book->chapters->sortBy('display_order') as $chapter)
-                    <a href="{{ route('operator.book.chapter.questions.index', [$book, $chapter]) }}" class="flex flex-row items-center py-2">
-                        <div class="flex justify-center items-center w-10 h-10 bg-{{ $colors[$i % 5] }}-100 text-{{ $colors[$i % 5] }}-600 rounded-lg">
-                            <!-- <i class="bi-layers"></i> -->
-                            {{ $chapter->chapter_no }}
-                        </div>
-                        <div class="flex-1 pl-3">
-                            <!-- <div class="text-[10px] text-slate-600">Chapter {{ $chapter->chapter_no }}</div> -->
-                            <div class="text-xs font-semibold">{{ $chapter->name }}</div>
-                            <div class="text-xs text-slate-600">Qs. {{ $book->questions()->where('chapter_no', $chapter->chapter_no)->count() }}</div>
-                        </div>
-                    </a>
-                    @php
-                    $i++;
-                    @endphp
-                    @endforeach
+            <div class="">
+                <div class="p-4 border rounded-lg">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-sm">Chapters <i class="bx bx-book"></i></h2>
+                        <a href="" class="text-green-700 text-xs font-semibold">manage <i class="bi-gear"></i></a>
+                    </div>
+                    <div class="grid divide-y mt-3">
+
+                        @php
+                        $colors=config('globals.colors');
+                        $size=count($colors);
+                        $i=0;
+                        @endphp
+                        @foreach($book->chapters->sortBy('display_order') as $chapter)
+                        <a href="{{ route('operator.book.chapter.questions.index', [$book, $chapter->chapter_no]) }}" class="flex flex-row items-center py-3">
+                            <div class="flex justify-center items-center w-10 h-10 bg-{{ $colors[$i % 5] }}-100 text-{{ $colors[$i % 5] }}-600 rounded-lg">
+                                <!-- <i class="bi-layers"></i> -->
+                                {{ $chapter->chapter_no }}
+                            </div>
+                            <div class="flex-1 pl-3">
+                                <!-- <div class="text-[10px] text-slate-600">Chapter {{ $chapter->chapter_no }}</div> -->
+                                <div class="text-xs font-semibold">{{ $chapter->name }}</div>
+                                <div class="text-xs text-slate-600">Qs. {{ $book->questions()->where('chapter_no', $chapter->chapter_no)->count() }}</div>
+                            </div>
+                        </a>
+                        @php
+                        $i++;
+                        @endphp
+                        @endforeach
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

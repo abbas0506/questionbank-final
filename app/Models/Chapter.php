@@ -20,6 +20,8 @@ class Chapter extends Model
     }
     public function questions()
     {
-        // return $this->book->questions->where()
+        return Question::where('book_id', $this->book_id)
+            ->where('chapter_no', $this->chapter_no);
+        // ->get();
     }
 }

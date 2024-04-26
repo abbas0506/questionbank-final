@@ -4,8 +4,8 @@
             <img alt="logo" src="{{asset('images/logo/app_logo.png')}}" class="w-8 h-8">
         </a>
     </div>
-    <div class="mt-8 font-bold text-center text-orange-300 uppercase tracking-wide">Exampixel</div>
-    <div class="text-xs text-center text-green-600">data entry panel</div>
+    <div class="mt-8 font-bold text-center uppercase tracking-wide">Exampixel</div>
+    <div class="text-xs text-center text-green-800">Data Entry</div>
     <div class="mt-12">
         <ul class="space-y-2">
             <li>

@@ -38,7 +38,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                     @foreach($book->chapters as $chapter)
-                    <a href="{{ route('operator.book.chapter.questions.index', [$book, $chapter]) }}" class="pallet-box border">
+                    <a href="{{ route('operator.book.chapter.questions.index', [$book, $chapter->chapter_no]) }}" class="pallet-box border">
                         <div class="ico bg-green-100 text-green-600 text-xl">{{ $chapter->chapter_no }}</div>
                         <div class="flex-1 pl-3">
                             <div class="text-xs">{{ $chapter->name }}</div>
@@ -58,7 +58,7 @@
                     $i=0;
                     @endphp
                     @foreach($book->chapters->sortBy('display_order') as $chapter)
-                    <a href="{{ route('operator.book.chapter.questions.index', [$book, $chapter]) }}" class="flex flex-row items-center py-2">
+                    <a href="{{ route('operator.book.chapter.questions.index', [$book, $chapter->chapter_no]) }}" class="flex flex-row items-center py-2">
                         <div class="flex justify-center items-center w-10 h-10 bg-{{ $colors[$i % $size] }}-100 text-{{ $colors[$i % $size] }}-600 rounded-lg">
                             <!-- <i class="bi-layers"></i> -->
                             {{ $chapter->chapter_no }}

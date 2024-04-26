@@ -18,7 +18,6 @@ class GradeBookController extends Controller
     {
         //
         $grade = Grade::find($id);
-        $books = $grade->books;
         return view('data-entry.books.index', compact('grade'));
     }
 

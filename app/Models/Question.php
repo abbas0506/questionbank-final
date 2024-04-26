@@ -44,10 +44,6 @@ class Question extends Model
     {
         return $this->belongsTo(Subtype::class);
     }
-    public function questionable(): MorphTo
-    {
-        return $this->morphTo();
-    }
 
     public function mcq()
     {
@@ -61,9 +57,10 @@ class Question extends Model
     {
         return $this->hasMany(Paraphrasing::class);
     }
+
     public function scopeMcqs($query)
     {
-        return $query->where('question_type', 'mcq');
+        return $query->where('s_type', 'mcq');
     }
     public function scopeShort($query)
     {
@@ -73,6 +70,7 @@ class Question extends Model
     {
         return $query->where('question_type', 'long');
     }
+
     public function scopeToday($query)
     {
         return $query->whereDate('questions.created_at', today());
@@ -84,5 +82,9 @@ class Question extends Model
     public function scopeSubjective($query)
     {
         return $query->where('type_id', 2);
+    }
+    public function scopeChapter($query, $chapter_no)
+    {
+        return $query->where('chapter_no', $chapter_no);
     }
 }

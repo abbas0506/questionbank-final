@@ -59,10 +59,10 @@
     } */
     /* header */
     header {
-        @apply fixed top-0 left-0 right-0 z-10 bg-white text-slate-700 border-b;
+        @apply fixed top-0 left-0 right-0 z-10 bg-white text-slate-700;
     }
     header.user-header {
-        @apply fixed top-0 left-0 md:left-48 right-0 z-10 bg-white text-slate-700 border-b;
+        @apply fixed top-0 left-0 md:left-48 right-0 z-10 bg-white text-slate-700 border-b border-slate-100;
     }
     header .current-user-dropdown {
         @apply flex flex-col absolute w-48 top-12 right-8 z-20 bg-white font-thin drop-shadow-xl hidden;
@@ -124,10 +124,10 @@
     }
 
     aside {
-        @apply fixed top-0 left-0 z-30 md:flex flex-col w-48 text-slate-400 text-sm -translate-x-60 md:translate-x-0 h-full px-4 transition-all duration-500 ease-in-out;
+        @apply fixed top-0 left-0 z-30 md:flex flex-col w-48 text-slate-800 font-medium text-sm -translate-x-60 md:translate-x-0 h-full px-4 transition-all duration-500 ease-in-out;
     }
     aside {
-        @apply bg-slate-700;
+        @apply bg-slate-100;
     }
     aside .current-page{
         @apply text-green-600;
@@ -347,7 +347,7 @@
     }
 
     .pallet-box {
-        @apply flex w-full rounded-lg bg-white drop-shadow-sm p-4;
+        @apply flex w-full rounded-lg bg-white drop-shadow-sm p-4 border;
     }
     .pallet-box .title {
         @apply text-sm text-slate-500 font-thin;

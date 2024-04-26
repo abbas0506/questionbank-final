@@ -62,13 +62,13 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6 rounded">
+        <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
             <!-- middle panel  -->
-            <div class="md:col-span-2">
+            <div class="md:col-span-2 border rounded-lg">
                 <!-- update news  -->
-                <div class="p-4 bg-white">
+                <div class="p-4">
                     <h2>Most Recent</h2>
-                    <div class="divider my-3 border-slate-200"></div>
+                    <!-- <div class="divider my-3 border-slate-200"></div> -->
                     <!-- <div class="grid grid-cols-4">
                         @foreach($grades as $grade)
                         <div class="text-center">
@@ -120,7 +120,7 @@
             <!-- middle panel end -->
             <!-- right side bar starts -->
             <div class="">
-                <div class="bg-white p-4">
+                <div class="bg-white p-4 rounded-lg border">
                     <h2>Profile</h2>
                     <div class="flex flex-col">
                         <div class="flex text-sm mt-4">

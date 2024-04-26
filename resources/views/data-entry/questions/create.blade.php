@@ -15,7 +15,7 @@
             <i class="bx bx-chevron-right"></i>
             <a href="{{route('operator.book.chapters.index', $book)}}">{{ $book->name }}</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('operator.book.chapter.questions.index', [$book, $chapter])}}">Ch. {{ $chapter->chapter_no }}</a>
+            <a href="{{route('operator.book.chapter.questions.index', [$book, $chapter->chapter_no])}}">Ch. {{ $chapter->chapter_no }}</a>
             <i class="bx bx-chevron-right"></i>
             <div>New Q.</div>
         </div>
