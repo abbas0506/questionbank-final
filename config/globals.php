@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'colors' => ['teal', 'green', 'pink', 'orange', 'indigo', 'blue', 'lime', 'emerald', 'cyan', 'sky', 'rose', 'red'],
+    'colors' => ['teal',  'orange', 'green', 'indigo', 'cyan', 'sky', 'pink', 'lime', 'blue',  'emerald', 'rose', 'red'],
 ];

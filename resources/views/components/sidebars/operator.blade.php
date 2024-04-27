@@ -5,7 +5,7 @@
         </a>
     </div>
     <div class="mt-8 font-bold text-center uppercase tracking-wide">Exampixel</div>
-    <div class="text-xs text-center text-green-800">Data Entry</div>
+    <div class="text-xs text-center text-green-600">Data Entry</div>
     <div class="mt-12">
         <ul class="space-y-2">
             <li>
@@ -24,19 +24,12 @@
                     <span class="ml-3">Questions</span>
                 </a>
             </li>
-
-            <!-- <li>
-                <a href="{{route('admin.users.index')}}" class="flex items-center p-2">
-                    <i class="bi bi-person-gear @if($page=='users') current-page @endif"></i>
-                    <span class="ml-3">Books</span>
+            <li>
+                <a href="{{ route('operator.grade.book.management.index',[1,0]) }}" class="flex items-center p-2">
+                    <i class="bi bi-gear @if($page=='management') current-page @endif"></i>
+                    <span class="ml-3">Management</span>
                 </a>
             </li>
-            <li>
-                <a href="{{ route('admin.data.index') }}" class="flex items-center p-2">
-                    <i class="bi bi-database-gear @if($page=='data') current-page @endif"></i>
-                    <span class="ml-3">Chapters</span>
-                </a>
-            </li> -->
         </ul>
     </div>
 </aside>

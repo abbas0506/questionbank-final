@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\DataEntry;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\Grade;
-use App\Models\Question;
 use Illuminate\Http\Request;
 
-class DataEntryController extends Controller
+class GradeBookChapterController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($gradeId, $bookId)
     {
         //
         $grades = Grade::all();
-        $questions = Question::all();
-        return view('data-entry.index', compact('grades', 'questions'));
+        $grade = Grade::find($gradeId);
+        if ($bookId)
+            $book = Book::find($bookId);
+        else
+            $book = $grade->books->first();
+        return view('data-entry.chapters.index', compact('grades', 'grade', 'book'));
     }
 
     /**
@@ -50,6 +54,7 @@ class DataEntryController extends Controller
     public function edit(string $id)
     {
         //
+
     }
 
     /**

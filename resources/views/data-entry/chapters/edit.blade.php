@@ -33,7 +33,7 @@
             </div>
             <div class="flex justify-center items-center mt-12">
                 <!-- page message -->
-                <form action="{{route('admin.book.chapters.update', [$book, $chapter])}}" method='post' class="md:w-2/3">
+                <form action="{{route('operator.book.chapters.update', [$book, $chapter])}}" method='post' class="md:w-2/3">
                     @csrf
                     @method('PATCH')
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

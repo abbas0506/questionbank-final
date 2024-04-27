@@ -1,10 +1,10 @@
 @extends('layouts.basic')
 @section('header')
-<x-headers.user page="Questions" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
+<x-headers.user page="Management" icon="<i class='bi bi-gear'></i>"></x-headers.user>
 @endsection
 
 @section('sidebar')
-<x-sidebars.operator page='questions'></x-sidebars.operator>
+<x-sidebars.operator page='management'></x-sidebars.operator>
 @endsection
 
 @section('body')
@@ -20,18 +20,20 @@ $i=0;
         <div class="bread-crumb">
             <a href="{{url('/')}}">Home</a>
             <i class="bx bx-chevron-right"></i>
-            <div>Books</div>
+            <div>Management</div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <!-- mid panel  -->
             <div class="md:col-span-2 lg:col-span-3">
-                <div class="p-4 border rounded-lg bg-green-100 border-green-200">
+                <div class="p-4 border rounded-lg bg-orange-100 border-orange-200">
+
                     <div class="flex flex-wrap gap-4 justify-between items-cente">
                         <h2>{{ $book->name }} <i class="bx bx-chevron-right"></i> Chapters &nbsp<i class="bi-layers"></i></h2>
                         <a href="{{ route('operator.book.chapters.create', $book) }}" class="btn-green rounded text-sm">Add Chapter</a>
 
                     </div>
+
                 </div>
 
                 <!-- page message -->
@@ -44,17 +46,25 @@ $i=0;
                 <div class="mt-4">
                     <div class="grid text-sm">
                         @foreach($book->chapters as $chapter)
-                        <a href="{{route('operator.book.chapter.questions.index', [$chapter->book_id, $chapter->chapter_no])}}" class="flex flex-row items-center text-slate-600 p-2 odd:bg-slate-100">
+                        <div class="flex flex-row items-center text-slate-600 p-2 odd:bg-slate-100">
                             <div class="flex-1">{{ $chapter->chapter_no}}. &nbsp {{ $chapter->name }} </div>
-                            <div class="text-xs mr-4">
-                                @if($chapter->questions()->today()->count()>0)
-                                {{ $chapter->questions()->today()->count() }}<i class="bi-arrow-up"></i>
-                                @endif
+                            <div class="flex justify-center items-center space-x-3">
+                                <a href="{{route('operator.book.chapters.edit', [$book,$chapter])}}">
+                                    <i class="bx bx-pencil text-green-600"></i>
+                                </a>
+                                <span class="text-slate-400">|</span>
+
+                                <form action="{{route('operator.book.chapters.destroy',[$book,$chapter])}}" method="POST" onsubmit="return confirmDel(event)">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-transparent p-0 border-0" @disabled($chapter->questions()->count())>
+                                        <i class="bx bx-trash text-red-600"></i>
+                                    </button>
+                                </form>
                             </div>
-                            <div class="flex items-center justify-center w-6 h-6 bg-orange-400 text-slate-50 text-xs rounded">
-                                {{ $chapter->questions()->count()}}
-                            </div>
-                        </a>
+
+                        </div>
+
                         @endforeach
                     </div>
                 </div>
@@ -68,11 +78,11 @@ $i=0;
                     <div class="flex items-center space-x-3 mt-3">
                         @foreach($grades as $activeGrade)
                         @if($activeGrade->id==$grade->id)
-                        <a href="{{route('operator.grade.book.chapters.index',[$activeGrade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-green-800 text-slate-50">
+                        <a href="{{route('operator.grade.book.management.index',[$activeGrade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-green-800 text-slate-50">
                             {{ $activeGrade->grade_no }}
                         </a>
                         @else
-                        <a href="{{route('operator.grade.book.chapters.index',[$activeGrade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-slate-100 text-slate-600">
+                        <a href="{{route('operator.grade.book.management.index',[$activeGrade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-slate-100 text-slate-600">
                             {{ $activeGrade->grade_no }}
                         </a>
                         @endif
@@ -84,12 +94,11 @@ $i=0;
                 <div class="p-4 border rounded-lg mt-3">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm">Books <i class="bx bx-book"></i></h2>
-                        <a href="" class="text-green-700 text-xs font-semibold">manage <i class="bi-gear"></i></a>
                     </div>
                     <div class="grid divide-y mt-3">
                         @foreach($grade->books->sortBy(' display_order') as $book)
 
-                        <a href="{{route('operator.grade.book.chapters.index',[$grade, $book])}}" class="flex items-center text-xs py-3">
+                        <a href="{{route('operator.grade.book.management.index',[$grade, $book])}}" class="flex items-center text-xs py-3">
                             <div class="flex justify-center items-center w-8 h-8 rounded bg-{{ $colors[$i % 5] }}-100 text-{{ $colors[$i % 5] }}-600"><i class="bx bx-book text-sm"></i></div>
                             <div class="flex-1 pl-3 gap-y-1">
                                 <div class="font-semibold">{{ $book->name }}</div>

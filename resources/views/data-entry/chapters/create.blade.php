@@ -26,9 +26,9 @@
         <x-message></x-message>
         @endif
 
-        <div class="container-light">
+        <div class="container-light bg-slate-100">
             <div class="flex items-center">
-                <h3 class="text-green-600 bg-green-100 px-3 py-1 rounded-full">New Chapter <i class="bx bx-plus"></i></h3>
+                <h3 class="bg-green-800 text-white px-3 py-1 rounded-full">New Chapter</h3>
             </div>
             <div class="flex justify-center items-center mt-12">
                 <!-- page message -->

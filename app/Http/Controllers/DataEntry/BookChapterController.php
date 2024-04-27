@@ -42,10 +42,16 @@ class BookChapterController extends Controller
         ]);
 
         $request->merge(['book_id' => $bookId]);
-
+        $book = Book::find($bookId);
         try {
-            Chapter::create($request->all());
-            return redirect()->route('operator.book.chapters.index', $bookId)->with('success', 'Successfully added');;
+            // 
+
+            if ($book->chapters()->where('chapter_no', $request->chapter_no)->count() == 0) {
+                Chapter::create($request->all());
+                return redirect()->route('operator.grade.book.chapters.index', [$book->grade, $book])->with('success', 'Successfully added');;
+            } else {
+                return redirect()->back()->with(['warning' => 'Chapter already exists']);
+            }
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }
@@ -85,7 +91,7 @@ class BookChapterController extends Controller
 
         try {
             $chapter->update($request->all());
-            return redirect()->route('operator.book.chapters.index', $bookId)->with('success', 'Successfully updated');;
+            return redirect()->route('operator.grade.book.management.index', [$chapter->book->grade, $bookId])->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }

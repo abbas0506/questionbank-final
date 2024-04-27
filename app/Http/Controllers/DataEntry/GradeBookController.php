@@ -14,11 +14,16 @@ class GradeBookController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index($gradeId, $bookId)
     {
         //
-        $grade = Grade::find($id);
-        return view('data-entry.books.index', compact('grade'));
+        $grades = Grade::all();
+        $grade = Grade::find($gradeId);
+        if ($bookId)
+            $book = Book::find($bookId);
+        else
+            $book = $grade->books->first();
+        return view('data-entry.management.index', compact('grades', 'grade', 'book'));
     }
 
     /**

@@ -15,7 +15,9 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Collaboration\CollaborationController;
 use App\Http\Controllers\Collaboration\CollaboratorController;
 use App\Http\Controllers\DataEntry\BookChapterController;
+use App\Http\Controllers\DataEntry\BookChapterManagementController;
 use App\Http\Controllers\DataEntry\DataEntryController;
+use App\Http\Controllers\DataEntry\GradeBookChapterController;
 use App\Http\Controllers\DataEntry\GradeBookController;
 use App\Http\Controllers\DataEntry\QuestionController as DataEntryQuestionController;
 use App\Http\Controllers\OnlineQuizzes\SelfTestController;
@@ -75,5 +77,7 @@ Route::group(['prefix' => 'operator', 'as' => 'operator.', 'middleware' => ['rol
     Route::get('/', [DataEntryController::class, 'index']);
     Route::resource('grade.books', GradeBookController::class);
     Route::resource('book.chapters', BookChapterController::class);
+    Route::resource('grade.book.chapters', GradeBookChapterController::class);
     Route::resource('book.chapter.questions', DataEntryQuestionController::class);
+    Route::resource('grade.book.management', GradeBookController::class);
 });
