@@ -13,11 +13,12 @@
         <div class="bread-crumb">
             <a href="{{url('/')}}">Home</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('operator.book.chapters.index', $book)}}">{{ $book->name }}</a>
+            <a href="{{route('operator.grade.book.chapters.index', [$book->grade,0])}}">Books</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('operator.book.chapter.questions.index', [$book, $chapter->chapter_no])}}">Ch. {{ $chapter->chapter_no }}</a>
+            <div>{{ $book->name }}</div>
             <i class="bx bx-chevron-right"></i>
-            <div>Questions</div>
+            <div>Ch. {{ $chapter->chapter_no }}</div>
+
         </div>
 
         <!-- page message -->
@@ -113,7 +114,7 @@
                             <div class="flex-1 pl-3">
                                 <!-- <div class="text-[10px] text-slate-600">Chapter {{ $chapter->chapter_no }}</div> -->
                                 <div class="text-xs font-semibold">{{ $chapter->name }}</div>
-                                <div class="text-xs text-slate-600">Qs. {{ $book->questions()->where('chapter_no', $chapter->chapter_no)->count() }}</div>
+                                <div class="text-xs text-slate-600">{{ $book->questions()->where('chapter_no', $chapter->chapter_no)->count() }} questions</div>
                             </div>
                         </a>
                         @php
