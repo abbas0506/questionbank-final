@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>ghss-cb</title>
+    <title>exampixel</title>
     <link rel="icon" href="{{ asset('/images/logo/logo-light.png') }}">
     <!-- Fonts -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -55,6 +55,23 @@
     </script> -->
     @yield('script')
     @yield('footer')
+
+    <div class="responsive-body">
+        @yield('page-content')
+    </div>
+
+    <script type="module">
+        $('#menu').click(function() {
+            $("aside").toggleClass('shown');
+        });
+
+        $('.responsive-container').click(function(event) {
+            var box = $('#sidebar');
+            if (!box.is(event.target) && box.has(event.target).length === 0) {
+                box.removeClass('shown');
+            }
+        })
+    </script>
 </body>
 
 </html>

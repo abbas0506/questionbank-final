@@ -5,6 +5,7 @@ namespace App\Http\Controllers\DataEntry;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Chapter;
+use App\Models\Grade;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,9 @@ class BookChapterController extends Controller
     public function index($bookId)
     {
         //
+        $grades = Grade::all();
         $book = Book::find($bookId);
-        return view('data-entry.chapters.index', compact('book'));
+        return view('data-entry.chapters.index', compact('grades', 'book'));
     }
 
     /**
@@ -91,7 +93,7 @@ class BookChapterController extends Controller
 
         try {
             $chapter->update($request->all());
-            return redirect()->route('operator.grade.book.management.index', [$chapter->book->grade, $bookId])->with('success', 'Successfully updated');;
+            return redirect()->route('operator.book.chapters.index', $chapter->book_id)->with('success', 'Successfully updated');;
         } catch (Exception $ex) {
             return redirect()->back()->withErrors($ex->getMessage());
         }

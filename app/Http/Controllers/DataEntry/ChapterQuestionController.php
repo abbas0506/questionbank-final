@@ -5,31 +5,26 @@ namespace App\Http\Controllers\DataEntry;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Chapter;
-use App\Models\Comprehension;
-use App\Models\Grade;
-use App\Models\Mcq;
 use App\Models\Question;
-use App\Models\Subject;
 use App\Models\Subtype;
 use App\Models\Type;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
-class QuestionController extends Controller
+class ChapterQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($bookId, $chapter_no)
+    public function index($chapterId)
     {
         //
-        $book = Book::find($bookId);
-        $chapter = $book->chapters->where('chapter_no', $chapter_no)->first();
-        $questions = Question::where('book_id', $bookId)
-            ->where('chapter_no', $chapter_no)
+        $chapter = Chapter::find($chapterId);
+        $book = $chapter->book;
+        $questions = Question::where('book_id', $book->id)
+            ->where('chapter_no', $chapter->chapter_no)
             ->get();
         return view('data-entry.questions.index', compact('book', 'chapter', 'questions'));
     }
@@ -37,28 +32,23 @@ class QuestionController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($bookId, $chapterId)
+    public function create($chapterId)
     {
         //
-        $book = Book::find($bookId);
         $chapter = Chapter::find($chapterId);
-        $questions = Question::where('book_id', $bookId)
-            ->where('chapter_no', $chapter->chapter_no)
-            ->get();
-
         $types = Type::all();
-        $subtypes = $book->subtypes(1); //objectives
-        return view('data-entry.questions.create', compact('book', 'chapter', 'questions', 'types', 'subtypes'));
+        $subtypes = $chapter->book->subtypes(1); //objectives
+        return view('data-entry.questions.create', compact('chapter', 'types', 'subtypes'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $bookId, $chapterId)
+    public function store(Request $request, $chapterId)
     {
         //
         $request->validate([
-            'chapter_no' => 'required|numeric',
+            // 'chapter_no' => 'required|numeric',
             'exercise_no' => 'nullable|numeric',
             'statement' => 'required',
             'marks' => 'required|numeric',
@@ -67,22 +57,16 @@ class QuestionController extends Controller
             'type_id' => 'required',
         ]);
 
-        $book = Book::find($bookId);
         $chapter = Chapter::find($chapterId);
-        $request->merge([
-            'book_id' => $bookId,
-            'is_approved' => false,
-            'user_id' => Auth::user()->id,
-        ]);
+        $book = $chapter->book;
 
         DB::beginTransaction();
 
         try {
             $subtype = Subtype::find($request->subtype_id);
 
-            $question = Question::create([
+            $question = $book->questions()->create([
                 'user_id' => Auth::user()->id,
-                'book_id' => $bookId,
                 'type_id' => $request->type_id,
                 'subtype_id' => $request->subtype_id,
                 'chapter_no' => $chapter->chapter_no,
@@ -156,31 +140,29 @@ class QuestionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($bookId, $chapterId, $questionId)
+    public function show($chapterId, $questionId)
     {
         //
-        $book = Book::find($bookId);
         $chapter = Chapter::find($chapterId);
         $question = Question::find($questionId);
-        return view('data-entry.questions.show', compact('book', 'chapter', 'question'));
+        return view('data-entry.questions.show', compact('chapter', 'question'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($bookId, $chapterId, $questionId)
+    public function edit($chapterId, $questionId)
     {
         //
-        $book = Book::find($bookId);
         $chapter = Chapter::find($chapterId);
         $question = Question::find($questionId);
-        return view('data-entry.questions.edit', compact('book', 'chapter', 'question'));
+        return view('data-entry.questions.edit', compact('chapter', 'question'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $bookId, $chapterId, $questionId)
+    public function update(Request $request, $chapterId, $questionId)
     {
         //
         $request->validate([
@@ -244,7 +226,7 @@ class QuestionController extends Controller
 
             // commit if all ok
             DB::commit();
-            return redirect()->back()->with(
+            return redirect()->route('operator.chapter.questions.index', $chapterId)->with(
                 [
                     'success' => 'Successfully updated',
                 ]
@@ -259,7 +241,7 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($bookId, $chapterId, $questionId)
+    public function destroy($chapterId, $questionId)
     {
         //
         try {

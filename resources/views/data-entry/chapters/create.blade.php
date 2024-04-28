@@ -14,7 +14,7 @@
         <div class="bread-crumb">
             <a href="{{url('/')}}">Home</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('operator.book.chapters.index', $book)}}">{{ $book->name }}</a>
+            <a href="{{route('operator.grade.book.chapters.index', [$book->grade,$book])}}">{{ $book->name }}</a>
             <i class="bx bx-chevron-right"></i>
             <div>New Chapter</div>
         </div>

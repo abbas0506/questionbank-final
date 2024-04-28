@@ -11,7 +11,7 @@
 
 @php
 $colors=config('globals.colors');
-$size=count($colors);
+$activeBook=$book;
 $i=0;
 @endphp
 
@@ -20,7 +20,9 @@ $i=0;
         <div class="bread-crumb">
             <a href="{{url('/')}}">Home</a>
             <i class="bx bx-chevron-right"></i>
-            <div>Books</div>
+            <a href="{{route('operator.grade.books.index', $book->grade)}}">Books</a>
+            <i class="bx bx-chevron-right"></i>
+            <div>{{ $book->name }}</div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -43,18 +45,35 @@ $i=0;
 
                 <div class="mt-4">
                     <div class="grid text-sm">
-                        @foreach($book->chapters as $chapter)
-                        <a href="{{route('operator.book.chapter.questions.index', [$chapter->book_id, $chapter->chapter_no])}}" class="flex flex-row items-center text-slate-600 p-2 odd:bg-slate-100">
-                            <div class="flex-1">{{ $chapter->chapter_no}}. &nbsp {{ $chapter->name }} </div>
-                            <div class="text-xs mr-4">
-                                @if($chapter->questions()->today()->count()>0)
-                                {{ $chapter->questions()->today()->count() }}<i class="bi-arrow-up"></i>
-                                @endif
+                        @foreach($book->chapters->sortBy('chapter_no') as $chapter)
+                        <div class="flex items-center odd:bg-slate-100 space-x-3">
+                            <a href="{{route('operator.chapter.questions.index', $chapter)}}" class="flex flex-1 items-center justify-between p-3 space-x-2">
+                                <div class="flex-1">{{ $chapter->chapter_no}}. &nbsp {{ $chapter->name }} </div>
+                                <div class="text-xs">
+                                    @if($chapter->questions()->today()->count()>0)
+                                    {{ $chapter->questions()->today()->count() }}<i class="bi-arrow-up"></i>
+                                    @endif
+                                </div>
+                                <div class="text-xs">
+                                    {{ $chapter->questions()->count()}} <i class="bi-question-circle"></i>
+                                </div>
+                            </a>
+                            <div class="flex items-center space-x-3 p-2 rounded">
+                                <!-- <a href="" class="">
+                                    <i class="bx bx-show-alt"></i>
+                                </a> -->
+                                <a href="{{route('operator.book.chapters.edit', [$chapter->book, $chapter])}}" class="text-green-600">
+                                    <i class="bx bx-pencil"></i>
+                                </a>
+                                <form action="{{route('operator.book.chapters.destroy',[$book,$chapter])}}" method="POST" onsubmit="return confirmDel(event)">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-transparent p-0 border-0" @disabled($chapter->questions()->count())>
+                                        <i class="bx bx-trash text-red-600"></i>
+                                    </button>
+                                </form>
                             </div>
-                            <div class="flex items-center justify-center w-6 h-6 bg-orange-400 text-slate-50 text-xs rounded">
-                                {{ $chapter->questions()->count()}}
-                            </div>
-                        </a>
+                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -65,15 +84,16 @@ $i=0;
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm">Grades <i class="bi-mortarboard-fill"></i></h2>
                     </div>
+
                     <div class="flex items-center space-x-3 mt-3">
-                        @foreach($grades as $activeGrade)
-                        @if($activeGrade->id==$grade->id)
-                        <a href="{{route('operator.grade.book.chapters.index',[$activeGrade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-green-800 text-slate-50">
-                            {{ $activeGrade->grade_no }}
+                        @foreach($grades as $grade)
+                        @if($grade->id==$book->grade_id)
+                        <a href="#" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-green-800 text-slate-50">
+                            {{ $grade->grade_no }}
                         </a>
                         @else
-                        <a href="{{route('operator.grade.book.chapters.index',[$activeGrade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-slate-100 text-slate-600">
-                            {{ $activeGrade->grade_no }}
+                        <a href="{{route('operator.grade.book.chapters.index',[$grade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-slate-100 text-slate-600">
+                            {{ $grade->grade_no }}
                         </a>
                         @endif
                         @php $i++; @endphp
@@ -84,24 +104,29 @@ $i=0;
                 <div class="p-4 border rounded-lg mt-3">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm">Books <i class="bx bx-book"></i></h2>
-                        <a href="" class="text-green-700 text-xs font-semibold">manage <i class="bi-gear"></i></a>
+                        <div class="flex items-center justify-center rounded-full px-2 bg-green-200  text-xs font-semibold"> {{ $activeBook->grade->books->count() }}</i></div>
                     </div>
                     <div class="grid divide-y mt-3">
-                        @foreach($grade->books->sortBy(' display_order') as $book)
-
+                        @foreach($activeBook->grade->books->sortBy(' display_order') as $book)
                         <a href="{{route('operator.grade.book.chapters.index',[$grade, $book])}}" class="flex items-center text-xs py-3">
                             <div class="flex justify-center items-center w-8 h-8 rounded bg-{{ $colors[$i % 5] }}-100 text-{{ $colors[$i % 5] }}-600"><i class="bx bx-book text-sm"></i></div>
-                            <div class="flex-1 pl-3 gap-y-1">
-                                <div class="font-semibold">{{ $book->name }}</div>
-                                <div class="flex space-x-5 text-slate-600 text-[10px]">
-                                    <div> <i class="bi-question-circle"></i> {{ $book->questions->count() }}</div>
-                                    <div> <i class="bi-layers"></i> {{ $book->chapters->count() }} chapters</div>
-                                    <div class="">
-                                        @if($book->questions()->today()->count()>0)
-                                        {{ $book->questions()->today()->count() }}<i class="bi-arrow-up"></i>
-                                        @endif
+                            <div class="flex justify-between items-center flex-1 pl-3 gap-y-1">
+                                <div>
+                                    <div class="font-semibold">{{ $book->name }}</div>
+                                    <div class="flex space-x-5 text-slate-600 text-[10px]">
+                                        <div> <i class="bi-question-circle"></i> {{ $book->questions->count() }}</div>
+                                        <div> <i class="bi-layers"></i> {{ $book->chapters->count() }} chapters</div>
+                                        <div class="">
+                                            @if($book->questions()->today()->count()>0)
+                                            {{ $book->questions()->today()->count() }}<i class="bi-arrow-up"></i>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
+                                @if($activeBook->id==$book->id)
+                                <div class="w-2 h-2  bg-red-600 rounded-full">
+                                </div>
+                                @endif
                             </div>
                         </a>
                         @php $i++; @endphp
