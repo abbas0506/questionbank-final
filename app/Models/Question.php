@@ -58,19 +58,10 @@ class Question extends Model
         return $this->hasMany(Paraphrasing::class);
     }
 
-    public function scopeMcqs($query)
+    public function chapterId()
     {
-        return $query->where('s_type', 'mcq');
+        return $this->book->chapters->where('chapter_no', $this->chapter_no)->first()->id;
     }
-    public function scopeShort($query)
-    {
-        return $query->where('question_type', 'short');
-    }
-    public function scopeLong($query)
-    {
-        return $query->where('question_type', 'long');
-    }
-
     public function scopeToday($query)
     {
         return $query->whereDate('questions.created_at', today());

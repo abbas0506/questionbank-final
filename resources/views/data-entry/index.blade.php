@@ -43,9 +43,9 @@ $colors=config('globals.colors');
             @endforeach
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 mt-8 gap-4">
             <!-- middle panel  -->
-            <div class="md:col-span-2 border rounded-lg">
+            <div class="md:col-span-3 border rounded-lg">
                 <div class="p-4">
                     <h2>Most Recent</h2>
                     <div class="overflow-x-auto mt-4">
@@ -53,8 +53,8 @@ $colors=config('globals.colors');
                             <thead>
                                 <tr class="">
                                     <th class="w-10">Sr</th>
-                                    <th class='w-60'>Question</th>
-                                    <th class="w-24">Subject</th>
+                                    <th class='w-60 text-left'>Question</th>
+                                    <th class="w-24 text-left">Subject</th>
                                     <th class='w-16'>Action</th>
                                 </tr>
                             </thead>
@@ -66,7 +66,20 @@ $colors=config('globals.colors');
                                     <td>{{$sr++}}</td>
                                     <td class="text-left">{{ $question->statement }}</td>
                                     <td class="text-left">{{ $question->book->name }}</td>
-                                    <td><a href=""><i class="bx bx-pencil"></i></a></td>
+                                    <td>
+                                        <div class="flex justify-center items-center space-x-2">
+                                            <a href="{{route('operator.chapter.questions.edit', [$question->chapterId(), $question])}}">
+                                                <i class="bx bx-pencil text-green-600"></i>
+                                            </a>
+                                            <form action="{{route('operator.chapter.questions.destroy', [$question->chapterId(), $question])}}" method="POST" onsubmit="return confirmDel(event)">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg-transparent p-0 border-0">
+                                                    <i class="bx bx-trash text-red-600"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -102,4 +115,26 @@ $colors=config('globals.colors');
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+    function confirmDel(event) {
+        event.preventDefault(); // prevent form submit
+        var form = event.target; // storing the form
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                form.submit();
+            }
+        })
+    }
+</script>
 @endsection
