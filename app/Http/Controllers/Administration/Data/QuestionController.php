@@ -62,7 +62,7 @@ class QuestionController extends Controller
             'exercise_no' => 'nullable|numeric',
             'statement' => 'required',
             'marks' => 'required|numeric',
-            'bise_frequency' => 'required|numeric',
+            'frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
             'type_id' => 'required',
         ]);
@@ -91,7 +91,7 @@ class QuestionController extends Controller
                 'statement' => $request->statement,
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
-                'bise_frequency' => $request->bise_frequency,
+                'frequency' => $request->frequency,
                 'is_approved' => false,
             ]);
 
@@ -140,7 +140,7 @@ class QuestionController extends Controller
                     'subtype_id' => $request->subtype_id,
                     'marks' => $request->marks,
                     'exercise_no' => $request->exercise_no,
-                    'bise_frequency' => $request->bise_frequency,
+                    'frequency' => $request->frequency,
                     'is_conceptual' => $request->is_conceptual,
                     'subtypes' => $book->subtypes($request->type_id),
                     'success' => 'Successfully added',
@@ -188,7 +188,7 @@ class QuestionController extends Controller
             'exercise_no' => 'nullable|numeric',
             'statement' => 'required',
             'marks' => 'required|numeric',
-            'bise_frequency' => 'required|numeric',
+            'frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
         ]);
 
@@ -202,7 +202,7 @@ class QuestionController extends Controller
                 'statement' => $request->statement,
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
-                'bise_frequency' => $request->bise_frequency,
+                'frequency' => $request->frequency,
             ]);
 
             // mcqs

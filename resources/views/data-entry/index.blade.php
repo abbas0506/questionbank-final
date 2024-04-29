@@ -31,7 +31,7 @@ $colors=config('globals.colors');
                 <div class="flex-1 pl-3">
                     <h2>{{ $grade->name }}</h2>
                     <div class="flex items-center space-x-4 text-slate-600 text-xs">
-                        <div><i class="bi-question-circle"></i> {{ $grade->questions->count() }}</div>
+                        <div><i class="bi-question-circle"></i> {{ $grade->questions()->count() }}</div>
                         <div><i class="bi-book"></i> {{ $grade->books->count() }}</div>
                         @if($grade->questions()->today()->count())
                         <div><i class="bi-arrow-up"></i>{{ $grade->questions()->today()->count() }}</div>
@@ -65,13 +65,13 @@ $colors=config('globals.colors');
                                 @foreach($questions->sortByDesc('id')->take(20) as $question) <tr class="tr text-sm">
                                     <td>{{$sr++}}</td>
                                     <td class="text-left">{{ $question->statement }}</td>
-                                    <td class="text-left">{{ $question->book->name }}</td>
+                                    <td class="text-left">{{ $question->chapter->book->name }}</td>
                                     <td>
                                         <div class="flex justify-center items-center space-x-2">
-                                            <a href="{{route('operator.chapter.questions.edit', [$question->chapterId(), $question])}}">
+                                            <a href="{{route('operator.chapter.questions.edit', [$question->chapter, $question])}}">
                                                 <i class="bx bx-pencil text-green-600"></i>
                                             </a>
-                                            <form action="{{route('operator.chapter.questions.destroy', [$question->chapterId(), $question])}}" method="POST" onsubmit="return confirmDel(event)">
+                                            <form action="{{route('operator.chapter.questions.destroy', [$question->chapter, $question])}}" method="POST" onsubmit="return confirmDel(event)">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="bg-transparent p-0 border-0">

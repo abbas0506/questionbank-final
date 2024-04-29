@@ -24,12 +24,9 @@ class DatabaseSeeder extends Seeder
             GradeSeeder::class,
             SubjectSeeder::class,
             BookSeeder::class,
-            // ChapterSeeder::class,
-            // TopicSeeder::class,
             TypeSeeder::class,
             SubtypeSeeder::class,
             UserSeeder::class,
-            // QuestionSeeder::class,
         ]);
     }
 }

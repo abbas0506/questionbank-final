@@ -28,23 +28,11 @@ class Book extends Model
     }
     public function questions()
     {
-        return $this->hasMany(Question::class);
+        return $this->hasManyThrough(Question::class, Chapter::class);
     }
     public function  subtypes($type_id)
     {
-        if ($this->subject->name_en == 'English')
-            $subtypes = Subtype::where('type_id',  $type_id)
-                ->where('language', 'en')
-                ->get();
-        else if ($this->subject->name_en == 'Urdu')
-            $subtypes = Subtype::where('type_id', $type_id)
-                ->where('language', 'ur')
-                ->get();
-        else
-            $subtypes = Subtype::where('type_id',  $type_id)
-                ->whereNull('language')
-                ->get();
-
+        $subtypes = $this->subject->subtypes()->where('type_id', $type_id);
         return $subtypes;
     }
 }

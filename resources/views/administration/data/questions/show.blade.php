@@ -102,7 +102,7 @@
 
                     <div class="grid gap-y-1">
                         <label for="">Bise Frequency</label>
-                        <div>{{ $question->bise_frequency }}</div>
+                        <div>{{ $question->frequency }}</div>
                     </div>
 
                 </div>

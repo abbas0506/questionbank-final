@@ -40,7 +40,7 @@
             @endif
             <form action="{{route('operator.chapter.questions.store', $chapter)}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
                 @csrf
-                <input type="hidden" id='book_id' value="{{ $chapter->book->id }}">
+                <input type="hidden" id='book_id' value="{{$chapter->book_id}}">
                 <div class="grid gap-y-1">
                     <label>Question Type</label>
                     <select name="type_id" id="type_id" class="custom-input-borderless text-sm">
@@ -159,7 +159,7 @@
 
                 <div class="grid gap-y-1">
                     <label for="">Bise Frequency</label>
-                    <input type="number" name="bise_frequency" value="1" min=0 class="custom-input-borderless">
+                    <input type="number" name="frequency" value="1" min=0 class="custom-input-borderless">
                 </div>
                 <input type="hidden" name='chapter_no' value="{{ $chapter->chapter_no }}">
                 <div class="text-right col-span-full">
@@ -175,16 +175,14 @@
 <script type="module">
     $(document).ready(function() {
         // show or hide on page load
-        if ($('#type_id').val() == 1) {
-            $('.questionable').hide()
+        $('.questionable').hide()
+
+        if ($('#type_id').val() == 1)
             $('#divMcq').show()
-        } else if ($('#subtype_id').val() == 18) {
-            $('.questionable').hide()
+        else if ($('#subtype_id').val() == 18)
             $('#divParaphrasing').show()
-        } else if ($('#subtype_id').val() == 19) {
-            $('.questionable').hide()
+        else if ($('#subtype_id').val() == 19)
             $('#divComprehension').show()
-        }
 
 
         $('#statement').bind('input propertychange', function() {
@@ -231,21 +229,19 @@
         });
 
         $('#subtype_id').change(function() {
-            // paraphrasing
-            if ($(this).val() == 18) {
-                $('.questionable').hide()
-                $('#divParaphrasing').show()
-            } else {
-                $('#divParaphrasing').hide()
-            }
 
-            // if comprehension option 
-            if ($(this).val() == 19) {
-                $('.questionable').hide()
+            $('.questionable').hide()
+            // paraphrasing
+
+            //objective
+            if ($('#type_id').val() == 1)
+                $('#divMcq').show()
+            else if ($(this).val() == 18)
+                $('#divParaphrasing').show()
+            // comprehensions 
+            else if ($(this).val() == 19)
                 $('#divComprehension').show()
-            } else {
-                $('#divComprehension').hide()
-            }
+
 
         })
 

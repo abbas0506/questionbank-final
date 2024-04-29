@@ -15,13 +15,16 @@
                     @else
                     <i class="bi-house"></i>
                     @endif
-                    <span class="ml-3">Home</span>
+                    <span class="ml-2">Home</span>
                 </a>
             </li>
             <li>
-                <a href="{{route('operator.grade.books.index',1)}}" class="flex items-center p-2">
-                    <i class="bi bi-database-gear @if($page=='questions') current-page @endif"></i>
-                    <span class="ml-3">Questions</span>
+                <a href="{{route('operator.grade.books.index',1)}}" class="flex items-center justify-between p-2">
+                    <div>
+                        <i class="bi bi-database-gear @if($page=='questions') current-page @endif"></i>
+                        <span class="ml-2">Questions </span>
+                    </div>
+                    <div class="text-xs px-1 rounded-full bg-orange-400 text-slate-100 ">{{ App\Models\Question::all()->count() }}</div>
                 </a>
             </li>
         </ul>

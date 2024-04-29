@@ -18,8 +18,21 @@ class Grade extends Model
     {
         return $this->hasMany(Book::class);
     }
+    public function chapters()
+    {
+        return $this->hasManyThrough(Chapter::class, Book::class);
+    }
+
     public function questions()
     {
-        return $this->hasManyThrough(Question::class, Book::class);
+
+        $chapterIds = $this->chapters()->pluck('chapters.id');
+        $questions = Question::whereIn('chapter_id', $chapterIds);
+        return $questions;
     }
+
+    // public function questions()
+    // {
+    //     return $this->whereRelation('books.chapters.questions', 'id');
+    // }
 }

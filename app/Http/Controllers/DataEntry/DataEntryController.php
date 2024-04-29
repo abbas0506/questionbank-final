@@ -17,6 +17,8 @@ class DataEntryController extends Controller
         //
         $grades = Grade::all();
         $questions = Question::all();
+        $grade = Grade::find(2);
+
         return view('data-entry.index', compact('grades', 'questions'));
     }
 

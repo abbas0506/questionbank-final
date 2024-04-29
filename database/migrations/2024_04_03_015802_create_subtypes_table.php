@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('subtypes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('subject_id')->nullable()->constrained()->cascadeOnDelete();
             $table->string('name', 50);
-            $table->string('language', 2)->nullable();
             $table->string('tagname', 50)->nullable();
             $table->timestamps();
         });

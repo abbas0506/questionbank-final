@@ -23,7 +23,7 @@
         <div class="flex flex-wrap items-center space-x-6 mt-5">
             <h3 class="bg-green-800 text-green-100 px-3 py-1 rounded-full">Question</h3>
             <div class="flex items-center space-x-1 ">
-                <h3>{{ $question->book->name }}</h3>
+                <h3>{{ $question->chapter->book->name }}</h3>
                 <i class="bx bx-chevron-right"></i>
                 <p class="text-sm">Chapter {{ $chapter->chapter_no }}</p>
             </div>
@@ -92,7 +92,7 @@
 
                 <div class="grid gap-y-1">
                     <label for="">Bise Frequency</label>
-                    <div>{{ $question->bise_frequency }}</div>
+                    <div>{{ $question->frequency }}</div>
                 </div>
 
             </div>

@@ -11,31 +11,27 @@ class Question extends Model
     use HasFactory;
     protected $fillable = [
         'user_id', //owner id
-        'book_id',
+        'chapter_id',
         'type_id',
         'subtype_id',
         'topic_id',
 
-        'chapter_no',
-        'exercise_no',
-
         'statement',
+        'exercise_no',
+        'frequency',
         'marks',
-        'bise_frequency',
         'is_conceptual',
         'is_approved',
     ];
 
-
-    public function book()
-    {
-        return $this->belongsTo(Book::class);
-    }
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
+    public function chapter()
+    {
+        return $this->belongsTo(Chapter::class);
+    }
     public function type()
     {
         return $this->belongsTo(Type::class);
@@ -58,10 +54,6 @@ class Question extends Model
         return $this->hasMany(Paraphrasing::class);
     }
 
-    public function chapterId()
-    {
-        return $this->book->chapters->where('chapter_no', $this->chapter_no)->first()->id;
-    }
     public function scopeToday($query)
     {
         return $query->whereDate('questions.created_at', today());

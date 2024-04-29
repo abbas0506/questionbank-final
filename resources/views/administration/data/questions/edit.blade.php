@@ -140,7 +140,7 @@
 
                     <div class="grid gap-y-1">
                         <label for="">Bise Frequency</label>
-                        <input type="number" name="bise_frequency" value="1" min=0 class="custom-input-borderless">
+                        <input type="number" name="frequency" value="1" min=0 class="custom-input-borderless">
                     </div>
                     <input type="hidden" name='chapter_no' value="{{ $chapter->chapter_no }}">
                     <div class="text-right col-span-full">

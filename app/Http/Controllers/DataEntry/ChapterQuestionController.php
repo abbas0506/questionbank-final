@@ -23,9 +23,7 @@ class ChapterQuestionController extends Controller
         //
         $chapter = Chapter::find($chapterId);
         $book = $chapter->book;
-        $questions = Question::where('book_id', $book->id)
-            ->where('chapter_no', $chapter->chapter_no)
-            ->get();
+        $questions = $chapter->questions;
         return view('data-entry.questions.index', compact('book', 'chapter', 'questions'));
     }
 
@@ -49,23 +47,21 @@ class ChapterQuestionController extends Controller
         //
         $request->validate([
             // 'chapter_no' => 'required|numeric',
-            'exercise_no' => 'nullable|numeric',
             'statement' => 'required',
             'marks' => 'required|numeric',
-            'bise_frequency' => 'required|numeric',
+            'exercise_no' => 'nullable|numeric',
+            'frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
             'type_id' => 'required',
         ]);
 
         $chapter = Chapter::find($chapterId);
-        $book = $chapter->book;
-
         DB::beginTransaction();
 
         try {
             $subtype = Subtype::find($request->subtype_id);
 
-            $question = $book->questions()->create([
+            $question = $chapter->questions()->create([
                 'user_id' => Auth::user()->id,
                 'type_id' => $request->type_id,
                 'subtype_id' => $request->subtype_id,
@@ -75,7 +71,7 @@ class ChapterQuestionController extends Controller
                 'statement' => $request->statement,
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
-                'bise_frequency' => $request->bise_frequency,
+                'frequency' => $request->frequency,
                 'is_approved' => false,
             ]);
 
@@ -124,9 +120,9 @@ class ChapterQuestionController extends Controller
                     'subtype_id' => $request->subtype_id,
                     'marks' => $request->marks,
                     'exercise_no' => $request->exercise_no,
-                    'bise_frequency' => $request->bise_frequency,
+                    'frequency' => $request->frequency,
                     'is_conceptual' => $request->is_conceptual,
-                    'subtypes' => $book->subtypes($request->type_id),
+                    'subtypes' => $chapter->book->subtypes($request->type_id),
                     'success' => 'Successfully added',
                 ]
             );
@@ -170,7 +166,7 @@ class ChapterQuestionController extends Controller
             'exercise_no' => 'nullable|numeric',
             'statement' => 'required',
             'marks' => 'required|numeric',
-            'bise_frequency' => 'required|numeric',
+            'frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
         ]);
 
@@ -184,7 +180,7 @@ class ChapterQuestionController extends Controller
                 'statement' => $request->statement,
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
-                'bise_frequency' => $request->bise_frequency,
+                'frequency' => $request->frequency,
             ]);
 
             // mcqs

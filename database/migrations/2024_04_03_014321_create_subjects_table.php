@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->string('name_en', 100);
-            $table->string('name_ur', 100);
-            // $table->string('language', 2);
+            $table->string('name_en', 50);
+            $table->string('name_ur', 50);
             $table->unsignedTinyInteger('display_order')->default(1);
+            $table->string('thumbnail', 20)->nullable();
+            $table->string('text_direction', 1)->default('L');
             $table->timestamps();
         });
     }

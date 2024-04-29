@@ -14,17 +14,15 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
-            $table->foreignId('book_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('chapter_id')->constrained()->cascadeOnDelete();
             $table->foreignId('type_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('subtype_id')->nullable()->constrained()->cascadeOnDelete();
             $table->foreignId('topic_id')->nullable()->constrained()->cascadeOnDelete();
 
-            $table->unsignedTinyInteger('chapter_no')->nullable();
-            $table->unsignedTinyInteger('exercise_no')->nullable();
-
             $table->string('statement', 300)->nullable();
+            $table->unsignedTinyInteger('exercise_no')->nullable();
+            $table->unsignedTinyInteger('frequency');
             $table->unsignedTinyInteger('marks');
-            $table->unsignedTinyInteger('bise_frequency');
             $table->boolean('is_conceptual');
             $table->boolean('is_approved');
             $table->timestamps();
