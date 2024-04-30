@@ -1,10 +1,10 @@
 @extends('layouts.basic')
 @section('header')
-<x-headers.user page="Data" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
+<x-headers.user page="Q. Bank" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
 @endsection
 
 @section('sidebar')
-<x-sidebars.admin page='data'></x-sidebars.admin>
+<x-sidebars.admin page='qbank'></x-sidebars.admin>
 @endsection
 
 @section('body')
@@ -13,18 +13,20 @@
         <div class="bread-crumb">
             <a href="{{url('admin')}}">Home</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('admin.data.index')}}">Data</a>
+            <a href="{{route('admin.grade.books.index', $book->grade)}}">{{ $chapter->book->grade->name }}</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('admin.chapter.questions.index',[$book,$chapter])}}">Questions</a>
+            <a href="{{route('admin.book.chapters.index', $book)}}">{{ $book->name }}</a>
             <i class="bx bx-chevron-right"></i>
-            <div>View</div>
+            <a href="{{route('admin.chapter.questions.index', $chapter)}}">Ch.{{ $chapter->chapter_no }}</a>
+
         </div>
 
         <div class="container-light">
             <div class="flex flex-wrap items-center justify-between">
-                <h3 class="text-green-600 bg-green-100 px-3 py-1 rounded-full">View Question <i class="bx bx-show-alt"></i></h3>
-                <div>
+                <h3 class="text-green-600 bg-green-100 px-3 py-1 rounded-full">Question <i class="bi-question-circle"></i></h3>
+                <div class="flex items-center space-x-2">
                     <h3>{{ $book->name }}</h3>
+                    <i class="bx bx-chevron-right"></i>
                     <p class="text-sm">Chapter {{ $chapter->chapter_no }}</p>
                 </div>
             </div>

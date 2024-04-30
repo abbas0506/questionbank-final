@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Administration\Data;
+namespace App\Http\Controllers\Administration\Qbank;
 
 use App\Http\Controllers\Controller;
 use App\Models\Grade;
@@ -16,7 +16,7 @@ class GradeController extends Controller
     {
         //
         $grades = Grade::all();
-        return view('administration.data.grades.index', compact('grades'));
+        return view('administration.qbank.grades.index', compact('grades'));
     }
 
     /**
@@ -25,7 +25,8 @@ class GradeController extends Controller
     public function create()
     {
         //
-        return view('administration.data.grades.create');
+        $grades = Grade::all();
+        return view('administration.qbank.grades.create', compact('grades'));
     }
 
     /**
@@ -53,7 +54,7 @@ class GradeController extends Controller
     {
         //
         $grade = Grade::find($id);
-        return view('administration.data.grades.show', compact('grade'));
+        return view('administration.qbank.grades.show', compact('grade'));
     }
 
     /**
@@ -63,7 +64,7 @@ class GradeController extends Controller
     {
         //
         $grade = Grade::find($id);
-        return view('administration.data.grades.edit', compact('grade'));
+        return view('administration.qbank.grades.edit', compact('grade'));
     }
 
     /**

@@ -24,11 +24,17 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <a href="" class="pallet-box">
                 <div class="flex-1">
-                    <div class="title">All Questions</div>
-                    <div class="h2">{{$questions->count()}}</div>
+                    <div class="title">Questions</div>
+                    <div class="flex items-center space-x-4">
+                        <div class="h2">{{$questions->count()}}</div>
+                        @if($questions->where('created_at', today())->count())
+                        <div><i class="bi-arrow-up"></i>{{ $questions->where('created_at', today())->count() }}</div>
+                        @endif
+
+                    </div>
                 </div>
                 <div class="ico bg-green-100">
-                    <i class="bi bi-person-circle text-green-600"></i>
+                    <i class="bi bi-question-circle text-green-600"></i>
                 </div>
             </a>
             <a href="" class="pallet-box">
@@ -60,54 +66,36 @@
             </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6 rounded">
+        <div class="grid grid-cols-1 md:grid-cols-4 mt-8 gap-4 rounded">
             <!-- middle panel  -->
-            <div class="md:col-span-2">
+            <div class="md:col-span-3">
                 <!-- update news  -->
-                <div class="p-4 bg-white">
+                <div class="p-4 bg-white border rounded-lg">
                     <h2>Most Recent</h2>
                     <div class="divider my-3 border-slate-200"></div>
-                    <div class="grid grid-cols-4">
-                        @foreach($grades as $grade)
-                        <div class="text-center">
-                            <h2>{{ $grade->grade_no }}<sup>th</sup></h2>
-                            <p class="text-sm text-slate-600">{{$grade->questions()->today()->count()}}</p>
-                        </div>
-                        @endforeach
-                    </div>
                     <!-- <div class="divider my-3 border-slate-200"></div> -->
                     <div class="overflow-x-auto mt-4">
-                        <table class="table-fixed w-full">
+                        <table class="table-fixed borderless w-full">
                             <thead>
                                 <tr class="">
                                     <th class="w-10">Sr</th>
-                                    <th class="w-24">Subject</th>
                                     <th class='w-60'>Question</th>
-                                    <th class='w-16'>Action</th>
+                                    <th class="w-24">Subject</th>
+                                    <th class='w-24'>Created_at</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                 $sr=1;
                                 @endphp
-                                @foreach($grades as $grade)
-                                @foreach($grade->questions()->today()->get()->take(30) as $question) <tr class="tr text-sm">
+                                @foreach($questions->sortByDesc('id')->take(20) as $question) <tr class="tr">
                                     <td>{{$sr++}}</td>
-                                    <td class="text-left">
-                                        {{ $question->book->subject->name_en }} - {{ $grade->grade_no }}
-                                    </td>
-                                    <td class="text-left">
-                                        <span class="font-semibold text-teal-700">{{ $question->type->name }}</span>
-                                        <br>
-                                        {{$question->statement}}
-                                    </td>
-                                    <td>
-                                        <a href=""><i class="bx bx-pencil"></i></a>
-                                    </td>
+                                    <td class=" text-left">{{ $question->statement }}</td>
+                                    <td>{{ $question->chapter->book->name }}</td>
+                                    <td>{{ $question->created_at }}</td>
                                 </tr>
+                                @endforeach
 
-                                @endforeach
-                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -118,7 +106,7 @@
             <!-- middle panel end -->
             <!-- right side bar starts -->
             <div class="">
-                <div class="bg-white p-4">
+                <div class="bg-white p-4 border rounded-lg">
                     <h2>Profile</h2>
                     <div class="flex flex-col">
                         <div class="flex text-sm mt-4">
@@ -141,4 +129,26 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+    function confirmDel(event) {
+        event.preventDefault(); // prevent form submit
+        var form = event.target; // storing the form
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                form.submit();
+            }
+        })
+    }
+</script>
 @endsection

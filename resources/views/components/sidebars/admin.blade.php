@@ -32,9 +32,9 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.data.index') }}" class="flex items-center p-2">
-                    <i class="bi bi-database-gear @if($page=='data') current-page @endif"></i>
-                    <span class="ml-3">Data</span>
+                <a href="{{ route('admin.grades.index') }}" class="flex items-center p-2">
+                    <i class="bi bi-database-gear @if($page=='qbank') current-page @endif"></i>
+                    <span class="ml-3">Q.Bank</span>
                 </a>
             </li>
         </ul>

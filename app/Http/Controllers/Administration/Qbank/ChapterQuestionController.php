@@ -3,22 +3,16 @@
 namespace App\Http\Controllers\Administration\Qbank;
 
 use App\Http\Controllers\Controller;
-use App\Models\Book;
 use App\Models\Chapter;
-use App\Models\Comprehension;
-use App\Models\Grade;
-use App\Models\Mcq;
 use App\Models\Question;
-use App\Models\Subject;
 use App\Models\Subtype;
 use App\Models\Type;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
-class QuestionController extends Controller
+class ChapterQuestionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -233,7 +227,7 @@ class QuestionController extends Controller
 
             // commit if all ok
             DB::commit();
-            return redirect()->back()->with(
+            return redirect()->route('admin.chapter.questions.index', $question->chapter)->with(
                 [
                     'success' => 'Successfully updated',
                 ]

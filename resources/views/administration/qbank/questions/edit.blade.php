@@ -1,10 +1,10 @@
 @extends('layouts.basic')
 @section('header')
-<x-headers.user page="Data" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
+<x-headers.user page="Q. Bank" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
 @endsection
 
 @section('sidebar')
-<x-sidebars.admin page='data'></x-sidebars.admin>
+<x-sidebars.admin page='qbank'></x-sidebars.admin>
 @endsection
 
 @section('body')
@@ -13,11 +13,12 @@
         <div class="bread-crumb">
             <a href="{{url('admin')}}">Home</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('admin.data.index')}}">Data</a>
+            <a href="{{route('admin.grade.books.index', $book->grade)}}">{{ $chapter->book->grade->name }}</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('admin.chapter.questions.index',[$book,$chapter])}}">Questions</a>
+            <a href="{{route('admin.book.chapters.index', $book)}}">{{ $book->name }}</a>
             <i class="bx bx-chevron-right"></i>
-            <div>Edit</div>
+            <a href="{{route('admin.chapter.questions.index', $chapter)}}">Ch.{{ $chapter->chapter_no }}</a>
+
         </div>
 
         <div class="container-light">
@@ -37,10 +38,9 @@
                 @else
                 <x-message></x-message>
                 @endif
-                <form action="{{route('admin.chapter.questions.update', [$book->id, $chapter->id, $question])}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
+                <form action="{{route('admin.chapter.questions.update', [$chapter, $question])}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
                     @csrf
                     @method('PATCH')
-                    <input type="hidden" id='book_id' value="{{ $book->id }}">
                     <div class="grid gap-y-1">
                         <label>Question Type</label>
                         <p>{{ $question->type->name }}</p>

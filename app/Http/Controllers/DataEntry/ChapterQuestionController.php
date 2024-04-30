@@ -126,7 +126,7 @@ class ChapterQuestionController extends Controller
                     'success' => 'Successfully added',
                 ]
             );
-            // return redirect()->route('admin.book.chapter.questions.index', [$bookId, $chapterId])->with('success', 'Successfully added');;
+            // return redirect()->route('admin.chapter.questions.index', [$bookId, $chapterId])->with('success', 'Successfully added');;
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());
@@ -227,7 +227,7 @@ class ChapterQuestionController extends Controller
                     'success' => 'Successfully updated',
                 ]
             );
-            // return redirect()->route('admin.book.chapter.questions.index', [$bookId, $chapterId])->with('success', 'Successfully added');;
+            // return redirect()->route('admin.chapter.questions.index', [$bookId, $chapterId])->with('success', 'Successfully added');;
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());

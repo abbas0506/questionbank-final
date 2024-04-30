@@ -15,16 +15,17 @@
             <i class="bx bx-chevron-right"></i>
             <a href="{{route('admin.data.index')}}">Data</a>
             <i class="bx bx-chevron-right"></i>
-            <a href="{{route('admin.book.chapter.questions.index',[$book,$chapter])}}">Questions</a>
+            <a href="{{route('admin.chapter.questions.index',[$book,$chapter])}}">Questions</a>
             <i class="bx bx-chevron-right"></i>
             <div>New</div>
         </div>
 
         <div class="container-light">
-            <div class="flex flex-wrap items-center justify-between">
-                <h3 class="text-green-600 bg-green-100 px-3 py-1 rounded-full">New Question <i class="bx bx-plus"></i></h3>
-                <div>
-                    <h3>{{ $book->name }}</h3>
+            <div class="flex flex-wrap items-center gap-4">
+                <h3 class="bg-green-800 text-green-100 px-3 py-1 rounded-full">New Question</h3>
+                <div class="flex items-center space-x-1 ">
+                    <h3>{{ $chapter->book->name }}</h3>
+                    <i class="bx bx-chevron-right"></i>
                     <p class="text-sm">Chapter {{ $chapter->chapter_no }}</p>
                 </div>
             </div>
@@ -36,7 +37,7 @@
                 @else
                 <x-message></x-message>
                 @endif
-                <form action="{{route('admin.book.chapter.questions.store', [$book->id, $chapter->id])}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
+                <form action="{{route('admin.chapter.questions.store', [$book->id, $chapter->id])}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
                     @csrf
                     <input type="hidden" id='book_id' value="{{ $book->id }}">
                     <div class="grid gap-y-1">

@@ -58,7 +58,7 @@
 
                 <div class="grid grid-cols-1 mt-3 text-slate-600">
                     @foreach($book->chapters->sortBy('chapter_no') as $chapter)
-                    <a href="{{ route('admin.book.chapter.questions.index', [$book->id, $chapter->id]) }}" class="text-left border-b py-3">
+                    <a href="{{ route('admin.chapter.questions.index', [$book->id, $chapter->id]) }}" class="text-left border-b py-3">
                         {{$chapter->chapter_no}}. &nbsp {{$chapter->name}}
                     </a>
                     @endforeach

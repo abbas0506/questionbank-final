@@ -2,12 +2,15 @@
 
 use App\Http\Controllers\Administration\AdminController;
 use App\Http\Controllers\Administration\Data\BookController;
-use App\Http\Controllers\Administration\Data\ChapterController;
 use App\Http\Controllers\Administration\Data\DataManagementController;
-use App\Http\Controllers\Administration\Data\GradeController;
-use App\Http\Controllers\Administration\Data\QuestionController;
 use App\Http\Controllers\Administration\Data\QuestionSearchController;
 use App\Http\Controllers\Administration\Data\SubjectController;
+use App\Http\Controllers\Administration\Qbank\BookChapterController as QbankBookChapterController;
+use App\Http\Controllers\Administration\Qbank\ChapterQuestionController as QbankChapterQuestionController;
+use App\Http\Controllers\Administration\Qbank\GradeBookChapterController as QbankGradeBookChapterController;
+use App\Http\Controllers\Administration\Qbank\GradeBookController as QbankGradeBookController;
+use App\Http\Controllers\Administration\Qbank\GradeController;
+use App\Http\Controllers\Administration\Qbank\QuestionController;
 use App\Http\Controllers\Administration\Users\UserManagementController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
@@ -60,10 +63,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
     Route::resource('grades', GradeController::class);
     Route::resource('subjects', SubjectController::class);
     Route::resource('books', BookController::class);
-    Route::resource('book.chapters', ChapterController::class);
+    Route::resource('grade.books', QbankGradeBookController::class);
+    Route::resource('book.chapters', QbankBookChapterController::class);
+    Route::resource('chapter.questions', QbankChapterQuestionController::class);
+    Route::resource('grade.book.chapters', QbankGradeBookChapterController::class);
     Route::resource('question-search', QuestionSearchController::class);
-    Route::resource('book.chapter.questions', QuestionController::class);
-    Route::resource('questions', QuestionController::class);
+
+    // Route::resource('questions', QuestionController::class);
 
     Route::view('change/password', 'admin.change_password');
     Route::post('change/password', [AuthController::class, 'changePassword'])->name('change.password');
