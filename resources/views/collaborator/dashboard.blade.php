@@ -81,7 +81,7 @@
                                 @php
                                 $sr=1;
                                 @endphp
-                                @foreach($questions->where('is_approved', 0)->take(30) as $question) <tr class="tr">
+                                @foreach($questions->where('is_approved', 0)->take(5) as $question) <tr class="tr">
                                     <td>{{$sr++}}</td>
                                     <td class=" text-left">{{ $question->statement }}</td>
                                     <td><a href="{{route('collaborator.approvals.edit',$question)}}" class="text-orange-600"><i class="bx bx-show-alt"></i></a></td>
