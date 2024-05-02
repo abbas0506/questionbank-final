@@ -70,4 +70,8 @@ class Question extends Model
     {
         return $query->where('chapter_no', $chapter_no);
     }
+    public function scopeApproved($query, $isApproved)
+    {
+        return $query->where('is_approved', $isApproved);
+    }
 }

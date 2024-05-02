@@ -10,10 +10,7 @@
         <ul class="space-y-2">
             <li>
                 <a href="{{url('admin')}}" class="flex items-center p-2">
-                    @if($page=='home')
-                    <i class="bi-house current-page"></i>
-                    @else
-                    <i class="bi-house"></i>
+                    <i class="bi-house @if($page=='home') current-page @endif"></i>
                     @endif
                     <span class="ml-3">Home</span>
                 </a>

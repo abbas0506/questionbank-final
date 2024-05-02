@@ -11,9 +11,11 @@ class collaborator extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public $page;
+    public function __construct($page)
     {
         //
+        $this->page = $page;
     }
 
     /**

@@ -29,4 +29,11 @@ class Subject extends Model
         else
             return Subtype::whereNull('subject_id')->get();
     }
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+    public function questions()
+    {
+    }
 }

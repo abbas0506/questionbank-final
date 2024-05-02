@@ -1,11 +1,10 @@
 @extends('layouts.basic')
-
 @section('header')
 <x-headers.user page="Welcome back!" icon="<i class='bi bi-emoji-smile'></i>"></x-headers.user>
 @endsection
 
 @section('sidebar')
-<x-sidebars.admin page='home'></x-sidebars.admin>
+<x-sidebars.collaborator page='home'></x-sidebars.collaborator>
 @endsection
 
 @section('body')
@@ -13,7 +12,7 @@
     <div class="container">
         <div class="flex flex-row justify-between items-center">
             <div class="bread-crumb">
-                <div>Admin</div>
+                <div>Collabrator</div>
                 <i class="bx bx-chevron-right"></i>
                 <i class="bi-house"></i>
             </div>
@@ -21,16 +20,13 @@
         </div>
 
         <!-- pallets -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <a href="{{ route('admin.grades.index') }}" class="pallet-box">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+            <a href="" class="pallet-box">
                 <div class="flex-1">
-                    <div class="title">Questions</div>
+                    <div class="title">Approved Questions</div>
                     <div class="flex items-center space-x-4">
                         <div class="h2">{{$questions->count()}}</div>
-                        @if($questions->where('created_at', today())->count())
-                        <div><i class="bi-arrow-up"></i>{{ $questions->where('created_at', today())->count() }}</div>
-                        @endif
-
+                        <div class="text-xs text-slate-600"><i class="bi-arrow-up"></i>{{$questions->where('is_approved', 1)->count()}} </div>
                     </div>
                 </div>
                 <div class="ico bg-green-100">
@@ -39,60 +35,56 @@
             </a>
             <a href="" class="pallet-box">
                 <div class="flex-1">
-                    <div class="title">Recent Questions</div>
-                    <div class="h2">{{$questions->where('created_at',today())->count()}}</div>
+                    <div class="title">Papers & Keys</div>
+                    <div class="h2"> %</div>
                 </div>
                 <div class="ico bg-indigo-100">
-                    <i class="bi bi-person-workspace text-indigo-400"></i>
-                </div>
-            </a>
-            <a href="" class="pallet-box">
-                <div class="flex-1 ">
-                    <div class="title">Recent Subscription</div>
-                    <div class="h2">%</div>
-                </div>
-                <div class="ico bg-teal-100">
-                    <i class="bi bi-card-checklist text-teal-600"></i>
+                    <i class="bi bi-files text-indigo-600"></i>
                 </div>
             </a>
             <a href="" class="pallet-box">
                 <div class="flex-1">
-                    <div class="title">Recent Payments</div>
+                    <div class="title">Quizzes & Results</div>
                     <div class="h2"> %</div>
                 </div>
                 <div class="ico bg-sky-100">
                     <i class="bi bi-graph-up text-sky-600"></i>
                 </div>
             </a>
+            <a href="" class="pallet-box">
+                <div class="flex-1 ">
+                    <div class="title">Classes / Groups</div>
+                    <div class="h2">%</div>
+                </div>
+                <div class="ico bg-teal-100">
+                    <i class="bi bi-people text-teal-600"></i>
+                </div>
+            </a>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 mt-8 gap-4 rounded">
+        <div class="grid grid-cols-1 md:grid-cols-3 mt-8 gap-6 rounded">
             <!-- middle panel  -->
-            <div class="md:col-span-3">
-                <!-- update news  -->
-                <div class="p-4 bg-white border rounded-lg">
-                    <h2>Most Recent</h2>
+            <div class="md:col-span-2">
+                <div class="p-4 bg-white">
+                    <h2>Waiting for your approval</h2>
                     <div class="divider my-3 border-slate-200"></div>
-                    <!-- <div class="divider my-3 border-slate-200"></div> -->
                     <div class="overflow-x-auto mt-4">
                         <table class="table-fixed borderless w-full">
                             <thead>
                                 <tr class="">
-                                    <th class="w-10">Sr</th>
-                                    <th class='w-60'>Question</th>
-                                    <th class="w-24">Subject</th>
-                                    <th class='w-24'>Created_at</th>
+                                    <th class="w-8">Sr</th>
+                                    <th class='w-60 text-left'>Question</th>
+                                    <th class='w-6'>...</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                 $sr=1;
                                 @endphp
-                                @foreach($questions->sortByDesc('id')->take(20) as $question) <tr class="tr">
+                                @foreach($questions->where('is_approved', 0)->take(30) as $question) <tr class="tr">
                                     <td>{{$sr++}}</td>
                                     <td class=" text-left">{{ $question->statement }}</td>
-                                    <td>{{ $question->chapter->book->name }}</td>
-                                    <td>{{ $question->created_at }}</td>
+                                    <td><a href="{{route('collaborator.approvals.edit',$question)}}" class="text-orange-600"><i class="bx bx-show-alt"></i></a></td>
                                 </tr>
                                 @endforeach
 
@@ -106,7 +98,7 @@
             <!-- middle panel end -->
             <!-- right side bar starts -->
             <div class="">
-                <div class="bg-white p-4 border rounded-lg">
+                <div class="bg-white p-4">
                     <h2>Profile</h2>
                     <div class="flex flex-col">
                         <div class="flex text-sm mt-4">
@@ -128,27 +120,4 @@
             </div>
         </div>
     </div>
-</div>
-@endsection
-@section('script')
-<script type="text/javascript">
-    function confirmDel(event) {
-        event.preventDefault(); // prevent form submit
-        var form = event.target; // storing the form
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.value) {
-                form.submit();
-            }
-        })
-    }
-</script>
-@endsection
+    @endsection

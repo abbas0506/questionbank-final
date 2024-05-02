@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Collaborator\ApprovalController;
 use App\Http\Controllers\Collaborator\DashboardController as CollaboratorDashboardController;
 use App\Http\Controllers\Operator\BookChapterController;
 use App\Http\Controllers\Operator\ChapterQuestionController;
@@ -50,6 +51,7 @@ Route::resource('passwords', PasswordController::class);
 
 Route::resource('self-tests', SelfTestController::class);
 Route::get('fetchSubTypesByTypeId', [AjaxController::class, 'fetchSubTypesByTypeId']);
+Route::get('findSimilarQuestions', [AjaxController::class, 'findSimilarQuestions']);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admin']], function () {
     Route::get('/', [DashboardController::class, 'index']);
@@ -66,6 +68,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
 
 Route::group(['prefix' => 'collaborator', 'as' => 'collaborator.', 'middleware' => ['role:collaborator']], function () {
     Route::get('/', [CollaboratorDashboardController::class, 'index']);
+    Route::resource('approvals', ApprovalController::class);
 });
 Route::group(['prefix' => 'operator', 'as' => 'operator.', 'middleware' => ['role:operator']], function () {
     Route::get('/', [OperatorDashboardController::class, 'index']);

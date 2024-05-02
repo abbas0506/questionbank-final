@@ -19,4 +19,12 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function subjectRelatedQuestions()
+    {
+        // return Question::whereRelation('chapter', function ($query) {
+        //     $query->whereRelation('book', function ($query) {
+        //         $query->where('subject_id', $this->id);
+        //     });
+        // });
+    }
 }
