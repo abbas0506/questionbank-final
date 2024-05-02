@@ -67,7 +67,8 @@ class ApprovalController extends Controller
             'could', 'might', 'here', 'there',  'have',
             'this', 'that', 'such', 'with',
             'three', 'four', 'five', 'seven', 'eight', 'nine',
-            'your', 'they', 'their', 'them',
+            'your', 'they', 'their', 'them', 'differentiate', 'between', 'find'
+
         ];
 
         // remove puncutation marks
