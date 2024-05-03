@@ -545,35 +545,24 @@
     .paper-subject:hover i {
         @apply right-4 text-slate-800;
     }
-    .checkable-row,
-    .question-filter {
-        @apply flex items-center justify-between border-b hover:bg-slate-100 px-2 relative;
-    }
-    .checkable-row input,
-    .question-filter input {
+    .checkable-row input{
         @apply block;
     }
-    .checkable-row.active,
-    .question-filter.active {
-        @apply bg-slate-100;
-    }
-    .checkable-row i,
-    .question-filter i {
+    .checkable-row i{
         @apply hidden;
     }
-    .checkable-row.active i,
-    .question-filter.active i {
+   .checkable-row.active i{
         @apply block text-cyan-500 font-extrabold;
     }
 
-    .checkable-row.active input,
-    .question-filter.active input {
+    .checkable-row.active input{
         @apply hidden;
     }
     .round-tab {
-        @apply rounded-full flex justify-center items-center w-10 h-10 text-slate-600 hover:bg-teal-200 hover:cursor-pointer transition-all duration-500 ease-in-out;
+        @apply rounded-full flex justify-center items-center w-12 h-12 text-slate-600 bg-slate-100 hover:bg-green-800  hover:text-slate-100 hover:cursor-pointer transition-all duration-500 ease-in-out;
     }
     .round-tab.active {
-        @apply bg-teal-400 text-white hover:bg-teal-200 hover:text-slate-800;
+        @apply bg-green-800 text-white hover:bg-green-600;
     }
+
 }

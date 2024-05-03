@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Question;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -181,6 +182,21 @@ class ApprovalController extends Controller
             //     }
             // }
 
+            if ($request->splitted_statement != '') {
+                Question::create([
+                    'user_id' => Auth::user()->id,
+                    'chapter_id' => $question->chapter_id,
+                    'type_id' => $question->type_id,
+                    'subtype_id' => $question->subtype_id,
+                    'exercise_no' => $question->exercise_no,
+                    'statement' => $request->splitted_statement,
+                    'marks' => $question->marks,
+                    'frequency' => $question->frequency,
+                    'is_conceptual' => $question->is_conceptual,
+                    'is_approved' => $question->is_approved,
+                ]);
+            }
+
             // commit if all ok
             DB::commit();
             return redirect('/')->with(
@@ -188,7 +204,6 @@ class ApprovalController extends Controller
                     'success' => 'Successfully updated',
                 ]
             );
-            // return redirect()->route('admin.chapter.questions.index', [$bookId, $chapterId])->with('success', 'Successfully added');;
         } catch (Exception $ex) {
             DB::rollBack();
             return redirect()->back()->withErrors($ex->getMessage());

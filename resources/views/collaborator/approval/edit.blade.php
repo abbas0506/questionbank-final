@@ -59,8 +59,12 @@
                     </div>
 
                     <div class="grid gap-y-1 col-span-full">
-                        <label for="">Question Statement</label>
+                        <label for="">Question Statement <span id="show_split" class="text-orange-600 pl-4">Show Split Option</span></label>
                         <textarea type="text" id='statement' name="statement" class="custom-input py-2 mt-2" rows='3' placeholder="Type here">{{ $question->statement }}</textarea>
+                    </div>
+                    <div class="grid gap-y-1 col-span-full hidden" id='splitted_question'>
+                        <label for="">Splitted Question Statement <span id="hide_split" class="text-orange-600 pl-4">Hide Split Option</span></label>
+                        <textarea type="text" id='splitted_statement' name="splitted_statement" class="custom-input py-2 mt-2" rows='3' placeholder="Type here"></textarea>
                     </div>
 
                     <!-- MCQs -->
@@ -146,7 +150,7 @@
                         <input type="number" name="frequency" value="1" min=0 class="custom-input-borderless">
                     </div>
                     <input type="hidden" name='chapter_no' value="{{ $question->chapterchapter_no }}">
-                    <div class="flex justify-end items-center gap-4 col-span-full">
+                    <div class="flex justify-end items-center gap-4 col-span-full py-5">
                         <a href="{{url('/')}}" class="btn-blue rounded">Cancel</a>
                         <button type="submit" class="btn-green rounded">Save & Approve</button>
                     </div>
@@ -157,17 +161,7 @@
             <div>
                 <div class="p-4 border rounded-lg">
                     <h2>Similar Questions <i class="bi bi-collection"></i></h2>
-
-                    <!-- <div class="flex relative w-full mt-4">
-                        <input type="text" id='searchby' placeholder="Search ..." class="custom-input-borderless w-full" oninput="search(event)">
-                        <i class="bx bx-search absolute top-2 right-2"></i>
-                    </div>
-                    <div class="text-right">
-                        <input type="hidden" id='question_id' value="{{ $question->id }}">
-                        <button class="btn-green rounded mt-4" id="btnCheckSimilarity">Search</button>
-                    </div> -->
                     <div id="similarityQuestions" class="text-xs h-64 overflow-y-auto odd:bg-slate-100">
-
                         @foreach($similarQuestions as $question)
                         <i class="bi-dot"></i>
                         <p>{{ $question->statement }}</p>
@@ -178,76 +172,60 @@
             </div>
         </div>
     </div>
-    @endsection
-    @section('script')
-    <script type="module">
-        $(document).ready(function() {
+</div>
+@endsection
+@section('script')
+<script type="module">
+    $(document).ready(function() {
 
-            $('#statement').bind('input propertychange', function() {
-                $('#math').html($('#statement').val());
-                MathJax.typeset();
-            });
-
-            $('#btnCheckSimilarity').click(function() {
-                //objetive selected
-
-                var token = $("meta[name='csrf-token']").attr("content");
-                var question_id = $('#question_id').val();
-
-                //fetch subtypes
-
-                $.ajax({
-                    type: 'GET',
-                    url: "{{url('findSimilarQuestions')}}",
-                    data: {
-                        "question_id": question_id,
-                        "_token": token,
-                    },
-                    success: function(response) {
-                        //
-                        $('#similarityCheck').html(response.options);
-                    },
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: errorThrown
-                        });
-                    }
-                }); //ajax end
-
-
-
-            });
-
-            $('#subtype_id').change(function() {
-                // paraphrasing
-                if ($(this).val() == 18) {
-                    $('.questionable').hide()
-                    $('#divParaphrasing').show()
-                } else {
-                    $('#divParaphrasing').hide()
-                }
-
-                // if comprehension option 
-                if ($(this).val() == 19) {
-                    $('.questionable').hide()
-                    $('#divComprehension').show()
-                } else {
-                    $('#divComprehension').hide()
-                }
-
-            })
-
-            $('.choice').bind('input propertychange', function() {
-                $('#math').html($(this).val());
-                MathJax.typeset();
-            });
-
-
-            $('.correct').change(function() {
-                $('.correct').not(this).prop('checked', false);
-                $(this).prop('checked', true)
-            });
+        $('#statement').bind('input propertychange', function() {
+            $('#math').html($('#statement').val());
+            MathJax.typeset();
         });
-    </script>
-    @endsection
+        $('#splitted_statement').bind('input propertychange', function() {
+            $('#math').html($('#splitted_statement').val());
+            MathJax.typeset();
+        });
+
+        $('#subtype_id').change(function() {
+            // paraphrasing
+            if ($(this).val() == 18) {
+                $('.questionable').hide()
+                $('#divParaphrasing').show()
+            } else {
+                $('#divParaphrasing').hide()
+            }
+
+            // if comprehension option 
+            if ($(this).val() == 19) {
+                $('.questionable').hide()
+                $('#divComprehension').show()
+            } else {
+                $('#divComprehension').hide()
+            }
+
+        })
+
+        $('.choice').bind('input propertychange', function() {
+            $('#math').html($(this).val());
+            MathJax.typeset();
+        });
+
+
+        $('.correct').change(function() {
+            $('.correct').not(this).prop('checked', false);
+            $(this).prop('checked', true)
+        });
+        $('#show_split').click(function() {
+            $(this).hide()
+            $('#splitted_question').slideDown()
+        });
+        $('#hide_split').click(function() {
+            $('#splitted_question').slideUp()
+            $('#splitted_statement').val('')
+            $('#show_split').show()
+        });
+
+    });
+</script>
+@endsection

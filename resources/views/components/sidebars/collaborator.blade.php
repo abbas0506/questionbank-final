@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li>
-                <a href="" class="flex items-center p-2">
+                <a href="{{ route('collaborator.papers.index') }}" class="flex items-center p-2">
                     <i class="bi bi-files"></i>
                     <span class="ml-3">Create Paper</span>
                 </a>
