@@ -11,7 +11,6 @@
             <li>
                 <a href="{{url('admin')}}" class="flex items-center p-2">
                     <i class="bi-house @if($page=='home') current-page @endif"></i>
-                    @endif
                     <span class="ml-3">Home</span>
                 </a>
             </li>
