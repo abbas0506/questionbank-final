@@ -15,6 +15,7 @@ use App\Http\Controllers\Collaborator\ApprovalController;
 use App\Http\Controllers\Collaborator\DashboardController as CollaboratorDashboardController;
 use App\Http\Controllers\Collaborator\PaperController;
 use App\Http\Controllers\Collaborator\PaperGradeBookChapterController;
+use App\Http\Controllers\Collaborator\PaperQuestionController;
 use App\Http\Controllers\Operator\BookChapterController;
 use App\Http\Controllers\Operator\ChapterQuestionController;
 use App\Http\Controllers\Operator\GradeBookChapterController;
@@ -72,6 +73,7 @@ Route::group(['prefix' => 'collaborator', 'as' => 'collaborator.', 'middleware' 
     Route::get('/', [CollaboratorDashboardController::class, 'index']);
     Route::resource('approvals', ApprovalController::class);
     Route::resource('papers', PaperController::class);
+    Route::resource('paper.questions', PaperQuestionController::class);
     Route::resource('grade.book.chapters', PaperGradeBookChapterController::class);
 });
 Route::group(['prefix' => 'operator', 'as' => 'operator.', 'middleware' => ['role:operator']], function () {

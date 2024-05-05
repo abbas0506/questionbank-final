@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('papers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('book_id')->constrained()->cascadeOnDelete();
             $table->string('title', 300)->nullable();
             $table->string('institution', 300)->nullable();
             $table->date('paper_date');

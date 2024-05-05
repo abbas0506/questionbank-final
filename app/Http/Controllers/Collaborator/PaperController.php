@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Chapter;
 use App\Models\Grade;
 use App\Models\Paper;
+use App\Models\Type;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +38,9 @@ class PaperController extends Controller
     {
         //
         $request->validate([
-            'paper_date' => 'required|date',
+            'book_id' => 'required|numeric',
             'title' => 'required|max:255',
+            'paper_date' => 'required|date',
             'chapter_ids_array' => 'required',
         ]);
 
@@ -47,8 +49,9 @@ class PaperController extends Controller
         try {
             $user = Auth::user();
             $paper = $user->papers()->create([
-                'paper_date' => $request->paper_date,
+                'book_id' => $request->book_id,
                 'title' => $request->title,
+                'paper_date' => $request->paper_date,
             ]);
 
             $chapterIdsArray = array();
@@ -71,7 +74,10 @@ class PaperController extends Controller
     {
         //
         $paper = Paper::find($id);
-        return view('collaborator.papers.show', compact('paper'));
+        $book = $paper->book;
+        $types = Type::all();
+        $selectedChapters = Chapter::whereIn('id', session('chapterIdsArray'))->get();
+        return view('collaborator.papers.show', compact('paper', 'book', 'types', 'selectedChapters'));
     }
 
     /**

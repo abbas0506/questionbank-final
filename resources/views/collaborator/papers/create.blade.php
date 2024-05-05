@@ -28,6 +28,7 @@ $activeBook=$book;
             <div class="md:col-span-2 lg:col-span-3">
                 <form id='start-test-form' action="{{route('collaborator.papers.store')}}" method='post' onsubmit="return validate(event)">
                     @csrf
+                    <input type="hidden" name="book_id" value="{{ $book->id }}">
                     <div class="p-4 border rounded-lg bg-green-100 border-green-200">
                         <div class="flex flex-wrap gap-4 justify-between items-cente">
                             <h2>{{ $book->name }} <i class="bx bx-chevron-right"></i> Chapters &nbsp<i class="bi-layers"></i></h2>
@@ -89,7 +90,7 @@ $activeBook=$book;
                             </div>
                         </div> -->
                         <div class="flex justify-center items-center my-8">
-                            <button type="submit" class="btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> Go Next & Select Questions</button>
+                            <button type="submit" class="btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> Select Questions Now</button>
                         </div>
 
                     </div>

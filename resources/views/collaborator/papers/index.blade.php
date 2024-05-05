@@ -34,7 +34,7 @@ $i=0;
             <x-message></x-message>
             @endif
 
-            <h3 class="text-lg mt-8">GRADES</h3>
+            <h3 class="text-lg mt-8">Grades <i class="bi-mortarboard-fill"></i></h3>
             <div class="flex items-center justify-center gap-x-4 mt-5">
                 @foreach($grades as $grade)
                 <div id='{{ $grade->id }}' bound='tab{{ $grade->id }}' class="round-tab">{{ $grade->grade_no }}</div>

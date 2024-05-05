@@ -10,6 +10,7 @@ class Paper extends Model
     use HasFactory;
     protected $fillable = [
         'user_id',
+        'book_id',
         'title',
         'institution',
         'paper_date',
@@ -24,4 +25,14 @@ class Paper extends Model
         'paper_date' => 'date',
 
     ];
+
+    public function book()
+    {
+        return $this->belongsTo(Book::class);
+    }
+
+    public function paperQuestions()
+    {
+        return $this->hasMany(PaperQuestion::class);
+    }
 }
