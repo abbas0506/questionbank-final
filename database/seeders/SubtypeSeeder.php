@@ -75,6 +75,7 @@ class SubtypeSeeder extends Seeder
             'name' => 'Correct grammar',
             'type_id' => 1,
             'subject_id' => 6,
+            'tagname' => 'mcq',
         ]);
         Subtype::create([
             'name' => 'Short (Lesson)',

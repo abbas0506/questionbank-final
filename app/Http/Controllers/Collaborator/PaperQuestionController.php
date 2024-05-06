@@ -41,7 +41,7 @@ class PaperQuestionController extends Controller
         $request->validate([
 
             'subtype_id' => 'required|numeric',
-            'question_title' => 'required',
+            'question_title' => 'nullable|max:100',
             'question_nature' => 'required',
             'exercise_ratio' => 'required|numeric',
             'conceptual_ratio' => 'required|numeric',

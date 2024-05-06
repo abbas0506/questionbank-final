@@ -55,6 +55,7 @@ $i=0;
             <x-message></x-message>
             @endif
 
+            <!-- modal -->
             <div id="default-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
 
                 <form action="{{ route('collaborator.paper.questions.store',$paper) }}" method="post">
@@ -96,9 +97,9 @@ $i=0;
                                     <div class="" id='question_nature_cap'>
                                         <label>Nature</label>
                                         <select name="question_nature" id="question_nature" class="custom-input-borderless text-sm">
-                                            <option value="whole">Whole Question</option>
-                                            <option value="parts">Mendatory Parts</option>
-                                            <option value="parts_or">Parts seprared by 'Or'</option>
+                                            <option value="full">Full question</option>
+                                            <option value="or">Has OR alternatives</option>
+                                            <option value="parts">Has multiple parts </option>
                                         </select>
                                     </div>
                                     <div class="grid" id='marks_cap'>
@@ -187,10 +188,10 @@ $i=0;
             $i=1;
             @endphp
             <!-- objective case -->
-            @if($paperQuestion->subtype->type_id==1)
+            @if($paperQuestion->subtype->tagname=='mcq')
             <div class="question mcq">
                 <div class="head">
-                    <div class="sr">Q.{{$i++}}</div>
+                    <div class="sr">Q.{{$questionSr++}}</div>
                     <h2>{{ $paperQuestion->title }}</h2>
                     <div class="action border border-green-200 rounded bg-green-50">
                         <a modal-id='{{$paperQuestion->id}}' class="show-modal text-cyan-600"><i class="bx bx-pencil"></i></a>
@@ -242,9 +243,15 @@ $i=0;
             <!-- subjective questions -->
 
             @if($paperQuestion->question_nature=='parts')
-            @php $i=1; @endphp
 
+            <div class="flex items-center">
+                <div class="w-8">Q. {{ $questionSr++ }}</div>
+                <div class="flex-1 text-left">{{ $paperQuestion->question_title }}</div>
+            </div>
+
+            @php $i=1; @endphp
             @foreach($paperQuestion->paperQuestionParts as $part)
+
             <div class="flex items-center">
                 <div class="w-8">{{Str::lower($roman->lowercase($i++))}}</div>
                 <div class="flex-1 text-left">{{$part->question->statement}}</div>
@@ -259,7 +266,7 @@ $i=0;
             </div>
             @endforeach
 
-            @elseif($paperQuestion->question_nature=='whole')
+            @elseif($paperQuestion->question_nature=='full')
             <div class="flex items-center">
                 <div class="w-8">Q. {{ $questionSr++ }}</div>
                 <div class="flex-1 text-left">{{ $paperQuestion->paperQuestionParts->first()->question->statement }}</div>
@@ -270,41 +277,19 @@ $i=0;
             <div class="flex items-center">
                 @if($loop->first)
                 <div class="w-8">Q. {{ $questionSr++ }}</div>
-                <div class="flex-1 text-left"> {{ $paperQuestion->paperQuestionParts->first()->question->statement }}</div>
+                <div class="flex-1 text-left"> {{ $part->question->statement }}</div>
                 <div>OR</div>
                 @elseif($loop->last)
                 <div class="w-8"></div>
-                <div class="flex-1 text-left"> {{ $paperQuestion->paperQuestionParts->first()->question->statement }}</div>
+                <div class="flex-1 text-left"> {{ $part->question->statement }}</div>
                 @else
                 <div class="w-8"></div>
-                <div class="flex-1 text-left"> {{ $paperQuestion->paperQuestionParts->first()->question->statement }}</div>
+                <div class="flex-1 text-left"> {{ $part->question->statement }}</div>
                 <div>OR</div>
                 @endif
             </div>
             @endforeach
             @endif
-            <div class="question">
-                <div class="head">
-                    <div class="sr">Q.{{$questionSr++}}</div>
-                    <div class="statement">
-                        <h2>{{ $paperQuestion->question_title }}</h2>
-
-                    </div>
-                    <div class="action border border-green-200 rounded bg-green-50">
-                        <a modal-id='{{$paperQuestion->id}}' class="show-modal text-cyan-600"><i class="bx bx-pencil"></i></a>
-                        <a href=""><i class="bi-arrow-repeat"></i></a>
-                        <form action="{{route('collaborator.paper.questions.destroy',[$paper, $paperQuestion])}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button><i class="bx bx-trash text-red-600 show-confirm"></i></button>
-                        </form>
-                    </div>
-                </div>
-                <div class="body">
-
-                </div>
-
-            </div>
 
             @endif
 
