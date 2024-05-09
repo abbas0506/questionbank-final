@@ -182,10 +182,10 @@
             $('#mcqChoicesCover').show()
         else if ($('#type_id').val() == 3) {
             // long question
-            if ($('#subtype_id').val() == 8)
+            if ($('#subtype_id').val() == 10)
                 // paraphrasing case
                 $('#paraphrasingCover').show()
-            else if ($('#subtype_id').val() == 9)
+            else if ($('#subtype_id').val() == 11)
                 // comprehension case
                 $('#comprehensionCover').show()
         }
@@ -249,10 +249,10 @@
             //objective
             if ($('#type_id').val() == 1)
                 $('#mcqChoicesCover').show()
-            else if ($(this).val() == 8)
+            else if ($(this).val() == 10)
                 $('#paraphrasingCover').show()
             // comprehensions 
-            else if ($(this).val() == 9)
+            else if ($(this).val() == 11)
                 $('#comprehensionCover').show()
 
 
