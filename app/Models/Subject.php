@@ -24,10 +24,12 @@ class Subject extends Model
     {
         // if subject english:6, or urdu:7, return subject related subtypes
         // else return general subtypes
-        if (in_array($this->id, [6, 7]))
-            return Subtype::where('subject_id', $this->id)->get();
-        else
-            return Subtype::whereNull('subject_id')->get();
+
+        return Subtype::all();
+        // if ($this->id == 6)
+        //     return Subtype::whereBetween('id', [1, 20])->get();
+        // else
+        //     return Subtype::where('id', 0)->get();
     }
     public function books()
     {

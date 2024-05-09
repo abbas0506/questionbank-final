@@ -36,7 +36,7 @@ $activeBook=$book;
                         <div class="flex justify-between gap-4 mt-5">
                             <div class="flex-1">
                                 <label for="">Paper Title</label>
-                                <input type="text" name="title" value='' placeholder="Sample Test" class="custom-input-borderless" required>
+                                <input type="text" name="title" value='Sample Paper' placeholder="Sample Paper" class="custom-input-borderless" required>
                             </div>
 
                             <div>

@@ -1,11 +1,12 @@
 @extends('layouts.basic')
 @section('header')
-<x-headers.user page="Data" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
+<x-headers.user page="Questions" icon="<i class='bi bi-database-gear'></i>"></x-headers.user>
 @endsection
 
 @section('sidebar')
-<x-sidebars.operator page='data'></x-sidebars.operator>
+<x-sidebars.operator page='questions'></x-sidebars.operator>
 @endsection
+
 
 @section('body')
 <div class="responsive-container">
@@ -28,12 +29,11 @@
                 <p class="text-sm">Chapter {{ $chapter->chapter_no }}</p>
             </div>
         </div>
-        <!-- <div class="divider my-5"></div> -->
         <div class="md:w-4/5 mx-auto mt-8">
             <div class="grid gap-6 md:gap-y-8 md:gap-x-16">
                 <div class="grid md:grid-cols-3  items-center text-sm">
                     <div><label>Question Type: </label>&nbsp<span class="font-semibold">{{ $question->type->name }}</span> </div>
-                    <div><label>Sub Type: </label> &nbsp<span class="font-semibold">{{ $question->subtype->name }}</span> </div>
+                    <div><label>Sub Type: </label> &nbsp<span class="font-semibold">{{ $question->subtype->name ?? '' }}</span> </div>
                     <div><label>Marks: </label> &nbsp<span class="font-semibold">{{ $question->marks }}</span> </div>
                 </div>
 
@@ -42,7 +42,7 @@
                     <div class="custom-input-borderless">{{ $question->statement }}</div>
                 </div>
                 <!-- MCQs -->
-                @if($question->subtype->tagname=='mcq')
+                @if($question->type->name=='MCQs')
                 <div class="text-sm">
                     <label for="">Choices</label>
                     <div class="grid gap-4 mt-2">
@@ -52,7 +52,7 @@
                         <div class="text-sm md:w-1/2">d. &nbsp{{ $question->mcq->choice_d }}</div>
                     </div>
                 </div>
-                @endif
+                @elseif($question->type->name=='Long')
                 <!-- Paraphrasing -->
                 @if($question->subtype->tagname=='paraphrasing')
                 <div class="text-sm">
@@ -80,6 +80,8 @@
                 </div>
                 @endif
 
+                @endif
+
                 <div class="grid gap-1">
                     <label>Exercise No.</label>
                     <div>{{ $question->exercise_no }}</div>
@@ -99,32 +101,4 @@
         </div>
     </div>
 </div>
-@endsection
-@section('script')
-<script type="module">
-    $(document).ready(function() {
-        $('#statement').bind('input propertychange', function() {
-            $('#math').html($('#statement').val());
-            MathJax.typeset();
-        });
-
-        $('#questionable_type').change(function() {
-            if ($(this).val() == 'App\\Models\\Mcq')
-                $('#choices_div').show()
-            else
-                $('#choices_div').hide()
-        });
-
-        $('.choice').bind('input propertychange', function() {
-            $('#math').html($(this).val());
-            MathJax.typeset();
-        });
-
-
-        $('.correct').change(function() {
-            $('.correct').not(this).prop('checked', false);
-            $(this).prop('checked', true)
-        });
-    });
-</script>
 @endsection

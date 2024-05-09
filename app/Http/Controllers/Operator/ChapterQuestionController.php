@@ -46,7 +46,6 @@ class ChapterQuestionController extends Controller
     {
         //
         $request->validate([
-            // 'chapter_no' => 'required|numeric',
             'statement' => 'required',
             'marks' => 'required|numeric',
             'exercise_no' => 'nullable|numeric',
@@ -59,24 +58,23 @@ class ChapterQuestionController extends Controller
         DB::beginTransaction();
 
         try {
+
+
             $subtype = Subtype::find($request->subtype_id);
 
             $question = $chapter->questions()->create([
                 'user_id' => Auth::user()->id,
                 'type_id' => $request->type_id,
                 'subtype_id' => $request->subtype_id,
-                'chapter_no' => $chapter->chapter_no,
-                'marks' => $request->marks,
-
                 'statement' => $request->statement,
+                'marks' => $request->marks,
                 'exercise_no' => $request->exercise_no,
-                'is_conceptual' => $request->is_conceptual,
                 'frequency' => $request->frequency,
-                'is_approved' => false,
+                'is_conceptual' => $request->is_conceptual,
             ]);
 
             // mcqs
-            if ($subtype->tagname == 'mcq') {
+            if ($request->type_id == 1) {
                 $correct = '';
                 if ($request->check_a) $correct = 'a';
                 if ($request->check_b) $correct = 'b';
@@ -90,28 +88,30 @@ class ChapterQuestionController extends Controller
                     'choice_d' => $request->choice_d,
                     'correct' => $correct,
                 ]);
-            }
+            } else {
+                // long question
+                if ($request->type_id == 3) {
+                    // paraphrasing
+                    if ($subtype->tagname == 'paraphrasing') {
+                        foreach ($request->poetry_lines as $poetry_line) {
+                            if ($poetry_line != '')
+                                $question->paraphrasings()->create([
+                                    'poetry_line' => $poetry_line,
+                                ]);
+                        }
+                    }
 
-            // paraphrasing
-            if ($subtype->tagname == 'paraphrasing') {
-                foreach ($request->poetry_lines as $poetry_line) {
-                    if ($poetry_line != '')
-                        $question->paraphrasings()->create([
-                            'poetry_line' => $poetry_line,
-                        ]);
+                    //comprehension
+                    if ($subtype->tagname == 'comprehension') {
+                        foreach ($request->sub_questions as $subQuestion) {
+                            if ($subQuestion != '')
+                                $question->comprehensions()->create([
+                                    'sub_question' => $subQuestion,
+                                ]);
+                        }
+                    }
                 }
             }
-
-            //comprehension
-            if ($subtype->tagname == 'comprehension') {
-                foreach ($request->sub_questions as $subQuestion) {
-                    if ($subQuestion != '')
-                        $question->comprehensions()->create([
-                            'sub_question' => $subQuestion,
-                        ]);
-                }
-            }
-
             // commit if all ok
             DB::commit();
             return redirect()->back()->with(
@@ -162,9 +162,8 @@ class ChapterQuestionController extends Controller
     {
         //
         $request->validate([
-            'chapter_no' => 'required|numeric',
-            'exercise_no' => 'nullable|numeric',
             'statement' => 'required',
+            'exercise_no' => 'nullable|numeric',
             'marks' => 'required|numeric',
             'frequency' => 'required|numeric',
             'is_conceptual' => 'required|boolean',
@@ -184,7 +183,7 @@ class ChapterQuestionController extends Controller
             ]);
 
             // mcqs
-            if ($question->type->name == 'Objective') {
+            if ($question->type_id == 1) {
                 $correct = '';
                 if ($request->check_a) $correct = 'a';
                 if ($request->check_b) $correct = 'b';

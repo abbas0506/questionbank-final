@@ -48,7 +48,7 @@
 
                     <div class="grid gap-y-1">
                         <label>Sub Type</label>
-                        <p>{{ $question->subtype->name }}</p>
+                        <p>{{ $question->subtype->name ?? '' }}</p>
                     </div>
 
                     <div class="grid gap-y-1">
@@ -62,8 +62,8 @@
                     </div>
 
                     <!-- MCQs -->
-                    @if($question->subtype->tagname=='mcq')
-                    <div id='divMcq' class="questionable col-span-full">
+                    @if($question->type_id == 1)
+                    <div id='mcqCover' class="questionable col-span-full">
                         <label for="">Choices</label>
                         <div class="grid gap-4 mt-2">
                             <div class="flex items-center space-x-2">
@@ -84,10 +84,11 @@
                             </div>
                         </div>
                     </div>
-                    @endif
+                    @elseif($question->type_id == 3)
+                    <!-- long question -->
                     @if($question->subtype->tagname=='paraphrasing')
                     <!-- paraphrasing question -->
-                    <div id='divParaphrasing' class="questionable col-span-full">
+                    <div id='paraphrasingCover' class="questionable col-span-full">
                         <label for="">Paraphrasing: Poetry Lines</label>
                         <div class="grid gap-4 md:grid-cols-2 mt-2">
                             @foreach($question->paraphrasings as $paraphrasing)
@@ -113,6 +114,8 @@
                         </div>
                     </div>
                     @endif
+                    @endif
+
                     <!-- preview -->
                     <div class="col-span-full border p-6">
                         <!-- <span id="math" class="text-left no-line-break text-slate-400">Preview</span> -->
@@ -160,10 +163,10 @@
         // show or hide on page load
         if ($('#type_id').val() == 1) {
             $('.questionable').hide()
-            $('#divMcq').show()
+            $('#mcqCover').show()
         } else if ($('#subtype_id').val() == 18) {
             $('.questionable').hide()
-            $('#divParaphrasing').show()
+            $('#paraphrasingCover').show()
         } else if ($('#subtype_id').val() == 19) {
             $('.questionable').hide()
             $('#divComprehension').show()
@@ -179,9 +182,9 @@
             //objetive selected
             if ($(this).val() == 1) {
                 $('.questionable').hide()
-                $('#divMcq').show()
+                $('#mcqCover').show()
             } else {
-                $('#divMcq').hide()
+                $('#mcqCover').hide()
             }
 
             var token = $("meta[name='csrf-token']").attr("content");
@@ -217,9 +220,9 @@
             // paraphrasing
             if ($(this).val() == 18) {
                 $('.questionable').hide()
-                $('#divParaphrasing').show()
+                $('#paraphrasingCover').show()
             } else {
-                $('#divParaphrasing').hide()
+                $('#paraphrasingCover').hide()
             }
 
             // if comprehension option 

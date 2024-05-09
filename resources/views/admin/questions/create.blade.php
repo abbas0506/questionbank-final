@@ -79,7 +79,7 @@
                     </div>
 
                     <!-- MCQs -->
-                    <div id='divMcq' class="questionable col-span-full">
+                    <div id='mcqCover' class="questionable col-span-full">
                         <label for="">Choices</label>
                         <div class="grid gap-4 mt-2">
                             <div class="flex items-center space-x-2">
@@ -102,7 +102,7 @@
                     </div>
 
                     <!-- Paraphrasing question -->
-                    <div id='divParaphrasing' class="questionable col-span-full hidden">
+                    <div id='paraphrasingCover' class="questionable col-span-full hidden">
                         <label for="">Paraphrasing: Poetry Lines</label>
                         <div class="grid gap-4 md:grid-cols-2 mt-2">
                             <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 1">
@@ -179,10 +179,10 @@
         // show or hide on page load
         if ($('#type_id').val() == 1) {
             $('.questionable').hide()
-            $('#divMcq').show()
+            $('#mcqCover').show()
         } else if ($('#subtype_id').val() == 18) {
             $('.questionable').hide()
-            $('#divParaphrasing').show()
+            $('#paraphrasingCover').show()
         } else if ($('#subtype_id').val() == 19) {
             $('.questionable').hide()
             $('#divComprehension').show()
@@ -198,9 +198,9 @@
             //objetive selected
             if ($(this).val() == 1) {
                 $('.questionable').hide()
-                $('#divMcq').show()
+                $('#mcqCover').show()
             } else {
-                $('#divMcq').hide()
+                $('#mcqCover').hide()
             }
 
             var token = $("meta[name='csrf-token']").attr("content");
@@ -236,9 +236,9 @@
             // paraphrasing
             if ($(this).val() == 18) {
                 $('.questionable').hide()
-                $('#divParaphrasing').show()
+                $('#paraphrasingCover').show()
             } else {
-                $('#divParaphrasing').hide()
+                $('#paraphrasingCover').hide()
             }
 
             // if comprehension option 

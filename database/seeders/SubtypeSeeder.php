@@ -14,284 +14,55 @@ class SubtypeSeeder extends Seeder
     public function run(): void
     {
 
-        Subtype::create([
-            'name' => 'MCQs',
-            'type_id' => 1,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'Short',
-            'type_id' => 2,
-        ]);
-        Subtype::create([
-            'name' => 'Long',
-            'type_id' => 2,
-        ]);
+        //English subtypes: MCQ subtypes
+        Subtype::create(['name' => 'Correct form of verb', 'position' => 1,]);
+        Subtype::create(['name' => 'Correct spelling', 'position' => 1,]);
+        Subtype::create(['name' => 'Meaning of words', 'position' => 1,]);
+        Subtype::create(['name' => 'Correct grammar', 'position' => 1,]);
+        Subtype::create(['name' => 'Correction of Propoisiton', 'position' => 1,]);
+        Subtype::create(['name' => 'Correction of sentence', 'position' => 1,]);
 
-        //English 9, MCQ subtypes
-        Subtype::create([
-            'name' => 'Correct form of verb',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'Correct spelling',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'Meaning of words',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'Correct grammar',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'MCQs (Lesson)',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'MCQs (Play)',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'MCQs (Novel)',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'Correct grammar',
-            'type_id' => 1,
-            'subject_id' => 6,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'Short (Lesson)',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Short (Poem)',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Short (Novel)',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-
-        Subtype::create([
-            'name' => 'English to Urdu (Para)',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Urdu to English (Para)',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Summary of Poem',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Paraphrasing of poetry',
-            'type_id' => 2,
-            'subject_id' => 6,
-            'tagname' => 'paraphrasing',
-        ]);
-        Subtype::create([
-            'name' => 'Comprehension',
-            'type_id' => 2,
-            'subject_id' => 6,
-            'tagname' => 'comprehension',
-        ]);
-        Subtype::create([
-            'name' => 'Letter',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Story',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Dialogue',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Essay',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Paragraph writing',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Idioms/Phrases',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Active/Passive',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Direct/indirect',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
-        Subtype::create([
-            'name' => 'Pair of words',
-            'type_id' => 2,
-            'subject_id' => 6,
-        ]);
+        // long subtypes
+        Subtype::create(['name' => 'English to Urdu (Para)', 'position' => 1,]);
+        Subtype::create(['name' => 'Urdu to English (Para)', 'position' => 1,]);
+        Subtype::create(['name' => 'Summary of Poem', 'position' => 1,]);
+        Subtype::create(['name' => 'Paraphrasing of poetry', 'tagname' => 'paraphrasing', 'position' => 1,]);
+        Subtype::create(['name' => 'Comprehension', 'tagname' => 'comprehension', 'position' => 1,]);
+        Subtype::create(['name' => 'Letter', 'position' => 1,]);
+        Subtype::create(['name' => 'Story', 'position' => 1,]);
+        Subtype::create(['name' => 'Dialogue', 'position' => 1,]);
+        Subtype::create(['name' => 'Essay', 'position' => 1,]);
+        Subtype::create(['name' => 'Paragraph writing', 'position' => 1,]);
+        Subtype::create(['name' => 'Idioms/Phrases', 'position' => 1,]);
+        Subtype::create(['name' => 'Active/Passive', 'position' => 1,]);
+        Subtype::create(['name' => 'Direct/indirect', 'position' => 1,]);
+        Subtype::create(['name' => 'Pair of words', 'position' => 1,]);
+        Subtype::create(['name' => 'Urdu sentences to english', 'position' => 1,]);
 
         // urdu subtypes
-        Subtype::create([
-            'name' => ' نصابی کثیرالانتخاب ',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'تشبیہ',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'استعارہ',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'تلمیح',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'مطلع',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'قافیہ',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'ردیف',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'تذکیرو تانیث',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'امدادی فعل',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'رموزاوقاف',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'جملہ کی درستی',
-            'type_id' => 1,
-            'subject_id' => 7,
-            'tagname' => 'mcq',
-        ]);
-        Subtype::create([
-            'name' => 'اشعار کی تشریح:نظم',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'اشعار کی تشریح:غزل',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'سبقی پیرا گراف کی تشریح',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'سبق کا خلاصہ',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'نظم کا خلاصہ',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'روداد',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'روزنامچہ',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'مکالمہ نگاری',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'خط',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'درخواست',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'آپ بیتی',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
-        Subtype::create([
-            'name' => 'مضمون',
-            'type_id' => 2,
-            'subject_id' => 7,
-        ]);
+        Subtype::create(['name' => ' نصابی کثیرالانتخاب ', 'position' => 1,]);
+        Subtype::create(['name' => 'تشبیہ', 'position' => 1,]);
+        Subtype::create(['name' => 'استعارہ', 'position' => 1,]);
+        Subtype::create(['name' => 'تلمیح', 'position' => 1,]);
+        Subtype::create(['name' => 'مطلع', 'position' => 1,]);
+        Subtype::create(['name' => 'قافیہ', 'position' => 1,]);
+        Subtype::create(['name' => 'ردیف', 'position' => 1,]);
+        Subtype::create(['name' => 'تذکیرو تانیث', 'position' => 1,]);
+        Subtype::create(['name' => 'امدادی فعل', 'position' => 1,]);
+        Subtype::create(['name' => 'رموزاوقاف', 'position' => 1,]);
+        Subtype::create(['name' => 'جملہ کی درستی', 'position' => 1,]);
+
+        Subtype::create(['name' => 'اشعار کی تشریح:نظم', 'position' => 1,]);
+        Subtype::create(['name' => 'اشعار کی تشریح:غزل', 'position' => 1,]);
+        Subtype::create(['name' => 'سبقی پیرا گراف کی تشریح', 'position' => 1,]);
+        Subtype::create(['name' => 'سبق کا خلاصہ', 'position' => 1,]);
+        Subtype::create(['name' => 'نظم کا خلاصہ', 'position' => 1,]);
+        Subtype::create(['name' => 'روداد', 'position' => 1,]);
+        Subtype::create(['name' => 'روزنامچہ', 'position' => 1,]);
+        Subtype::create(['name' => 'مکالمہ نگاری', 'position' => 1,]);
+        Subtype::create(['name' => 'خط', 'position' => 1,]);
+        Subtype::create(['name' => 'درخواست', 'position' => 1,]);
+        Subtype::create(['name' => 'آپ بیتی', 'position' => 1,]);
+        Subtype::create(['name' => 'مضمون', 'position' => 1,]);
     }
 }

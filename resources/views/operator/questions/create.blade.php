@@ -50,7 +50,7 @@
                     </select>
                 </div>
 
-                <div class="grid gap-y-1">
+                <div class="grid gap-y-1" id='subtypeIdCover'>
                     <label>Sub Type</label>
                     <select name="subtype_id" id="subtype_id" class="custom-input-borderless text-sm">
                         <!-- <option value="">Select ...</option> -->
@@ -77,7 +77,7 @@
                 </div>
 
                 <!-- MCQs -->
-                <div id='divMcq' class="questionable col-span-full">
+                <div id='mcqChoicesCover' class="questionable col-span-full">
                     <label for="">Choices</label>
                     <div class="grid gap-4 mt-2">
                         <div class="flex items-center space-x-2">
@@ -100,7 +100,7 @@
                 </div>
 
                 <!-- Paraphrasing question -->
-                <div id='divParaphrasing' class="questionable col-span-full hidden">
+                <div id='paraphrasingCover' class="questionable col-span-full hidden">
                     <label for="">Paraphrasing: Poetry Lines</label>
                     <div class="grid gap-4 md:grid-cols-2 mt-2">
                         <input type="text" name='poetry_lines[]' class="custom-input-borderless" placeholder="Poetry line 1">
@@ -117,7 +117,7 @@
                 </div>
 
                 <!-- Comprehension question -->
-                <div id='divComprehension' class="questionable col-span-full hidden">
+                <div id='comprehensionCover' class="questionable col-span-full hidden">
                     <label for="">Comprehension Questions</label>
                     <div class="grid gap-4 mt-2">
                         <input type="text" name='sub_questions[]' class="custom-input-borderless" placeholder="Sub Q.">
@@ -177,13 +177,21 @@
         // show or hide on page load
         $('.questionable').hide()
 
+        // auto show or hide on page load
         if ($('#type_id').val() == 1)
-            $('#divMcq').show()
-        else if ($('#subtype_id').val() == 18)
-            $('#divParaphrasing').show()
-        else if ($('#subtype_id').val() == 19)
-            $('#divComprehension').show()
+            $('#mcqChoicesCover').show()
+        else if ($('#type_id').val() == 3) {
+            // long question
+            if ($('#subtype_id').val() == 8)
+                // paraphrasing case
+                $('#paraphrasingCover').show()
+            else if ($('#subtype_id').val() == 9)
+                // comprehension case
+                $('#comprehensionCover').show()
+        }
 
+        if (!$('#subtype_id').val())
+            $('#subtypeIdCover').hide();
 
         $('#statement').bind('input propertychange', function() {
             $('#math').html($('#statement').val());
@@ -194,10 +202,13 @@
             //objetive selected
             if ($(this).val() == 1) {
                 $('.questionable').hide()
-                $('#divMcq').show()
+                $('#mcqChoicesCover').show()
             } else {
-                $('#divMcq').hide()
+                $('#mcqChoicesCover').hide()
+                if ($(this).val() == 2)
+                    $('#subtypeIdCover').hide();
             }
+
 
             var token = $("meta[name='csrf-token']").attr("content");
             var book_id = $('#book_id').val();
@@ -215,6 +226,8 @@
                 success: function(response) {
                     //
                     $('#subtype_id').html(response.options);
+                    if (response.options != '')
+                        $('#subtypeIdCover').show()
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     Swal.fire({
@@ -235,12 +248,12 @@
 
             //objective
             if ($('#type_id').val() == 1)
-                $('#divMcq').show()
-            else if ($(this).val() == 18)
-                $('#divParaphrasing').show()
+                $('#mcqChoicesCover').show()
+            else if ($(this).val() == 8)
+                $('#paraphrasingCover').show()
             // comprehensions 
-            else if ($(this).val() == 19)
-                $('#divComprehension').show()
+            else if ($(this).val() == 9)
+                $('#comprehensionCover').show()
 
 
         })

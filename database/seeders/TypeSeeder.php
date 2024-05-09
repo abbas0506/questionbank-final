@@ -14,8 +14,9 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         //
-        Type::create(['name' => 'Objective']);
-        Type::create(['name' => 'Subjective']);
+        Type::create(['name' => 'MCQs']);
+        Type::create(['name' => 'Short']);
+        Type::create(['name' => 'Long']);
 
         // 
     }

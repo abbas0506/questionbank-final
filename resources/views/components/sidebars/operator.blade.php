@@ -24,7 +24,7 @@
                         <i class="bi bi-database-gear @if($page=='questions') current-page @endif"></i>
                         <span class="ml-2">Questions </span>
                     </div>
-                    <div class="text-xs px-1 rounded-full bg-orange-400 text-slate-100 ">{{ App\Models\Question::all()->count() }}</div>
+                    <div class="text-xs px-1 rounded-full bg-orange-400 text-slate-100 ">{{ $questionsCount }}</div>
                 </a>
             </li>
         </ul>

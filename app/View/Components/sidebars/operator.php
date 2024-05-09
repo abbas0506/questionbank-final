@@ -12,10 +12,12 @@ class operator extends Component
      * Create a new component instance.
      */
     public $page;
-    public function __construct($page)
+    public $questionsCount;
+    public function __construct($page, $questionsCount = null)
     {
         //
         $this->page = $page;
+        $this->questionsCount = $questionsCount;
     }
     /**
      * Get the view / contents that represent the component.

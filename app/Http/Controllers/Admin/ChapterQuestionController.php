@@ -75,7 +75,6 @@ class ChapterQuestionController extends Controller
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
                 'frequency' => $request->frequency,
-                'is_approved' => false,
             ]);
 
             // mcqs

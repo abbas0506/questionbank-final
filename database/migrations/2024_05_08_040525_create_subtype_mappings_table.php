@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('subtypes', function (Blueprint $table) {
+        Schema::create('subtype_mappings', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 50);
-            $table->string('tagname', 50)->nullable();
-            $table->unsignedTinyInteger('position')->default(1);
+            $table->foreignId('book_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('type_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('subtype_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subtypes');
+        Schema::dropIfExists('subtype_mappings');
     }
 };

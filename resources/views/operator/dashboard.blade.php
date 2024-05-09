@@ -5,7 +5,7 @@
 @endsection
 
 @section('sidebar')
-<x-sidebars.operator page='home'></x-sidebars.operator>
+<x-sidebars.operator page='home' questionsCount='{{ $questions->count() }}'></x-sidebars.operator>
 @endsection
 
 @section('body')
@@ -17,7 +17,7 @@ $colors=config('globals.colors');
     <div class="container">
         <div class="flex flex-row justify-between items-center">
             <div class="bread-crumb">
-                <div><i class="bi-house"></i> home</div>
+                <div><i class="bi-house"></i> home </div>
             </div>
             <div class="md:hidden text-slate-500">Welcome back!</div>
         </div>

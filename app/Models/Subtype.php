@@ -9,9 +9,11 @@ class Subtype extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'type_id',
-        'subject_id',
         'name',
         'tagname',
     ];
+    public function subtype_mappings()
+    {
+        return $this->hasMany(SubtypeMapping::class);
+    }
 }

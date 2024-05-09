@@ -30,9 +30,18 @@ class Book extends Model
     {
         return $this->hasManyThrough(Question::class, Chapter::class);
     }
+
     public function  subtypes($type_id)
     {
-        $subtypes = $this->subject->subtypes()->where('type_id', $type_id);
+
+        // $subtypeIds = SubtypeMapping::where('book_id', $this->id)
+        //     ->where('type_id', $type_id)->pluck('subtype_id');
+        // $subtypes = Subtype::whereIn('id', $subtypeIds)->get();
+
+        $subtypes = Subtype::whereRelation('subtype_mappings', function ($query) use ($type_id) {
+            return $query->where('type_id', $type_id);
+        })->get();
+
         return $subtypes;
     }
 }

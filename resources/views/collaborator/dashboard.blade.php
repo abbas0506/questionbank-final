@@ -26,7 +26,7 @@
                     <div class="title">Approved Questions</div>
                     <div class="flex items-center space-x-4">
                         <div class="h2">{{$questions->count()}}</div>
-                        <div class="text-xs text-slate-600"><i class="bi-arrow-up"></i>{{$questions->where('is_approved', 1)->count()}} </div>
+                        <div class="text-xs text-slate-600"><i class="bi-arrow-up"></i>{{$questions->whereNotNull('approver_id')->count()}} </div>
                     </div>
                 </div>
                 <div class="ico bg-green-100">
@@ -81,7 +81,7 @@
                                 @php
                                 $sr=1;
                                 @endphp
-                                @foreach($questions->where('is_approved', 0)->take(5) as $question) <tr class="tr">
+                                @foreach($questions->whereNull('approver_id')->take(5) as $question) <tr class="tr">
                                     <td>{{$sr++}}</td>
                                     <td class=" text-left">{{ $question->statement }}</td>
                                     <td><a href="{{route('collaborator.approvals.edit',$question)}}" class="text-orange-600"><i class="bx bx-show-alt"></i></a></td>

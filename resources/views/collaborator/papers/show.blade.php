@@ -99,7 +99,8 @@ $i=0;
                                         <select name="question_nature" id="question_nature" class="custom-input-borderless text-sm">
                                             <option value="full">Full question</option>
                                             <option value="or">Has OR alternatives</option>
-                                            <option value="parts">Has multiple parts </option>
+                                            <option value="parts">Has in-line parts </option>
+                                            <option value="parts">Has parts as defulat</option>
                                         </select>
                                     </div>
                                     <div class="grid" id='marks_cap'>
@@ -315,12 +316,12 @@ $i=0;
                         $('#question_nature_cap').hide();
                         $('#marks_cap').hide();
                         $('.questionable').hide()
-                        $('#divMcq').show()
+                        $('#mcqCover').show()
                         $('')
                     } else {
                         $('#question_nature_cap').show();
                         $('#marks_cap').show();
-                        $('#divMcq').hide()
+                        $('#mcqCover').hide()
                     }
 
                     var token = $("meta[name='csrf-token']").attr("content");

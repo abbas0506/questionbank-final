@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             BookSeeder::class,
             TypeSeeder::class,
             SubtypeSeeder::class,
+            SubtypeMappingSeeder::class,
             UserSeeder::class,
         ]);
     }

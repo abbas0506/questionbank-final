@@ -21,7 +21,8 @@ class Question extends Model
         'frequency',
         'marks',
         'is_conceptual',
-        'is_approved',
+        'approver_id',
+        'approved_at',
     ];
 
     public function user()
@@ -70,8 +71,12 @@ class Question extends Model
     {
         return $query->where('chapter_no', $chapter_no);
     }
-    public function scopeApproved($query, $isApproved)
+    public function scopeApproved($query)
     {
-        return $query->where('is_approved', $isApproved);
+        return $query->whereNotNull('approver_id');
+    }
+    public function scopeNotApproved($query)
+    {
+        return $query->whereNull('approver_id');
     }
 }

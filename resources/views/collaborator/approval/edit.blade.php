@@ -50,7 +50,7 @@
 
                     <div class="grid gap-y-1">
                         <label>Sub Type</label>
-                        <p>{{ $question->subtype->name }}</p>
+                        <p>{{ $question->subtype->name  ?? '' }}</p>
                     </div>
 
                     <div class="grid gap-y-1">
@@ -68,8 +68,8 @@
                     </div>
 
                     <!-- MCQs -->
-                    @if($question->subtype->tagname=='mcq')
-                    <div id='divMcq' class="questionable col-span-full">
+                    @if($question->type_id == 1)
+                    <div id='mcqCover' class="questionable col-span-full">
                         <label for="">Choices</label>
                         <div class="grid gap-4 mt-2">
                             <div class="flex items-center space-x-2">
@@ -90,10 +90,10 @@
                             </div>
                         </div>
                     </div>
-                    @endif
+                    @elseif($question->type_id == 3)
                     @if($question->subtype->tagname=='paraphrasing')
                     <!-- paraphrasing question -->
-                    <div id='divParaphrasing' class="questionable col-span-full">
+                    <div id='paraphrasingCover' class="questionable col-span-full">
                         <label for="">Paraphrasing: Poetry Lines</label>
                         <div class="grid gap-4 md:grid-cols-2 mt-2">
                             @foreach($question->paraphrasings as $paraphrasing)
@@ -118,6 +118,8 @@
 
                         </div>
                     </div>
+                    @endif
+
                     @endif
                     <!-- preview -->
                     <div class="col-span-full border p-6">
@@ -149,7 +151,7 @@
                         <label for="">Bise Frequency</label>
                         <input type="number" name="frequency" value="1" min=0 class="custom-input-borderless">
                     </div>
-                    <input type="hidden" name='chapter_no' value="{{ $question->chapterchapter_no }}">
+                    <!-- <input type="hidden" name='chapter_no' value="{{ $question->chapterchapter_no }}"> -->
                     <div class="flex justify-end items-center gap-4 col-span-full py-5">
                         <a href="{{url('/')}}" class="btn-blue rounded">Cancel</a>
                         <button type="submit" class="btn-green rounded">Save & Approve</button>
@@ -191,9 +193,9 @@
             // paraphrasing
             if ($(this).val() == 18) {
                 $('.questionable').hide()
-                $('#divParaphrasing').show()
+                $('#paraphrasingCover').show()
             } else {
-                $('#divParaphrasing').hide()
+                $('#paraphrasingCover').hide()
             }
 
             // if comprehension option 

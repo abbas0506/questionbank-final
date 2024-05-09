@@ -142,11 +142,12 @@ class ApprovalController extends Controller
                 'exercise_no' => $request->exercise_no,
                 'is_conceptual' => $request->is_conceptual,
                 'frequency' => $request->frequency,
-                'is_approved' => true,
+                'approver_id' => Auth::user()->id,
+                'approved_at' => now()->format('Y-m-d'),
             ]);
 
             // mcqs
-            if ($question->type->name == 'Objective') {
+            if ($question->type_id == 1) {
                 $correct = '';
                 if ($request->check_a) $correct = 'a';
                 if ($request->check_b) $correct = 'b';
@@ -193,7 +194,6 @@ class ApprovalController extends Controller
                     'marks' => $question->marks,
                     'frequency' => $question->frequency,
                     'is_conceptual' => $question->is_conceptual,
-                    'is_approved' => $question->is_approved,
                 ]);
             }
 
