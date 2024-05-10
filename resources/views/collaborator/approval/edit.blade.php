@@ -48,11 +48,12 @@
                         <p>{{ $question->type->name }}</p>
                     </div>
 
+                    @if($question->subtype)
                     <div class="grid gap-y-1">
                         <label>Sub Type</label>
                         <p>{{ $question->subtype->name  ?? '' }}</p>
                     </div>
-
+                    @endif
                     <div class="grid gap-y-1">
                         <label for="">Marks</label>
                         <input type="number" name="marks" value="{{ $question->marks }}" min=1 class="custom-input-borderless">

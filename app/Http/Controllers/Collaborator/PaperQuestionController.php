@@ -40,7 +40,8 @@ class PaperQuestionController extends Controller
 
         $request->validate([
 
-            'subtype_id' => 'required|numeric',
+            'type_id' => 'required|numeric',
+            'subtype_id' => 'nullable|numeric',
             'question_title' => 'nullable|max:100',
             'question_nature' => 'required',
             'exercise_ratio' => 'required|numeric',
@@ -60,7 +61,7 @@ class PaperQuestionController extends Controller
         try {
             //create paper question instance
             $paperQuestion = $paper->paperQuestions()->create([
-                'subtype_id' => $request->subtype_id,
+                'type_id' => $request->type_id,
                 'question_title' => $request->question_title,
                 'question_nature' => $request->question_nature,
                 'exercise_ratio' => $request->exercise_ratio,
@@ -81,22 +82,28 @@ class PaperQuestionController extends Controller
             $i = 0; //for iterating numOfparts
             // echo $threshold;
             foreach ($chapters as $chapter) {
-                $randomlySelectedQuestions = Question::where('subtype_id', $request->subtype_id)
+
+                $randomQuestions = Question::where('type_id', $request->type_id)
                     ->where('chapter_id', $chapter->id)
                     // ->where('is_from_exercise', $request->exercise_only)
                     ->where('frequency', '>=', $request->frequency)
                     ->get()
-                    ->random($partsCount[$i++]);
+                    ->random($partsCount[$i]);
 
-                foreach ($randomlySelectedQuestions as $question) {
+                echo $chapter->id . ":" . $request->type_id . "," . $request->frequency . "-" . $partsCount[$i] . "<br>";
+
+                foreach ($randomQuestions as $question) {
                     $paperQuestion->paperQuestionParts()->create([
                         'question_id' => $question->id,
                     ]);
                 }
+
+                $i++;
+                echo $randomQuestions;
             }
             DB::commit();
-            // echo $questions;
-            return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
+
+            // return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors($e->getMessage());

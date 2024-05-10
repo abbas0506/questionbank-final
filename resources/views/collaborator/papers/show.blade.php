@@ -78,7 +78,7 @@ $i=0;
                             <div class="p-4 md:p-8 h-80 overflow-y-auto">
                                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-x-16 text-left">
                                     <div class="">
-                                        <label>Q. Type</label>
+                                        <label>Question Type</label>
                                         <select name="type_id" id="type_id" class="custom-input-borderless text-sm">
                                             @foreach($types as $type)
                                             <option value="{{ $type->id }}" @selected(session('type_id')==$type->id)> {{ $type->name }} </option>
@@ -86,15 +86,17 @@ $i=0;
                                         </select>
                                     </div>
 
+                                    @if($book->subtype_mappings->count())
                                     <div class="">
-                                        <label>Question Type</label>
+                                        <label>Sub Type</label>
                                         <select name="subtype_id" id="subtype_id" class="custom-input-borderless text-sm">
                                             @foreach($book->subtypes(1) as $subtype)
                                             <option value="{{ $subtype->id }}">{{ $subtype->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="" id='question_nature_cap'>
+                                    @endif
+                                    <div class="" id='question_nature_cover'>
                                         <label>Nature</label>
                                         <select name="question_nature" id="question_nature" class="custom-input-borderless text-sm">
                                             <option value="full">Full question</option>
@@ -103,7 +105,7 @@ $i=0;
                                             <option value="parts">Has parts as defulat</option>
                                         </select>
                                     </div>
-                                    <div class="grid" id='marks_cap'>
+                                    <div class="grid" id='marks_cover'>
                                         <label>Marks (each)</label>
                                         <input type="number" name="marks_each" class="custom-input-borderless" value="1">
                                     </div>
@@ -184,17 +186,17 @@ $i=0;
             @endphp
             <!-- display paper question and their details -->
             <!-- MCQs -->
-            @foreach($paper->paperQuestions->sortBy('subtype_id') as $paperQuestion)
+            @foreach($paper->paperQuestions->sortBy('type_id') as $paperQuestion)
             @php
             $i=1;
             @endphp
-            <!-- objective case -->
-            @if($paperQuestion->subtype->tagname=='mcq')
+            <!-- mcqs -->
+            @if($paperQuestion->type_id == 1)
             <div class="question mcq">
                 <div class="head">
-                    <div class="sr">Q.{{$questionSr++}}</div>
-                    <h2>{{ $paperQuestion->title }}</h2>
-                    <div class="action border border-green-200 rounded bg-green-50">
+                    <div class="sr">Q.{{ $questionSr++ }}</div>
+                    <h2>{{ $paperQuestion->question_title }}</h2>
+                    <div class="action border border-green-200 rounded bg-green-50 mx-2">
                         <a modal-id='{{$paperQuestion->id}}' class="show-modal text-cyan-600"><i class="bx bx-pencil"></i></a>
                         <a href=""><i class="bi-arrow-repeat"></i></a>
                         <form action="" method="post">
@@ -207,7 +209,7 @@ $i=0;
                 <div class="body">
                     @foreach($paperQuestion->paperQuestionParts as $part)
                     <div class="sub">
-                        <div class="sr"></div>
+                        <div class="sr">{{$roman->lowercase($i++)}}</div>
                         <div class="statement">{{$part->question->statement}}</div>
                         <div class="action">
                             <a href=""><i class="bi-arrow-repeat"></i></a>
@@ -246,7 +248,7 @@ $i=0;
             @if($paperQuestion->question_nature=='parts')
 
             <div class="flex items-center">
-                <div class="w-8">Q. {{ $questionSr++ }}</div>
+                <div class="w-12">Q. {{ $questionSr++ }}</div>
                 <div class="flex-1 text-left">{{ $paperQuestion->question_title }}</div>
             </div>
 
@@ -254,10 +256,10 @@ $i=0;
             @foreach($paperQuestion->paperQuestionParts as $part)
 
             <div class="flex items-center">
-                <div class="w-8">{{Str::lower($roman->lowercase($i++))}}</div>
+                <div class="w-12">{{Str::lower($roman->lowercase($i++))}}</div>
                 <div class="flex-1 text-left">{{$part->question->statement}}</div>
-                <div class="flex items-center space-x-2">
-                    <a href="#"><i class="bi-arrow-repeat"></i></a>
+                <div class="flex items-center space-x-3">
+                    <a href="#"><i class="bi-arrow-repeat text-cyan-600"></i></a>
                     <form id='formDel{{$part->id}}' action="" method="post">
                         @csrf
                         @method('DELETE')
@@ -269,24 +271,32 @@ $i=0;
 
             @elseif($paperQuestion->question_nature=='full')
             <div class="flex items-center">
-                <div class="w-8">Q. {{ $questionSr++ }}</div>
+                <div class="w-12">Q. {{ $questionSr++ }}</div>
                 <div class="flex-1 text-left">{{ $paperQuestion->paperQuestionParts->first()->question->statement }}</div>
+                <div class="flex items-center space-x-3">
+                    <a href="#"><i class="bi-arrow-repeat text-cyan-600"></i></a>
+                    <form id='formDel{{$part->id}}' action="" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"><i class="bx bx-x text-red-600 show-confirm"></i></button>
+                    </form>
+                </div>
             </div>
             @else
             <!-- alternatives -->
             @foreach($paperQuestion->paperQuestionParts as $part)
             <div class="flex items-center">
                 @if($loop->first)
-                <div class="w-8">Q. {{ $questionSr++ }}</div>
-                <div class="flex-1 text-left"> {{ $part->question->statement }}</div>
-                <div>OR</div>
+                <div class="w-12">Q. {{ $questionSr++ }}</div>
+                <div class="text-left"> {{ $part->question->statement }}</div>
+                <div class="ml-2">OR</div>
                 @elseif($loop->last)
-                <div class="w-8"></div>
-                <div class="flex-1 text-left"> {{ $part->question->statement }}</div>
+                <div class="w-12"></div>
+                <div class="text-left"> {{ $part->question->statement }}</div>
                 @else
-                <div class="w-8"></div>
-                <div class="flex-1 text-left"> {{ $part->question->statement }}</div>
-                <div>OR</div>
+                <div class="w-12"></div>
+                <div class="text-left"> {{ $part->question->statement }}</div>
+                <div class="ml-2">OR</div>
                 @endif
             </div>
             @endforeach
@@ -306,21 +316,21 @@ $i=0;
 
                 // initialize controls
                 if ($('#type_id').val() == 1) {
-                    $('#question_nature_cap').hide();
-                    $('#marks_cap').hide();
+                    $('#question_nature_cover').hide();
+                    $('#marks_cover').hide();
                 }
 
                 $('#type_id').change(function() {
                     // objetive selected
                     if ($(this).val() == 1) {
-                        $('#question_nature_cap').hide();
-                        $('#marks_cap').hide();
+                        $('#question_nature_cover').hide();
+                        $('#marks_cover').hide();
                         $('.questionable').hide()
                         $('#mcqCover').show()
                         $('')
                     } else {
-                        $('#question_nature_cap').show();
-                        $('#marks_cap').show();
+                        $('#question_nature_cover').show();
+                        $('#marks_cover').show();
                         $('#mcqCover').hide()
                     }
 

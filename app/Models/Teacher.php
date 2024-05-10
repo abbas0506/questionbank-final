@@ -11,6 +11,7 @@ class Teacher extends Model
     protected $fillable = [
         'designation_type',
         'subject_id',
+        'phone',
         'institution',
         'logo',
     ];

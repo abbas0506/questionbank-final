@@ -10,7 +10,7 @@ class PaperQuestion extends Model
     use HasFactory;
     protected $fillable = [
         'paper_id',
-        'subtype_id',
+        'type_id',
         'question_title',
         'question_nature',
         'exercise_ratio',
@@ -26,9 +26,9 @@ class PaperQuestion extends Model
     {
         return $this->belongsTo(Paper::class);
     }
-    public function  subtype()
+    public function  type()
     {
-        return $this->belongsTo(Subtype::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function  paperQuestionParts()

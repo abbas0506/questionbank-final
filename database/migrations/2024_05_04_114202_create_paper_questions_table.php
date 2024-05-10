@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('paper_questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('paper_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('subtype_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('type_id')->constrained()->cascadeOnDelete();
             $table->string('question_title', 100)->nullable();
             $table->string('question_nature', 10)->default('whole');
+            $table->unsignedTinyInteger('marks_each')->default(1);
             $table->unsignedTinyInteger('exercise_ratio')->default(0);
             $table->unsignedTinyInteger('conceptual_ratio')->default(0);
             $table->unsignedTinyInteger('frequency')->default(1);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Subject;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,7 +30,8 @@ class UserController extends Controller
     {
         //
         $roles = Role::all();
-        return view('admin.users.create', compact('roles'));
+        $subjects = Subject::all();
+        return view('admin.users.create', compact('roles', 'subjects'));
     }
 
     /**
@@ -52,6 +54,13 @@ class UserController extends Controller
             $user = User::create($request->all());
             foreach ($request->role_names_array as $roleName) {
                 $user->assignRole($roleName);
+                $roles = array('collaborator', 'teacher');
+                if (in_array($roleName, $roles)) {
+                    $user->teacher()->create([
+                        'subject_id' => $request->subject_id,
+                        'phone' => $request->phone,
+                    ]);
+                }
             }
 
             DB::commit();
