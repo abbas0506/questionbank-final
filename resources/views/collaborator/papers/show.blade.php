@@ -273,14 +273,7 @@ $i=0;
             <div class="flex items-center">
                 <div class="w-12">Q. {{ $questionSr++ }}</div>
                 <div class="flex-1 text-left">{{ $paperQuestion->paperQuestionParts->first()->question->statement }}</div>
-                <div class="flex items-center space-x-3">
-                    <a href="#"><i class="bi-arrow-repeat text-cyan-600"></i></a>
-                    <form id='formDel{{$part->id}}' action="" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"><i class="bx bx-x text-red-600 show-confirm"></i></button>
-                    </form>
-                </div>
+
             </div>
             @else
             <!-- alternatives -->
