@@ -99,11 +99,10 @@ class PaperQuestionController extends Controller
                 }
 
                 $i++;
-                echo $randomQuestions;
             }
             DB::commit();
 
-            // return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
+            return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors($e->getMessage());
