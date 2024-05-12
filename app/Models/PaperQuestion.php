@@ -12,7 +12,7 @@ class PaperQuestion extends Model
         'paper_id',
         'type_id',
         'question_title',
-        'question_nature',
+        'display_format',
         'exercise_ratio',
         'conceptual_ratio',
         'frequency',

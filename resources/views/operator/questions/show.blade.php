@@ -7,7 +7,6 @@
 <x-sidebars.operator page='questions'></x-sidebars.operator>
 @endsection
 
-
 @section('body')
 <div class="responsive-container">
     <div class="container">

@@ -33,16 +33,18 @@ $activeBook=$book;
                         <div class="flex flex-wrap gap-4 justify-between items-cente">
                             <h2>{{ $book->name }} <i class="bx bx-chevron-right"></i> Chapters &nbsp<i class="bi-layers"></i></h2>
                         </div>
-                        <div class="flex justify-between gap-4 mt-5">
-                            <div class="flex-1">
-                                <label for="">Paper Title</label>
-                                <input type="text" name="title" value='Sample Paper' placeholder="Sample Paper" class="custom-input-borderless" required>
-                            </div>
 
-                            <div>
-                                <label for="">Paper Date</label>
-                                <input type="date" id='paper_date' name="paper_date" class="custom-input-borderless" value="{{ date('Y-m-d') }}">
-                            </div>
+                    </div>
+
+                    <div class="flex justify-between gap-4 p-4 mt-6 border border-dashed rounded-lg">
+                        <div class="flex-1">
+                            <label for="">Paper Title *</label>
+                            <input type="text" name="title" value='' placeholder="Enter paper title" class="custom-input-borderless" required>
+                        </div>
+
+                        <div>
+                            <label for="">Paper Date</label>
+                            <input type="date" id='paper_date' name="paper_date" class="custom-input-borderless" value="{{ date('Y-m-d') }}">
                         </div>
                     </div>
 
@@ -53,8 +55,8 @@ $activeBook=$book;
                     <x-message></x-message>
                     @endif
 
-                    <div class="flex items-center justify-between px-3 mt-4">
-                        <h2 class="text-green-800">Please select chapter(s) for the paper</h2>
+                    <div class="flex items-center justify-between px-4 mt-6">
+                        <div class="text-red-600">Please select chapter(s) for the paper</div>
                         <div class="flex items-center space-x-2">
                             <label for="check_all">Check All</label>
                             <input type="checkbox" id='check_all' class="custom-input w-4 h-4 rounded">
@@ -90,7 +92,7 @@ $activeBook=$book;
                             </div>
                         </div> -->
                         <div class="flex justify-center items-center my-8">
-                            <button type="submit" class="btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> Select Questions Now</button>
+                            <button type="submit" class="btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> Go Next & Add Questions</button>
                         </div>
 
                     </div>
@@ -156,29 +158,4 @@ $activeBook=$book;
     </div>
 
 </div>
-@endsection
-@section('script')
-<script type="module">
-    $('.checkable-row input').change(function() {
-        if ($(this).prop('checked'))
-            $(this).parents('.checkable-row').addClass('active')
-        else
-            $(this).parents('.checkable-row').removeClass('active')
-    })
-
-    $('#check_all').change(function() {
-        if ($(this).prop('checked')) {
-            $('.checkable-row input').each(function() {
-                $(this).prop('checked', true)
-                $(this).parents('.checkable-row').addClass('active')
-            })
-        } else {
-            $('.checkable-row input').each(function() {
-                $(this).prop('checked', false)
-                $(this).parents('.checkable-row').removeClass('active')
-            })
-        }
-    })
-</script>
-
 @endsection

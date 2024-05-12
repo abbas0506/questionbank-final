@@ -24,7 +24,7 @@
                         <i class="bx bx-chevron-right"></i>
                         <p class="text-sm text-slate-600">Ch. {{ $question->chapter->chapter_no }}</p>
                     </div>
-                    <form action="{{route('collaborator.approvals.destroy', $question)}}" method="POST" onsubmit="return confirmDel(event)">
+                    <form action="{{route('collaborator.approvables.destroy', $question)}}" method="POST" onsubmit="return confirmDel(event)">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-red rounded text-slate-200">
@@ -40,7 +40,7 @@
                 <x-message></x-message>
                 @endif
 
-                <form action="{{route('collaborator.approvals.update', $question)}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
+                <form action="{{route('collaborator.approvables.update', $question)}}" method='post' class="grid md:grid-cols-3 gap-6 md:gap-y-8 md:gap-x-16 mt-12" onsubmit="return validate(event)">
                     @csrf
                     @method('PATCH')
                     <div class="grid gap-y-1">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Collaborator;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\Question;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,6 +19,10 @@ class ApprovalController extends Controller
     public function index()
     {
         //
+        $books = Book::where('subject_id', Auth::user()->teacher->subject_id)->get();
+        $activeBook = $books->first();
+        $activeChapter = $activeBook->chapters->first();
+        return view('collaborator.approvables.index', compact('books', 'activeBook', 'activeChapter'));
     }
 
     /**
@@ -42,6 +47,9 @@ class ApprovalController extends Controller
     public function show(string $id)
     {
         //
+        $question = Question::find($id);
+        $similarQuestions = $question->similarQuestions();
+        return view('collaborator.approvables.show', compact('question', 'similarQuestions'));
     }
 
     /**
@@ -50,71 +58,7 @@ class ApprovalController extends Controller
     public function edit(string $id)
     {
         //
-        $question = Question::find($id);
 
-        $statement = Str::lower($question->statement);
-
-        $punctuationMarks = ['.', ',', '?', ':',];
-
-        //too short automatically skippped words
-        // 'who', 'how','is', 'am', 'are', 'was', 'can', 'of', 'the','has',  'had',
-        // 'in', 'out', 'on', 'at', 'as', 'any', 'one', 'two', 'or''i', 'we', 'our', 'us', 'you', 
-        // 'he', 'she', 'it', 'its', 'his', 'him', 'her', 
-
-        $wordsToRemove = [
-            'define', 'explain', 'describe', 'write', 'down',
-            'what', 'which', 'where', 'whose', 'when',
-            'were', 'shall', 'will', 'would', 'should',
-            'could', 'might', 'here', 'there',  'have',
-            'this', 'that', 'such', 'with',
-            'three', 'four', 'five', 'seven', 'eight', 'nine',
-            'your', 'they', 'their', 'them', 'differentiate', 'between', 'find'
-
-        ];
-
-        // remove puncutation marks
-        foreach ($punctuationMarks as $punctuationMark) {
-            $statement = Str::replace($punctuationMark, '', $statement);
-        }
-        // Optionally, trim extra spaces after removing words
-        $statement = trim($statement);
-
-        // skip  too short words, pick atleast 4 chracters word
-        preg_match_all("/\b\w{4,}\b/", $statement, $wordsArray);
-
-        $wordsArray = $wordsArray[0];
-
-        // remove duplicated words
-        $wordsArray = array_unique($wordsArray);
-
-        // Remove specific words from the array
-        $shortListedWordsArray = array_diff($wordsArray, $wordsToRemove);
-
-        // reset the index values of array
-        $shortListedWordsArray = array_values($shortListedWordsArray);
-
-        if (count($shortListedWordsArray)) {
-            $similarQuestions = Question::whereNot('id', $question->id)
-                ->where('type_id', $question->type_id)
-                ->where('statement', 'like', '%' . $shortListedWordsArray[0] . '%')
-                ->whereRelation('chapter', function ($query) use ($question) {
-                    $query->where('book_id', $question->chapter->book_id)
-                        ->whereRelation('book', function ($query) use ($question) {
-                            $query->where('subject_id', $question->chapter->book->subject_id);
-                        });
-                });
-
-            if (count($shortListedWordsArray) > 1) {
-                $similarQuestions = $similarQuestions->where('statement', 'like', '%' . $shortListedWordsArray[1] . '%');
-            }
-            // if (count($shortListedWordsArray) > 2) {
-            //     $similarQuestions = $similarQuestions->where('statement', 'like', '%' . $shortListedWordsArray[2] . '%');
-            // }
-
-            $similarQuestions = $similarQuestions->get();
-        }
-
-        return view('collaborator.approval.edit', compact('question', 'similarQuestions'));
     }
 
     /**

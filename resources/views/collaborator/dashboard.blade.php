@@ -84,7 +84,7 @@
                                 @foreach($questions->whereNull('approver_id')->take(5) as $question) <tr class="tr">
                                     <td>{{$sr++}}</td>
                                     <td class=" text-left">{{ $question->statement }}</td>
-                                    <td><a href="{{route('collaborator.approvals.edit',$question)}}" class="text-orange-600"><i class="bx bx-show-alt"></i></a></td>
+                                    <td><a href="{{route('collaborator.approvables.show',$question)}}" class="text-orange-600"><i class="bx bx-show-alt"></i></a></td>
                                 </tr>
                                 @endforeach
 

@@ -43,11 +43,6 @@ $i=0;
                 <a href="{{route('collaborator.papers.edit',$paper)}}" class="absolute top-2 right-2 btn-sky flex justify-center items-center rounded-full p-0 w-5 h-5"><i class="bx bx-pencil text-xs"></i></a>
             </div>
 
-            <div class="flex justify-center gap-3 my-6">
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 1]) }}" class="btn btn-blue">MCQs <i class="bi bi-plus-circle"></i></a>
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 2]) }}" class="btn btn-orange">Short <i class="bi bi-plus-circle"></i></a>
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 3]) }}" class="btn btn-green">Long <i class="bi bi-plus-circle"></i></a>
-            </div>
 
             <div data-modal-target="default-modal" data-modal-toggle="default-modal" class="flex justify-center items-center my-8">
                 <button type="submit" class="btn-green flex justify-center items-center"> Add Question(s) to Paper</button>
@@ -329,100 +324,99 @@ $i=0;
 
 
         </div>
-    </div>
-    @endsection
+        @endsection
 
-    @section('script')
-    <script type="module">
-        $('document').ready(function() {
+        @section('script')
+        <script type="module">
+            $('document').ready(function() {
 
-            // // initialize controls
-            // if ($('#type_id').val() == 1) {
-            //     $('#question_nature_cover').hide();
-            //     $('#marks_cover').hide();
-            // }
+                // initialize controls
+                if ($('#type_id').val() == 1) {
+                    $('#display_format_cover').hide();
+                    $('#marks_cover').hide();
+                }
 
-            // $('#type_id').change(function() {
-            //     // objetive selected
-            //     if ($(this).val() == 1) {
-            //         $('#question_nature_cover').hide();
-            //         $('#marks_cover').hide();
-            //         $('.questionable').hide()
-            //         $('#mcqCover').show()
-            //         $('')
-            //     } else {
-            //         $('#question_nature_cover').show();
-            //         $('#marks_cover').show();
-            //         $('#mcqCover').hide()
-            //     }
-
-            //     var token = $("meta[name='csrf-token']").attr("content");
-            //     var book_id = $('#book_id').val();
-
-            //     //fetch subtypes
-
-            //     $.ajax({
-            //         type: 'GET',
-            //         url: "{{url('fetchSubTypesByTypeId')}}",
-            //         data: {
-            //             "type_id": $(this).val(),
-            //             "book_id": book_id,
-            //             "_token": token,
-            //         },
-            //         success: function(response) {
-            //             //
-            //             $('#subtype_id').html(response.options);
-            //         },
-            //         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            //             Swal.fire({
-            //                 icon: 'warning',
-            //                 title: errorThrown
-            //             });
-            //         }
-            //     }); //ajax end
-            $('.show-confirm').click(function(event) {
-                var form = $(this).closest("form");
-                // var name = $(this).data("name");
-                event.preventDefault();
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.value) {
-                        //submit corresponding form
-                        form.submit();
+                $('#type_id').change(function() {
+                    // objetive selected
+                    if ($(this).val() == 1) {
+                        $('#display_format_cover').hide();
+                        $('#marks_cover').hide();
+                        $('.questionable').hide()
+                        $('#mcqCover').show()
+                        $('')
+                    } else {
+                        $('#display_format_cover').show();
+                        $('#marks_cover').show();
+                        $('#mcqCover').hide()
                     }
+
+                    var token = $("meta[name='csrf-token']").attr("content");
+                    var book_id = $('#book_id').val();
+
+                    //fetch subtypes
+
+                    $.ajax({
+                        type: 'GET',
+                        url: "{{url('fetchSubTypesByTypeId')}}",
+                        data: {
+                            "type_id": $(this).val(),
+                            "book_id": book_id,
+                            "_token": token,
+                        },
+                        success: function(response) {
+                            //
+                            $('#subtype_id').html(response.options);
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: errorThrown
+                            });
+                        }
+                    }); //ajax end
+                    $('.show-confirm').click(function(event) {
+                        var form = $(this).closest("form");
+                        // var name = $(this).data("name");
+                        event.preventDefault();
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            type: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.value) {
+                                //submit corresponding form
+                                form.submit();
+                            }
+                        });
+                    });
+
+
                 });
-            });
+
+                $('.parts-count').click(function() {
+                    $(this).select();
+                })
+                $('#choices').click(function() {
+                    $(this).select();
+                })
+
+                $('.parts-count').bind('keyup mouseup', function() {
+                    var sumOfParts = 0;
+                    $('.parts-count').each(function() {
+                        sumOfParts += parseInt($(this).val());
+
+                    });
+
+                    sumOfParts = parseInt(sumOfParts);
+                    $('#parts_total').val(sumOfParts);
+                    // $('#choices').val(sumOfParts);
+                });
 
 
-        });
-
-        $('.parts-count').click(function() {
-            $(this).select();
-        })
-        $('#choices').click(function() {
-            $(this).select();
-        })
-
-        $('.parts-count').bind('keyup mouseup', function() {
-        var sumOfParts = 0;
-        $('.parts-count').each(function() {
-            sumOfParts += parseInt($(this).val());
-
-        });
-
-        sumOfParts = parseInt(sumOfParts);
-        $('#parts_total').val(sumOfParts);
-        // $('#choices').val(sumOfParts);
-        });
-
-
-        })
-    </script>
-    @endsection
+            })
+        </script>
+        @endsection

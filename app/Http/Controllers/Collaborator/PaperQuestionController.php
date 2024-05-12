@@ -43,7 +43,7 @@ class PaperQuestionController extends Controller
             'type_id' => 'required|numeric',
             'subtype_id' => 'nullable|numeric',
             'question_title' => 'nullable|max:100',
-            'question_nature' => 'required',
+            'display_format' => 'required',
             'exercise_ratio' => 'required|numeric',
             'conceptual_ratio' => 'required|numeric',
             'frequency' => 'required|numeric',
@@ -63,7 +63,7 @@ class PaperQuestionController extends Controller
             $paperQuestion = $paper->paperQuestions()->create([
                 'type_id' => $request->type_id,
                 'question_title' => $request->question_title,
-                'question_nature' => $request->question_nature,
+                'display_format' => $request->display_format,
                 'exercise_ratio' => $request->exercise_ratio,
                 'conceptual_ratio' => $request->conceptual_ratio,
                 'frequency' => $request->frequency,
@@ -81,16 +81,25 @@ class PaperQuestionController extends Controller
 
             $i = 0; //for iterating numOfparts
             // echo $threshold;
+
             foreach ($chapters as $chapter) {
 
-                $randomQuestions = Question::where('type_id', $request->type_id)
-                    ->where('chapter_id', $chapter->id)
-                    // ->where('is_from_exercise', $request->exercise_only)
-                    ->where('frequency', '>=', $request->frequency)
-                    ->get()
-                    ->random($partsCount[$i]);
-
-                echo $chapter->id . ":" . $request->type_id . "," . $request->frequency . "-" . $partsCount[$i] . "<br>";
+                if ($request->subtype_id) {
+                    $randomQuestions = Question::where('type_id', $request->type_id)
+                        ->where('subtype_id', $request->subtype_id)
+                        ->where('chapter_id', $chapter->id)
+                        // ->where('is_from_exercise', $request->exercise_only)
+                        ->where('frequency', '>=', $request->frequency)
+                        ->get()
+                        ->random($partsCount[$i]);
+                } else {
+                    $randomQuestions = Question::where('type_id', $request->type_id)
+                        ->where('chapter_id', $chapter->id)
+                        // ->where('is_from_exercise', $request->exercise_only)
+                        ->where('frequency', '>=', $request->frequency)
+                        ->get()
+                        ->random($partsCount[$i]);
+                }
 
                 foreach ($randomQuestions as $question) {
                     $paperQuestion->paperQuestionParts()->create([
@@ -101,8 +110,8 @@ class PaperQuestionController extends Controller
                 $i++;
             }
             DB::commit();
-
-            return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
+            echo $chaperIds;
+            // return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors($e->getMessage());

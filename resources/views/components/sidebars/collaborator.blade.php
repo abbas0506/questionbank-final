@@ -15,9 +15,9 @@
                 </a>
             </li>
             <li>
-                <a href="" class="flex items-center p-2">
+                <a href="{{ route('collaborator.book.approvables.index',0) }}" class="flex items-center p-2">
                     <i class="bi-bookmark-check @if($page=='approval') current-page @endif"></i>
-                    <span class="ml-3">Approve Qs.</span>
+                    <span class="ml-3">Approvable Qs.</span>
                 </a>
             </li>
             <li>

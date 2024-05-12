@@ -12,10 +12,15 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Collaborator\ApprovalController;
+use App\Http\Controllers\Collaborator\BookApprovableController;
+use App\Http\Controllers\Collaborator\BookChapterQuestionController;
+use App\Http\Controllers\Collaborator\ChapterApprovableController;
+use App\Http\Controllers\Collaborator\ChapterQuestionController as CollaboratorChapterQuestionController;
 use App\Http\Controllers\Collaborator\DashboardController as CollaboratorDashboardController;
 use App\Http\Controllers\Collaborator\PaperController;
 use App\Http\Controllers\Collaborator\PaperGradeBookChapterController;
 use App\Http\Controllers\Collaborator\PaperQuestionController;
+use App\Http\Controllers\Collaborator\PaperTypeQuestionController;
 use App\Http\Controllers\Operator\BookChapterController;
 use App\Http\Controllers\Operator\ChapterQuestionController;
 use App\Http\Controllers\Operator\GradeBookChapterController;
@@ -71,9 +76,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
 
 Route::group(['prefix' => 'collaborator', 'as' => 'collaborator.', 'middleware' => ['role:collaborator']], function () {
     Route::get('/', [CollaboratorDashboardController::class, 'index']);
-    Route::resource('approvals', ApprovalController::class);
+    Route::resource('approvables', ApprovalController::class);
+    Route::resource('book.approvables', BookApprovableController::class);
+    Route::resource('chapter.approvables', ChapterApprovableController::class);
     Route::resource('papers', PaperController::class);
     Route::resource('paper.questions', PaperQuestionController::class);
+    Route::resource('paper.type.questions', PaperTypeQuestionController::class);
+
     Route::resource('grade.book.chapters', PaperGradeBookChapterController::class);
 });
 Route::group(['prefix' => 'operator', 'as' => 'operator.', 'middleware' => ['role:operator']], function () {
