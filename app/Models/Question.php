@@ -72,6 +72,14 @@ class Question extends Model
     {
         return $query->where('type_id', 3);
     }
+    public function scopeObjective($query)
+    {
+        return $query->where('type_id', 1);
+    }
+    public function scopeSubjective($query)
+    {
+        return $query->whereBetween('type_id', [2, 3]);
+    }
     public function scopeChapter($query, $chapter_no)
     {
         return $query->where('chapter_no', $chapter_no);

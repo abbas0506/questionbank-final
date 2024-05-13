@@ -50,7 +50,7 @@ class SelfTestController extends Controller
             $chapterNoArray = $request->chapter_no_array;
             session([
                 'chapterNoArray' => $chapterNoArray,
-                'mcqs_count' => $request->mcqs_count,
+                'mcqs_count' => $request->objective()_count,
 
             ]);
             return redirect()->route('self-tests.show', $request->book_id);
