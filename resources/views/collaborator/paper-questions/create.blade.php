@@ -22,8 +22,12 @@ $activeBook=$paper->book;
             <div>Papers</div>
         </div>
 
-
-        <!-- <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6"> -->
+        <!-- page message -->
+        @if($errors->any())
+        <x-message :errors='$errors'></x-message>
+        @else
+        <x-message></x-message>
+        @endif
 
         <form action="{{ route('collaborator.paper.questions.store',$paper) }}" method="post">
             @csrf
@@ -35,7 +39,8 @@ $activeBook=$paper->book;
                 <a href="{{ route('collaborator.papers.show', $paper) }}" class="text-blue-600 hover:text-blue-800 text-xs">Show Paper <i class="bi-eye"></i></a>
             </div>
             <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 bg-slate-100 border border-dashed rounded-lg p-5 mt-5">
-                @if($paper->book->subtype_mappings->count())
+
+                @if($paper->book->subtype_mappings->where('type_id', $type->id)->count()>0)
                 <div class="">
                     <label>Sub Type</label>
                     <select name="subtype_id" id="subtype_id" class="custom-input-borderless text-sm">
@@ -45,23 +50,27 @@ $activeBook=$paper->book;
                     </select>
                 </div>
                 @endif
-                <div class="" id='display_format_cover'>
+
+                @if($type->id>1)
+                <div class="" id='display_style_cover'>
                     <label>Display Format</label>
-                    <select name="display_format" id="display_format" class="custom-input-borderless text-sm">
+                    <select name="display_style" id="display_style" class="custom-input-borderless text-sm">
                         <option value="compact">Compact Question</option>
                         <option value="vertical">Vertical List</option>
                         <option value="horizontal">Horizontal List </option>
                         <option value="alt">OR Separated Alternative</option>
                     </select>
                 </div>
+
                 <div class="grid" id='marks_cover'>
                     <label>Marks (each)</label>
-                    <input type="number" name="marks_each" class="custom-input-borderless" value="1">
+                    <input type="number" name="marks_each" class="custom-input-borderless text-sm" value="{{ $type->id==2?2:8 }}" min=1>
                 </div>
+                @endif
                 <!-- advanced options -->
                 <!-- <div class="">
                         <label>Exercise Ratio</label>
-                        <select name="exercise_ratio" id="display_format" class="custom-input-borderless text-sm">
+                        <select name="exercise_ratio" id="display_style" class="custom-input-borderless text-sm">
                             <option value="0">0 %</option>
                             <option value="10">10 %</option>
                             <option value="20">20 %</option>
@@ -83,15 +92,20 @@ $activeBook=$paper->book;
                             <option value="100">100 %</option>
                         </select>
                     </div>
-                    <div class="">
-                        <label>Importance Level</label>
-                        <input type="number" name="frequency" class="custom-input-borderless" value="1">
-                    </div> -->
+                    -->
+                <div class="">
+                    <label>Importance Level</label>
+                    <select name="frequency" id="" class="custom-input-borderless text-sm">
+                        <option value="1">Normal</option>
+                        <option value="2">High</option>
+                        <option value="3">Very High</option>
+                    </select>
+                </div>
 
 
             </div>
 
-            <!-- Modal body -->
+            <!-- Chapters List -->
             <div class="p-4 md:p-8 h-[16rem] overflow-y-auto">
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-x-16 text-left">
 
@@ -133,4 +147,53 @@ $activeBook=$paper->book;
 </div>
 
 </div>
+@endsection
+
+@section('script')
+<script type="module">
+    $('document').ready(function() {
+
+        //     $('.show-confirm').click(function(event) {
+        //         var form = $(this).closest("form");
+        //         // var name = $(this).data("name");
+        //         event.preventDefault();
+        //         Swal.fire({
+        //             title: 'Are you sure?',
+        //             text: "You won't be able to revert this!",
+        //             type: 'warning',
+        //             showCancelButton: true,
+        //             confirmButtonColor: '#3085d6',
+        //             cancelButtonColor: '#d33',
+        //             confirmButtonText: 'Yes, delete it!'
+        //         }).then((result) => {
+        //             if (result.value) {
+        //                 //submit corresponding form
+        //                 form.submit();
+        //             }
+        //         });
+        //     });
+
+
+        // });
+
+        $('.parts-count').click(function() {
+            $(this).select();
+        })
+        $('#choices').click(function() {
+            $(this).select();
+        })
+
+        $('.parts-count').bind('keyup mouseup', function() {
+            var sumOfParts = 0;
+            $('.parts-count').each(function() {
+                sumOfParts += parseInt($(this).val());
+
+            });
+
+            sumOfParts = parseInt(sumOfParts);
+            $('#parts_total').val(sumOfParts);
+            // $('#choices').val(sumOfParts);
+        });
+    });
+</script>
 @endsection

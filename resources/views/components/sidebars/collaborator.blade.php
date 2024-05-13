@@ -14,11 +14,11 @@
                     <span class="ml-3">Home</span>
                 </a>
             </li>
-            <li>
+            <!-- <li>
                 <a href="{{ route('collaborator.book.approvables.index',0) }}" class="flex items-center p-2">
                     <i class="bi-bookmark-check @if($page=='approval') current-page @endif"></i>
                     <span class="ml-3">Approvable Qs.</span>
-                </a>
+                </a> -->
             </li>
             <li>
                 <a href="{{ route('collaborator.papers.index') }}" class="flex items-center p-2">

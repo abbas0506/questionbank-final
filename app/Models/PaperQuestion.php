@@ -12,14 +12,14 @@ class PaperQuestion extends Model
         'paper_id',
         'type_id',
         'question_title',
-        'display_format',
+        'display_style',
         'exercise_ratio',
         'conceptual_ratio',
         'frequency',
         'choices',
         'number_style',
         'display_cols',
-        'position_no'
+        'position'
     ];
 
     public function  paper()

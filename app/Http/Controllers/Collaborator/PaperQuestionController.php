@@ -11,6 +11,9 @@ use App\Models\Question;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Rmunate\Utilities\SpellNumber;
+use NumberFormatter;
+
 
 class PaperQuestionController extends Controller
 {
@@ -43,14 +46,14 @@ class PaperQuestionController extends Controller
             'type_id' => 'required|numeric',
             'subtype_id' => 'nullable|numeric',
             'question_title' => 'nullable|max:100',
-            'display_format' => 'required',
-            'exercise_ratio' => 'required|numeric',
-            'conceptual_ratio' => 'required|numeric',
+            // 'display_style' => 'required',
+            // 'exercise_ratio' => 'required|numeric',
+            // 'conceptual_ratio' => 'required|numeric',
             'frequency' => 'required|numeric',
             'choices' => 'required|numeric',
             // 'number_style' => 'required',
             // 'display_cols' => 'required|numeric',
-            // 'position_no' => 'required|numeric',
+            // 'position' => 'required|numeric',
             'chapter_ids_array' => 'required',
             'parts_count_array' => 'required',
 
@@ -58,19 +61,30 @@ class PaperQuestionController extends Controller
 
         $paper = Paper::find($paperId);
         DB::beginTransaction();
+
+        $question_title = '';
+        $formatter = new NumberFormatter('en', NumberFormatter::SPELLOUT);
+        if ($request->type_id == 1) {
+            $mustAttempt = collect($request->parts_count_array)->sum() - $request->choices;
+
+
+            $question_title = "Attempt any " . $formatter->format($mustAttempt) . " questions.";
+        }
+
+
         try {
             //create paper question instance
             $paperQuestion = $paper->paperQuestions()->create([
                 'type_id' => $request->type_id,
-                'question_title' => $request->question_title,
-                'display_format' => $request->display_format,
-                'exercise_ratio' => $request->exercise_ratio,
-                'conceptual_ratio' => $request->conceptual_ratio,
+                'question_title' => $question_title,
+                'display_style' => $request->display_style ? $request->display_style : 'compact',
+                // 'exercise_ratio' => $request->exercise_ratio,
+                // 'conceptual_ratio' => $request->conceptual_ratio,
                 'frequency' => $request->frequency,
                 'choices' => $request->choices,
                 // 'number_style' => $request->num,
                 // 'display_cols' => 'required|numeric',
-                // 'position_no' => 'required|numeric',
+                // 'position' => 'required|numeric',
             ]);
             //randomly select question parts from each chapter and save them
             $chaperIds = array();
@@ -110,8 +124,8 @@ class PaperQuestionController extends Controller
                 $i++;
             }
             DB::commit();
-            echo $chaperIds;
-            // return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
+            // print_r($chaperIds);
+            return redirect()->route('collaborator.papers.show', $paper)->with('success', 'Question successfully added!');
         } catch (Exception $e) {
             DB::rollBack();
             return redirect()->back()->withErrors($e->getMessage());
@@ -150,7 +164,7 @@ class PaperQuestionController extends Controller
     {
         //
         try {
-            $paperQuestion = Question::find($paperQuestionId);
+            $paperQuestion = PaperQuestion::find($paperQuestionId);
             $paperQuestion->delete();
             return redirect()->back()->with('success', 'Successfully deleted!');
         } catch (Exception $e) {

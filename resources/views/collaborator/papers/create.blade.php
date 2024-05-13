@@ -63,7 +63,6 @@ $activeBook=$book;
                         </div>
                     </div>
                     <div class="mt-4">
-
                         <div class="grid text-sm">
                             @foreach($book->chapters->sortBy('chapter_no') as $chapter)
                             <div class="flex items-center odd:bg-slate-100 space-x-3 checkable-row">
@@ -77,20 +76,6 @@ $activeBook=$book;
                             </div>
                             @endforeach
                         </div>
-                        <!-- other valuable options -->
-                        <!-- <h2 class="text-lg mt-8 text-left">Value Added Filters <span class="text-sm text-salte-600 ml-4">(optional)</span></h2>
-                        <div class="flex flex-col text-left mt-5">
-                            <div class="question-filter flex items-center space-x-2 border-b py-3">
-                                <label for="exercise_only" class="flex-1 text-base hover:cursor-pointer">Questions form exercise only</label>
-                                <input type="checkbox" id='exercise_only' name="exercise_only" class="custom-input w-4 h-4 rounded">
-                                <i class="bx bx-check"></i>
-                            </div>
-                            <div class="question-filter flex items-center space-x-2 border-b py-3">
-                                <label for="frequent_only" class="flex-1 text-base hover:cursor-pointer">Most frequent questions only</label>
-                                <input type="checkbox" id='frequent_only' name="frequent_only" class="custom-input w-4 h-4 rounded">
-                                <i class="bx bx-check"></i>
-                            </div>
-                        </div> -->
                         <div class="flex justify-center items-center my-8">
                             <button type="submit" class="btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> Go Next & Add Questions</button>
                         </div>
@@ -134,13 +119,7 @@ $activeBook=$book;
                                 <div>
                                     <div class="font-semibold">{{ $book->name }}</div>
                                     <div class="flex space-x-5 text-slate-600 text-[10px]">
-                                        <div> <i class="bi-question-circle"></i> {{ $book->questions->count() }}</div>
-                                        <div> <i class="bi-layers"></i> {{ $book->chapters->count() }} chapters</div>
-                                        <div class="">
-                                            @if($book->questions()->today()->count()>0)
-                                            {{ $book->questions()->today()->count() }}<i class="bi-arrow-up"></i>
-                                            @endif
-                                        </div>
+
                                     </div>
                                 </div>
                                 @if($activeBook->id==$book->id)
@@ -158,4 +137,29 @@ $activeBook=$book;
     </div>
 
 </div>
+@endsection
+
+@section('script')
+<script type="module">
+    $('.checkable-row input').change(function() {
+        if ($(this).prop('checked'))
+            $(this).parents('.checkable-row').addClass('active')
+        else
+            $(this).parents('.checkable-row').removeClass('active')
+    })
+
+    $('#check_all').change(function() {
+        if ($(this).prop('checked')) {
+            $('.checkable-row input').each(function() {
+                $(this).prop('checked', true)
+                $(this).parents('.checkable-row').addClass('active')
+            })
+        } else {
+            $('.checkable-row input').each(function() {
+                $(this).prop('checked', false)
+                $(this).parents('.checkable-row').removeClass('active')
+            })
+        }
+    })
+</script>
 @endsection

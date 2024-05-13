@@ -19,10 +19,10 @@ class SubtypeSeeder extends Seeder
         Subtype::create(['name' => 'Correct spelling', 'position' => 1,]);
         Subtype::create(['name' => 'Meaning of words', 'position' => 1,]);
         Subtype::create(['name' => 'Correct grammar', 'position' => 1,]);
-        Subtype::create(['name' => 'Correction of Propoisiton', 'position' => 1,]);
+        Subtype::create(['name' => 'Correction of Proposition', 'position' => 1,]);
         Subtype::create(['name' => 'Correction of sentence', 'position' => 1,]);
 
-        // long subtypes
+        // long subtypes 
         Subtype::create(['name' => 'English to Urdu (Para)', 'position' => 1,]);
         Subtype::create(['name' => 'Urdu to English (Para)', 'position' => 1,]);
         Subtype::create(['name' => 'Summary of Poem', 'position' => 1,]);
@@ -31,13 +31,49 @@ class SubtypeSeeder extends Seeder
         Subtype::create(['name' => 'Letter', 'position' => 1,]);
         Subtype::create(['name' => 'Story', 'position' => 1,]);
         Subtype::create(['name' => 'Dialogue', 'position' => 1,]);
-        Subtype::create(['name' => 'Essay', 'position' => 1,]);
-        Subtype::create(['name' => 'Paragraph writing', 'position' => 1,]);
-        Subtype::create(['name' => 'Idioms/Phrases', 'position' => 1,]);
-        Subtype::create(['name' => 'Active/Passive', 'position' => 1,]);
-        Subtype::create(['name' => 'Direct/indirect', 'position' => 1,]);
-        Subtype::create(['name' => 'Pair of words', 'position' => 1,]);
-        Subtype::create(['name' => 'Urdu sentences to english', 'position' => 1,]);
+        Subtype::create([
+            'name' => 'Essay',
+            'position' => 1,
+            'display_style' => 'horizontal'
+        ]);
+        Subtype::create([
+            'name' => 'Paragraph writing',
+            'position' => 1,
+            'display_style' => 'horizontal'
+        ]);
+        Subtype::create([
+            'name' => 'Idioms/Phrases',
+            'position' => 1,
+            'display_style' => 'horizontal'
+        ]);
+        Subtype::create([
+            'name' => 'Active/Passive',
+            'position' => 1,
+            'display_style' => 'horizontal'
+        ]);
+        Subtype::create([
+            'name' => 'Direct/indirect',
+            'position' => 1,
+            'display_style' => 'horizontal'
+        ]);
+        Subtype::create([
+            'name' =>
+            'Pair of words',
+            'position' => 1,
+            'display_style' => 'horizontal'
+        ]);
+        Subtype::create([
+            'name' => 'Urdu sentences to english',
+            'position' => 1,
+            'display_style' => 'horizontal'
+        ]);
+
+        Subtype::create(['name' => 'Synonyms/Antonyms', 'position' => 1,]);
+        Subtype::create(['name' => 'Application', 'position' => 1,]);
+        Subtype::create(['name' => 'Punctuation', 'position' => 1,]);
+        Subtype::create(['name' => 'Pargaraph explanation', 'position' => 1,]);
+
+
 
         // urdu subtypes
         Subtype::create(['name' => ' نصابی کثیرالانتخاب ', 'position' => 1,]);

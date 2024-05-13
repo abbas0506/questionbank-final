@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('paper_id')->constrained()->cascadeOnDelete();
             $table->foreignId('type_id')->constrained()->cascadeOnDelete();
             $table->string('question_title', 100)->nullable();
-            $table->string('display_format', 10)->default('whole');
+            $table->string('display_style', 10)->default('whole');
             $table->unsignedTinyInteger('marks_each')->default(1);
             $table->unsignedTinyInteger('exercise_ratio')->default(0);
             $table->unsignedTinyInteger('conceptual_ratio')->default(0);
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('choices')->default(0);
             $table->string('number_style', 10)->default('alpha');   //alpha, numeric, roman, urdu
             $table->unsignedTinyInteger('display_cols')->default(1);
-            $table->unsignedTinyInteger('position_no')->default(1);
+            $table->unsignedTinyInteger('position')->default(1);
 
             $table->timestamps();
         });
