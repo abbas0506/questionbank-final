@@ -26,6 +26,10 @@ class Question extends Model
         'approved_at',
     ];
 
+    protected $casts = [
+        'approved_at' => 'date',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -19,33 +19,33 @@ $activeBook=$book;
         <div class="bread-crumb">
             <a href="{{url('/')}}">Home</a>
             <i class="bx bx-chevron-right"></i>
-            <div>Papers</div>
+            <a href="{{ route('collaborator.papers.index') }}">Books</a>
+            <i class="bx bx-chevron-right"></i>
+            <div>{{ $book->name }}</div>
         </div>
 
 
-        <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div class="md:w-3/4 mx-auto">
             <!-- mid panel  -->
             <div class="md:col-span-2 lg:col-span-3">
                 <form id='start-test-form' action="{{route('collaborator.papers.store')}}" method='post' onsubmit="return validate(event)">
                     @csrf
                     <input type="hidden" name="book_id" value="{{ $book->id }}">
-                    <div class="p-4 border rounded-lg bg-green-100 border-green-200">
-                        <div class="flex flex-wrap gap-4 justify-between items-cente">
-                            <h2>{{ $book->name }} <i class="bx bx-chevron-right"></i> Chapters &nbsp<i class="bi-layers"></i></h2>
+                    <div class="grid p-4 mt-6 border border-dashed rounded-lg">
+                        <h2 class="text-green-800">{{ $book->name }} </h2>
+                        <div class="flex justify-between gap-4 mt-2 ">
+
+                            <div class="flex-1">
+                                <label for="">Paper Title *</label>
+                                <input type="text" name="title" value='' placeholder="Enter paper title" class="custom-input-borderless" required>
+                            </div>
+
+                            <div>
+                                <label for="">Paper Date</label>
+                                <input type="date" id='paper_date' name="paper_date" class="custom-input-borderless" value="{{ date('Y-m-d') }}">
+                            </div>
                         </div>
 
-                    </div>
-
-                    <div class="flex justify-between gap-4 p-4 mt-6 border border-dashed rounded-lg">
-                        <div class="flex-1">
-                            <label for="">Paper Title *</label>
-                            <input type="text" name="title" value='' placeholder="Enter paper title" class="custom-input-borderless" required>
-                        </div>
-
-                        <div>
-                            <label for="">Paper Date</label>
-                            <input type="date" id='paper_date' name="paper_date" class="custom-input-borderless" value="{{ date('Y-m-d') }}">
-                        </div>
                     </div>
 
                     <!-- page message -->
@@ -56,7 +56,7 @@ $activeBook=$book;
                     @endif
 
                     <div class="flex items-center justify-between px-4 mt-6">
-                        <div class="text-red-600">Please select chapter(s) for the paper</div>
+                        <div class="text-slate-600 text-sm">Please select chapter(s) for the paper</div>
                         <div class="flex items-center space-x-2">
                             <label for="check_all">Check All</label>
                             <input type="checkbox" id='check_all' class="custom-input w-4 h-4 rounded">
@@ -82,56 +82,6 @@ $activeBook=$book;
 
                     </div>
                 </form>
-            </div>
-            <!-- right panel -->
-            <div class="">
-                <div class="p-4 border rounded-lg">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-sm">Grades <i class="bi-mortarboard-fill"></i></h2>
-                    </div>
-
-                    <div class="flex items-center space-x-3 mt-3">
-                        @foreach($grades as $grade)
-                        @if($grade->id==$book->grade_id)
-                        <a href="#" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-green-800 text-slate-50">
-                            {{ $grade->grade_no }}
-                        </a>
-                        @else
-                        <a href="{{route('collaborator.grade.book.chapters.index',[$grade, 0])}}" class="flex items-center justify-center text-xs py-3 w-8 h-8 space-x-3 rounded-full bg-slate-100 text-slate-600">
-                            {{ $grade->grade_no }}
-                        </a>
-                        @endif
-                        @php $i++; @endphp
-                        @endforeach
-                    </div>
-                </div>
-
-                <div class="p-4 border rounded-lg mt-3">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-sm">Books <i class="bx bx-book"></i></h2>
-                        <div class="flex items-center justify-center rounded-full px-2 bg-green-200  text-xs font-semibold"> {{ $activeBook->grade->books->count() }}</i></div>
-                    </div>
-                    <div class="grid divide-y mt-3">
-                        @foreach($activeBook->grade->books->sortBy(' display_order') as $book)
-                        <a href="{{route('collaborator.grade.book.chapters.index',[$grade, $book])}}" class="flex items-center text-xs py-3">
-                            <div class="flex justify-center items-center w-8 h-8 rounded bg-{{ $colors[$i % 5] }}-100 text-{{ $colors[$i % 5] }}-600"><i class="bx bx-book text-sm"></i></div>
-                            <div class="flex justify-between items-center flex-1 pl-3 gap-y-1">
-                                <div>
-                                    <div class="font-semibold">{{ $book->name }}</div>
-                                    <div class="flex space-x-5 text-slate-600 text-[10px]">
-
-                                    </div>
-                                </div>
-                                @if($activeBook->id==$book->id)
-                                <div class="w-2 h-2  bg-red-600 rounded-full"></div>
-                                @endif
-                            </div>
-                        </a>
-                        @php $i++; @endphp
-                        @endforeach
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

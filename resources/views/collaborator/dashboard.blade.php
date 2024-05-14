@@ -25,8 +25,8 @@
                 <div class="flex-1">
                     <div class="title">Approved Questions</div>
                     <div class="flex items-center space-x-4">
-                        <div class="h2">{{$questions->count()}}</div>
-                        <div class="text-xs text-slate-600"><i class="bi-arrow-up"></i>{{$questions->whereNotNull('approver_id')->count()}} </div>
+                        <div class="h2">{{$questions->whereNotNull('approver_id')->count()}}</div>
+                        <div class="text-xs text-slate-600"><i class="bi-arrow-up"></i>{{$questions->whereNotNull('approver_id')->where('approved_at', today())->count()}} </div>
                     </div>
                 </div>
                 <div class="ico bg-green-100">

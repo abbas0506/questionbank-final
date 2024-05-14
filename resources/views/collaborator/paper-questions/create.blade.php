@@ -22,53 +22,54 @@ $activeBook=$paper->book;
             <div>Papers</div>
         </div>
 
-        <!-- page message -->
-        @if($errors->any())
-        <x-message :errors='$errors'></x-message>
-        @else
-        <x-message></x-message>
-        @endif
+        <div class="md:w-4/5 mx-auto mt-5">
+            <!-- page message -->
+            @if($errors->any())
+            <x-message :errors='$errors'></x-message>
+            @else
+            <x-message></x-message>
+            @endif
 
-        <form action="{{ route('collaborator.paper.questions.store',$paper) }}" method="post">
-            @csrf
+            <form action="{{ route('collaborator.paper.questions.store',$paper) }}" method="post">
+                @csrf
 
-            <input type="hidden" name="type_id" id="type_id" value='{{ $type->id }}' class="custom-input-borderless text-sm">
-            <input type="hidden" id='book_id' value="{{ $paper->book->id }}">
-            <div class="flex flex-wrap items-center space-x-8">
-                <div class="font-semibold text-green-700"><i class="bi-files"></i> {{ $paper->book->name }} <i class="bi-node-plus-fill ml-4"></i> Add {{ $type->name}}</div>
-                <a href="{{ route('collaborator.papers.show', $paper) }}" class="text-blue-600 hover:text-blue-800 text-xs">Show Paper <i class="bi-eye"></i></a>
-            </div>
-            <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 bg-slate-100 border border-dashed rounded-lg p-5 mt-5">
-
-                @if($paper->book->subtype_mappings->where('type_id', $type->id)->count()>0)
-                <div class="">
-                    <label>Sub Type</label>
-                    <select name="subtype_id" id="subtype_id" class="custom-input-borderless text-sm">
-                        @foreach($paper->book->subtypes($type->id) as $subtype)
-                        <option value="{{ $subtype->id }}">{{ $subtype->name }}</option>
-                        @endforeach
-                    </select>
+                <input type="hidden" name="type_id" id="type_id" value='{{ $type->id }}' class="custom-input-borderless text-sm">
+                <input type="hidden" id='book_id' value="{{ $paper->book->id }}">
+                <div class="flex flex-wrap items-center  gap-y-3 gap-x-6">
+                    <div class="font-semibold text-green-700"><i class="bi-files"></i> {{ $paper->book->name }} <i class="bi-node-plus-fill ml-4"></i> Add {{ $type->name}}</div>
+                    <a href="{{ route('collaborator.papers.show', $paper) }}" class="text-blue-600 hover:text-blue-800 text-xs">Show Paper <i class="bi-eye"></i></a>
                 </div>
-                @endif
+                <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8 bg-slate-100 border border-dashed rounded-lg p-5 mt-5">
 
-                @if($type->id>1)
-                <div class="" id='display_style_cover'>
-                    <label>Display Format</label>
-                    <select name="display_style" id="display_style" class="custom-input-borderless text-sm">
-                        <option value="compact">Compact Question</option>
-                        <option value="vertical">Vertical List</option>
-                        <option value="horizontal">Horizontal List </option>
-                        <option value="alt">OR Separated Alternative</option>
-                    </select>
-                </div>
+                    @if($paper->book->subtype_mappings->where('type_id', $type->id)->count()>0)
+                    <div class="">
+                        <label>Sub Type</label>
+                        <select name="subtype_id" id="subtype_id" class="custom-input-borderless text-sm">
+                            @foreach($paper->book->subtypes($type->id) as $subtype)
+                            <option value="{{ $subtype->id }}">{{ $subtype->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
 
-                <div class="grid" id='marks_cover'>
-                    <label>Marks (each)</label>
-                    <input type="number" name="marks_each" class="custom-input-borderless text-sm" value="{{ $type->id==2?2:8 }}" min=1>
-                </div>
-                @endif
-                <!-- advanced options -->
-                <!-- <div class="">
+                    @if($type->id>1)
+                    <div class="" id='display_style_cover'>
+                        <label>Display Format</label>
+                        <select name="display_style" id="display_style" class="custom-input-borderless text-sm">
+                            <option value="compact">Compact Question</option>
+                            <option value="vertical">Vertical List</option>
+                            <option value="horizontal">Horizontal List </option>
+                            <option value="alt">OR Separated Alternative</option>
+                        </select>
+                    </div>
+
+                    <div class="grid" id='marks_cover'>
+                        <label>Marks (each)</label>
+                        <input type="number" name="marks_each" class="custom-input-borderless text-sm" value="{{ $type->id==2?2:8 }}" min=1>
+                    </div>
+                    @endif
+                    <!-- advanced options -->
+                    <!-- <div class="">
                         <label>Exercise Ratio</label>
                         <select name="exercise_ratio" id="display_style" class="custom-input-borderless text-sm">
                             <option value="0">0 %</option>
@@ -93,59 +94,58 @@ $activeBook=$paper->book;
                         </select>
                     </div>
                     -->
-                <div class="">
-                    <label>Importance Level</label>
-                    <select name="frequency" id="" class="custom-input-borderless text-sm">
-                        <option value="1">Normal</option>
-                        <option value="2">High</option>
-                        <option value="3">Very High</option>
-                    </select>
+                    <div class="">
+                        <label>Importance Level</label>
+                        <select name="frequency" id="" class="custom-input-borderless text-sm">
+                            <option value="1">Normal</option>
+                            <option value="2">High</option>
+                            <option value="3">Very High</option>
+                        </select>
+                    </div>
+
+
                 </div>
 
+                <!-- Chapters List -->
+                <div class="p-4 md:p-8 h-[16rem] overflow-y-auto">
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-x-16 text-left">
 
-            </div>
+                        <div class="grid col-span-full text-sm">
+                            @foreach($selectedChapters->sortBy('chapter_no') as $chapter)
+                            <div class="flex items-center odd:bg-transparent px-3">
+                                <label for='chapter{{$chapter->id}}' class="flex-1 text-sm text-slate-800 py-3 hover:cursor-pointer">{{ $chapter->chapter_no}}. &nbsp {{ $chapter->name }} </label>
+                                <input type="hidden" name='chapter_ids_array[]' value="{{$chapter->id}}">
+                                <input type="number" name='parts_count_array[]' autocomplete="off" class="parts-count custom-input-borderless w-16 h-8 text-center px-0" min='0' value="0" oninput="syncNumOfParts()">
 
-            <!-- Chapters List -->
-            <div class="p-4 md:p-8 h-[16rem] overflow-y-auto">
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-x-16 text-left">
-
-                    <div class="grid col-span-full text-sm">
-                        @foreach($selectedChapters->sortBy('chapter_no') as $chapter)
-                        <div class="flex items-center odd:bg-transparent px-3">
-                            <label for='chapter{{$chapter->id}}' class="flex-1 text-sm text-slate-800 py-3 hover:cursor-pointer">{{ $chapter->chapter_no}}. &nbsp {{ $chapter->name }} </label>
-                            <input type="hidden" name='chapter_ids_array[]' value="{{$chapter->id}}">
-                            <input type="number" name='parts_count_array[]' autocomplete="off" class="parts-count custom-input-borderless w-16 h-8 text-center px-0" min='0' value="0" oninput="syncNumOfParts()">
-
+                            </div>
+                            @endforeach
                         </div>
-                        @endforeach
+
+                    </div>
+
+                </div>
+                <!-- Modal footer -->
+
+                <div class="flex flex-wrap justify-center items-center p-4 md:p-5 gap-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+
+                    <div class="flex flex-wrap gap-4">
+                        <div>
+                            <label>Total Parts</label>
+                            <input type="number" id="parts_total" class="custom-input-borderless w-16 h-8 text-center font-bold" value="0" disabled>
+                        </div>
+                        <div> <label>Choices</label>
+                            <input type="number" name="choices" class="custom-input-borderless w-16 h-8 text-center font-bold text-red-600" value="0">
+                        </div>
+                    </div>
+                    <div>
+                        <button data-modal-hide="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Q.</button>
                     </div>
 
                 </div>
 
-            </div>
-            <!-- Modal footer -->
-
-            <div class="flex flex-wrap justify-center items-center p-4 md:p-5 gap-6 border-t border-gray-200 rounded-b dark:border-gray-600">
-
-                <div>
-                    <label>Total Parts</label>
-                    <input type="number" id="parts_total" class="custom-input-borderless w-16 h-8 text-center font-bold" value="0" disabled>
-                </div>
-                <div> <label>Choices</label>
-                    <input type="number" name="choices" class="custom-input-borderless w-16 h-8 text-center font-bold text-red-600" value="0">
-                </div>
-                <div>
-                    <button data-modal-hide="default-modal" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Q.</button>
-                </div>
-            </div>
-
+            </form>
+        </div>
     </div>
-
-</div>
-</form>
-<!-- </div> -->
-</div>
-
 </div>
 @endsection
 
