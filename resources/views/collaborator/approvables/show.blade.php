@@ -28,7 +28,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn-red rounded text-slate-200">
-                            <i class="bx bx-trash"></i> Remove
+                            <i class="bx bx-trash"></i> Remove Q.
                         </button>
                     </form>
                 </div>
@@ -164,12 +164,12 @@
             <div>
                 <div class="p-4 border rounded-lg">
                     <h2>Similar Questions <i class="bi bi-collection"></i></h2>
-                    <div id="similarityQuestions" class="text-xs h-64 overflow-y-auto odd:bg-slate-100">
+                    <ul class="list-outside list-disc text-xs h-24 md:h-40 overflow-y-auto odd:bg-slate-100 mt-2 pl-5">
                         @foreach($similarQuestions as $question)
-                        <i class="bi-dot"></i>
-                        <p>{{ $question->statement }}</p>
+                        <!-- <i class="bi-dot"></i> -->
+                        <li>{{ $question->statement }}</li>
                         @endforeach
-                    </div>
+                    </ul>
 
                 </div>
             </div>

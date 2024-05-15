@@ -36,7 +36,7 @@
     <div class="flex flex-col justify-start md:justify-center flex-1 px-5 md:pl-24 mt-8 md:mt-24">
         <p class="text-teal-800 text-3xl md:text-5xl">Question Bank </p>
         <p class="text-slate-600 mt-3 text-md">50,000+ questions including short, long, MCQs have been taken from the exercises of textbooks and past papers, fully covering 9th to 12th classes.</p>
-        <a href="{{url('services')}}" class="mt-5">
+        <a href="{{url('login')}}" class="mt-5">
             <button class="btn-green">Get Started <i class="bi-arrow-right"></i></button>
         </a>
     </div>

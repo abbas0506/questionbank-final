@@ -55,7 +55,7 @@ $activeBook=$book;
                     <x-message></x-message>
                     @endif
 
-                    <div class="flex items-center justify-between px-4 mt-6">
+                    <div class="flex items-center justify-between px-3 mt-6">
                         <div class="text-slate-600 text-sm">Please select chapter(s) for the paper</div>
                         <div class="flex items-center space-x-2">
                             <label for="check_all">Check All</label>
@@ -66,7 +66,7 @@ $activeBook=$book;
                         <div class="grid text-sm">
                             @foreach($book->chapters->sortBy('chapter_no') as $chapter)
                             <div class="flex items-center odd:bg-slate-100 space-x-3 checkable-row">
-                                <div class="flex flex-1 items-center justify-between space-x-2 px-3">
+                                <div class="flex flex-1 items-center justify-between space-x-2 pr-3">
                                     <label for='chapter{{$chapter->id}}' class="flex-1 text-sm text-slate-800 py-3 hover:cursor-pointer">{{ $chapter->chapter_no}}. &nbsp {{ $chapter->name }} </label>
                                     <div class="text-base font-extrabold">
                                         <input type="checkbox" id='chapter{{$chapter->id}}' name='chapter_ids_array[]' class="custom-input w-4 h-4 rounded hidden" value="{{ $chapter->id }}">
@@ -77,7 +77,7 @@ $activeBook=$book;
                             @endforeach
                         </div>
                         <div class="flex justify-center items-center my-8">
-                            <button type="submit" class="btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> Go Next & Add Questions</button>
+                            <button type="submit" class="btn-green rounded flex justify-center items-center" @disabled($book->chapters->count()==0)> Go Next & Add Qs.</button>
                         </div>
 
                     </div>

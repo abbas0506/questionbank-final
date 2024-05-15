@@ -45,9 +45,10 @@ $questionSr=1;
             </div>
 
             <div class="flex justify-center gap-3 my-6">
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 1]) }}" class="btn btn-blue">MCQs <i class="bi bi-plus-circle"></i></a>
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 2]) }}" class="btn btn-orange">Short <i class="bi bi-plus-circle"></i></a>
+                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 1]) }}" class="btn btn-sky">MCQs <i class="bi bi-plus-circle"></i></a>
+                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 2]) }}" class="btn btn-teal">Short <i class="bi bi-plus-circle"></i></a>
                 <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 3]) }}" class="btn btn-green">Long <i class="bi bi-plus-circle"></i></a>
+                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 3]) }}" class="btn btn-red" @if($paper->paperQuestions->count()==0) hidden @endif>Print <i class="bi bi-printer"></i></a>
             </div>
 
             <!-- page message -->
