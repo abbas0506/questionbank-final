@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\OnlineQuizzes;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
@@ -19,7 +19,7 @@ class SelfTestController extends Controller
         //
         $grades = Grade::all();
         $subjects = Subject::all();
-        return view('online-quizzes.self-tests.index', compact('grades', 'subjects'));
+        return view('self-tests.index', compact('grades', 'subjects'));
     }
 
     /**
@@ -40,16 +40,16 @@ class SelfTestController extends Controller
         $request->validate([
             'book_id' => 'required|numeric',
             'mcqs_count' => 'required|numeric',
-            'chapter_no_array' => 'required',
+            'chapter_ids_array' => 'required',
         ]);
 
 
         try {
             // $test = Test::create($request->all());
-            $chapterNoArray = array();
-            $chapterNoArray = $request->chapter_no_array;
+            $chapterIdsArray = array();
+            $chapterIdsArray = $request->chapter_ids_array;
             session([
-                'chapterNoArray' => $chapterNoArray,
+                'chapterIdsArray' => $chapterIdsArray,
                 'mcqs_count' => $request->mcqs_count,
 
             ]);
@@ -68,30 +68,30 @@ class SelfTestController extends Controller
         //
         $book = Book::find($id);
 
-        $chapterNoArray = session('chapterNoArray');
+        $chapterIdsArray = session('chapterIdsArray');
         $mcqs_count = session('mcqs_count');
 
-        $questions = Question::whereIn('chapter_no', $chapterNoArray)
+        $questions = Question::whereIn('chapter_id', $chapterIdsArray)
             ->where('type_id', 1)
             ->get()
             ->random($mcqs_count);
         // echo $questions;
 
-        // $chapters = Chapter::whereIn('id', $chapterNoArray)->get();
+        // $chapters = Chapter::whereIn('id', $chapterIdsArray)->get();
         // $questions = collect();
-        // foreach ($chapterNoArray as $chapterNo) {
+        // foreach ($chapterIdsArray as $chapterNo) {
         //     $questionsFromThisChapter = Question::where('question_type', 'mcq')
         //         ->where('chapter_no', $chapterNo)
         //         ->get()
         //         ->random(
-        //             round(20 / sizeOf($chapterNoArray), 0)
+        //             round(20 / sizeOf($chapterIdsArray), 0)
         //         );
 
         //     foreach ($questionsFromThisChapter as $question)
         //         $questions->add($question);
         // }
         // echo $questions;
-        return view('online-quizzes.self-tests.show', compact('book', 'questions'));
+        return view('self-tests.show', compact('book', 'questions'));
     }
 
     /**
@@ -104,7 +104,7 @@ class SelfTestController extends Controller
         // $chapters = Chapter::where('subject_id', $id)
         //     ->whereHas('questions')
         //     ->get();
-        return view('online-quizzes.self-tests.edit', compact('book'));
+        return view('self-tests.edit', compact('book'));
     }
 
     /**

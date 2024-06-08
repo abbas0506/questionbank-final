@@ -66,34 +66,34 @@ $sr=1;
     <div class="mx-auto flex flex-col gap-y-6 px-4 mt-8">
         @foreach($questions as $question)
         <div class="flex flex-col items-start justify-start border border-dashed rounded  bg-slate-50 relative">
-            <p class="w-8 font-semibold text-xs text-center text-slate-100 bg-teal-600">{{$sr++}}</p>
+            <p class="w-8 font-semibold text-center text-slate-100 bg-teal-600">{{$sr++}}</p>
             <div class="pt-4 pb-8 px-8 md:px-16 w-full">
                 <p class="font-semibold text-base text-left text-gray-800">{{$question->statement}}</p>
                 <div class="divider my-4"></div>
                 <div id='ans' class="answer flex flex-col mt-4 text-gray-600 gap-y-2">
                     <div class="option flex space-x-3 items-center @if($question->mcq->correct=='a') correct @endif">
                         <input type="radio" id='radioa-{{$question->id}}' class="radio">
-                        <label for="radioa-{{$question->id}}" class="">{{$question->mcq->choice_a}}</label>
+                        <label for="radioa-{{$question->id}}" class="text-base">{{$question->mcq->choice_a}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>
 
                     <div class="option flex space-x-3 items-center @if($question->mcq->correct=='b') correct @endif">
                         <input type="radio" id='radiob-{{$question->id}}' class="radio">
-                        <label for="radiob-{{$question->id}}" class="">{{$question->mcq->choice_b}}</label>
+                        <label for="radiob-{{$question->id}}" class="text-base">{{$question->mcq->choice_b}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>
 
                     <div class="option flex space-x-3 items-center @if($question->mcq->correct=='c') correct @endif">
                         <input type="radio" id='radioc-{{$question->id}}' class="radio">
-                        <label for="radioc-{{$question->id}}" class="">{{$question->mcq->choice_c}}</label>
+                        <label for="radioc-{{$question->id}}" class="text-base">{{$question->mcq->choice_c}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>
                     <div class="option flex space-x-3 items-center @if($question->mcq->correct=='d') correct @endif">
                         <input type="radio" id="radiod-{{$question->id}}" class="radio">
-                        <label for="radiod-{{$question->id}}" class="">{{$question->mcq->choice_d}}</label>
+                        <label for="radiod-{{$question->id}}" class="text-base">{{$question->mcq->choice_d}}</label>
                         <i class="bi-check-lg"></i>
                         <i class="bi-x"></i>
                     </div>

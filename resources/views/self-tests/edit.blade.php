@@ -36,10 +36,7 @@
                 <label for="">How many MCQs?</label>
                 <input type="number" name="mcqs_count" class="custom-input w-32 text-center" min=1 max=50 value="20">
             </div>
-            <!-- <div class="flex flex-col text-left">
-            <label for="">Time (min)</label>
-            <input type="number"  class="custom-input w-24 " value="20">
-        </div> -->
+
         </div>
 
         <div class="flex justify-center items-center text-center p-3 bg-teal-100 rounded-md mt-8 relative">
@@ -50,14 +47,13 @@
         <div class="mt-3">
             @foreach($book->chapters->sortBy('chapter_no') as $chapter)
             <div class="flex items-center justify-between space-x-2 border-b">
-                <label for="chapter{{$chapter->chapter_no}}" class="hover:cursor-pointer text-base text-slate-800 text-left py-3 flex-1">{{$chapter->chapter_no}}. &nbsp {{$chapter->name}}</label>
-                <input type="checkbox" id='chapter{{$chapter->chapter_no}}' name='chapter_no_array[]' class="custom-input w-4 h-4" value="{{ $chapter->chapter_no }}">
+                <label for="chapter{{$chapter->id}}" class="hover:cursor-pointer text-base text-slate-800 text-left py-3 flex-1">{{$chapter->chapter_no}}. &nbsp {{$chapter->name}}</label>
+                <input type="checkbox" id='chapter{{$chapter->id}}' name='chapter_ids_array[]' class="custom-input w-4 h-4" value="{{ $chapter->id }}">
             </div>
             @endforeach
         </div>
-        <input type="hidden" name='book_id' value="{{$book->id}}">
         <div class="border-b border-slate-100 my-12"></div>
-
+        <input type="hidden" name="book_id" value="{{ $book->id }}">
         <button type="submit" class="fixed bottom-6 right-6 w-12 h-12 rounded-full btn-green flex justify-center items-center" @disabled($book->chapters->count()==0)> <i class="bi-caret-right"></i></button>
     </form>
 </div>

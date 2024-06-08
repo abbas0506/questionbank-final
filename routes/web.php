@@ -25,7 +25,7 @@ use App\Http\Controllers\Operator\BookChapterController;
 use App\Http\Controllers\Operator\ChapterQuestionController;
 use App\Http\Controllers\Operator\GradeBookChapterController;
 use App\Http\Controllers\Operator\GradeBookController;
-use App\Http\Controllers\OnlineQuizzes\SelfTestController;
+use App\Http\Controllers\SelfTestController;
 use App\Http\Controllers\Operator\DashboardController as OperatorDashboardController;
 use App\Http\Controllers\PdfController;
 use App\Http\Middleware\CheckSessionExpiry;
