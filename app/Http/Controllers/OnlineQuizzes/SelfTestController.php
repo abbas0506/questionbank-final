@@ -71,8 +71,7 @@ class SelfTestController extends Controller
         $chapterNoArray = session('chapterNoArray');
         $mcqs_count = session('mcqs_count');
 
-        $questions = Question::where('book_id', $book->id)
-            ->whereIn('chapter_no', $chapterNoArray)
+        $questions = Question::whereIn('chapter_no', $chapterNoArray)
             ->where('type_id', 1)
             ->get()
             ->random($mcqs_count);
