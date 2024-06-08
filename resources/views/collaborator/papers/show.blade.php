@@ -44,11 +44,11 @@ $questionSr=1;
                 <a href="{{route('collaborator.papers.edit',$paper)}}" class="absolute top-2 right-2 btn-sky flex justify-center items-center rounded-full p-0 w-5 h-5"><i class="bx bx-pencil text-xs"></i></a>
             </div>
 
-            <div class="flex justify-center gap-3 my-6">
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 1]) }}" class="btn btn-sky">MCQs <i class="bi bi-plus-circle"></i></a>
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 2]) }}" class="btn btn-teal">Short <i class="bi bi-plus-circle"></i></a>
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 3]) }}" class="btn btn-green">Long <i class="bi bi-plus-circle"></i></a>
-                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 3]) }}" class="btn btn-red" @if($paper->paperQuestions->count()==0) hidden @endif>Print <i class="bi bi-printer"></i></a>
+            <div class="flex justify-center gap-4 my-6">
+                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 1]) }}" class="btn btn-sky rounded text-sm">MCQs <i class="bi bi-plus-circle ml-1"></i></a>
+                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 2]) }}" class="btn btn-teal rounded text-sm">Short <i class="bi bi-plus-circle  ml-1"></i></a>
+                <a href="{{ route('collaborator.paper.type.questions.create',[$paper, 3]) }}" class="btn btn-green rounded text-sm">Long <i class="bi bi-plus-circle  ml-1"></i></a>
+                <a href="{{ route('collaborator.paper.pdf.create',$paper) }}" target="_blank" class="btn btn-red rounded text-sm" @if($paper->paperQuestions->count()==0) hidden @endif>Print <i class="bi bi-printer  ml-1"></i></a>
             </div>
 
             <!-- page message -->
@@ -198,6 +198,9 @@ $questionSr=1;
 
         </div>
     </div>
+
+
+
     @endsection
 
     @section('script')

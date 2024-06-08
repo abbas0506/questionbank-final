@@ -126,7 +126,8 @@ return [
     ],
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Roman' => App\Helpers\Roman::class,
+        'Roman' => \App\Helpers\Roman::class,
+
     ])->toArray(),
 
 

@@ -39,10 +39,7 @@ class PaperQuestionController extends Controller
     public function store(Request $request, $paperId)
     {
         //
-
-
         $request->validate([
-
             'type_id' => 'required|numeric',
             'subtype_id' => 'nullable|numeric',
             'question_title' => 'nullable|max:100',

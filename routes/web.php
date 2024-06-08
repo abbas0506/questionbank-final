@@ -27,7 +27,9 @@ use App\Http\Controllers\Operator\GradeBookChapterController;
 use App\Http\Controllers\Operator\GradeBookController;
 use App\Http\Controllers\OnlineQuizzes\SelfTestController;
 use App\Http\Controllers\Operator\DashboardController as OperatorDashboardController;
+use App\Http\Controllers\PdfController;
 use App\Http\Middleware\CheckSessionExpiry;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -81,6 +83,7 @@ Route::group(['prefix' => 'collaborator', 'as' => 'collaborator.', 'middleware' 
     Route::resource('chapter.approvables', ChapterApprovableController::class);
     Route::resource('papers', PaperController::class);
     Route::resource('paper.questions', PaperQuestionController::class);
+    Route::resource('paper.pdf', PdfController::class);
     Route::resource('paper.type.questions', PaperTypeQuestionController::class);
 
     Route::resource('grade.book.chapters', PaperGradeBookChapterController::class);
@@ -92,3 +95,5 @@ Route::group(['prefix' => 'operator', 'as' => 'operator.', 'middleware' => ['rol
     Route::resource('grade.book.chapters', GradeBookChapterController::class);
     Route::resource('chapter.questions', ChapterQuestionController::class);
 });
+
+Route::post('/generate-pdf', 'PdfController@generatePDF');

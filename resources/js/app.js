@@ -4,6 +4,7 @@ import "./bootstrap";
 import jQuery from "jquery";
 window.$ = jQuery;
 
+
 // import AOS from "aos";
 // import "aos/dist/aos.css";
 

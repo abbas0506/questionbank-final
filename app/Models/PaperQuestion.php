@@ -35,4 +35,16 @@ class PaperQuestion extends Model
     {
         return $this->hasMany(PaperQuestionPart::class);
     }
+    public function scopeMcqs($query)
+    {
+        return $query->where('type_id', 1);
+    }
+    public function scopeShorts($query)
+    {
+        return $query->where('type_id', 2);
+    }
+    public function scopeLongs($query)
+    {
+        return $query->where('type_id', 3);
+    }
 }
