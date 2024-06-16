@@ -8,7 +8,12 @@
 @endsection
 
 @section('body')
-
+<style>
+    .green-1 {
+        background: url("{{asset('/images/bg/green-1.png')}}") no-repeat center center/cover;
+        background-size: cover;
+    }
+</style>
 @php
 $colors=config('globals.colors');
 $i=0;
@@ -31,15 +36,36 @@ $i=0;
 
         <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <!-- mid panel  -->
-            <div class="md:col-span-2 lg:col-span-3">
-                <div class="p-4 border rounded-lg bg-green-100 border-green-200 ">
-                    <div class="flex flex-wrap gap-4 justify-between items-center ">
-                        <h2 class="">{{ $grade->name }} <i class="bx bx-chevron-right"></i> Books &nbsp<i class="bx bx-book"></i></h2>
+            <div class="md:col-span-2 lg:col-span-4">
+                <div class="p-4 border rounded-lg green-1 border-green-200 ">
+                    <!-- <div class=" flex flex-wrap gap-4 justify-between items-center ">
+                        <h2 class="">{{ $grade->name }} <i class=" bx bx-chevron-right"></i> Books &nbsp<i class="bx bx-book"></i></h2>
+                </div> -->
+
+                    <div class="flex items-center justify-between">
+                        <h2 class="">Grades <i class="bi-mortarboard-fill"></i></h2>
+                    </div>
+                    @php
+                    $activeGrade=$grade;
+                    @endphp
+                    <div class="flex items-center space-x-3 mt-3">
+                        @foreach($grades as $grade)
+                        @if($activeGrade->id==$grade->id)
+                        <a href="#" class="flex items-center justify-center w-8 h-8 space-x-3 rounded-full border border-slate-100 bg-slate-100 text-teal-600">
+                            {{ $grade->grade_no }}
+                        </a>
+                        @else
+                        <a href="{{route('operator.grade.books.index',$grade)}}" class="flex items-center justify-center w-8 h-8 space-x-3 border border-teal-400 rounded-full hover:border-slate-50 ">
+                            {{ $grade->grade_no }}
+                        </a>
+                        @endif
+                        @php $i++; @endphp
+                        @endforeach
                     </div>
                 </div>
 
                 <div class="mt-4">
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
                         @foreach($grade->books as $book)
                         <a href="{{ route('operator.book.chapters.index', $book) }}" class="border rounded-lg overflow-hidden">
                             <div class="flex justify-center items-center h-32 bg-slate-100">
@@ -64,7 +90,7 @@ $i=0;
                 </div>
             </div>
             <!-- right panel -->
-            <div class="">
+            <!-- <div class="">
                 <div class="p-4 border rounded-lg">
                     <div class="flex items-center justify-between">
                         <h2 class="text-sm">Grades <i class="bi-mortarboard-fill"></i></h2>
@@ -87,7 +113,7 @@ $i=0;
                         @endforeach
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

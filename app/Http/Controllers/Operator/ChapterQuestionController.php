@@ -36,6 +36,7 @@ class ChapterQuestionController extends Controller
         $chapter = Chapter::find($chapterId);
         $types = Type::all();
         $subtypes = $chapter->book->subtypes(1); //objectives
+
         return view('operator.questions.create', compact('chapter', 'types', 'subtypes'));
     }
 

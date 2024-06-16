@@ -212,7 +212,6 @@
 
             var token = $("meta[name='csrf-token']").attr("content");
             var book_id = $('#book_id').val();
-
             //fetch subtypes
 
             $.ajax({

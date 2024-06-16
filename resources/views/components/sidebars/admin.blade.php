@@ -33,6 +33,18 @@
                     <span class="ml-3">Q.Bank</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.subtypes.index') }}" class="flex items-center p-2">
+                    <i class="bi bi-database-gear @if($page=='subtypes') current-page @endif"></i>
+                    <span class="ml-3">Sub Types</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.mappings.index') }}" class="flex items-center p-2">
+                    <i class="bi bi-database-gear @if($page=='mappings') current-page @endif"></i>
+                    <span class="ml-3">Mapping</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

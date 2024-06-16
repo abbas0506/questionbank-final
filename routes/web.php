@@ -6,7 +6,9 @@ use App\Http\Controllers\Admin\GradeBookController as AdminGradeBookController;
 use App\Http\Controllers\Admin\BookChapterController as AdminBookChapterController;
 use App\Http\Controllers\Admin\GradeBookChapterController as AdminGradeBookChapterController;
 use App\Http\Controllers\Admin\ChapterQuestionController as AdminChapterQuestionController;
+use App\Http\Controllers\Admin\MappingController;
 use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\Admin\SubtypeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\Auth\AuthController;
@@ -67,6 +69,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['role:admi
     Route::get('/', [DashboardController::class, 'index']);
     Route::resource('users', UserController::class);
     Route::resource('grades', GradeController::class);
+    Route::resource('subtypes', SubtypeController::class);
+    Route::resource('mappings', MappingController::class);
     Route::resource('subjects', SubjectController::class);
     Route::resource('grade.books', AdminGradeBookController::class);
     Route::resource('book.chapters', AdminBookChapterController::class);
