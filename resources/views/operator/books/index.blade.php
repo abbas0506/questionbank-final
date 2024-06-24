@@ -66,7 +66,7 @@ $i=0;
 
                 <div class="mt-4">
                     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
-                        @foreach($grade->books as $book)
+                        @foreach($activeGrade->books as $book)
                         <a href="{{ route('operator.book.chapters.index', $book) }}" class="border rounded-lg overflow-hidden">
                             <div class="flex justify-center items-center h-32 bg-slate-100">
                                 <div class="flex w-16 h-16 justify-center items-center rounded-full bg-{{ $colors[$i%4] }}-100 text-{{ $colors[$i%4] }}-600 text-2xl"><i class="bx bx-book"></i></div>
